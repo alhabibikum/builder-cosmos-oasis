@@ -28,8 +28,8 @@ export default function Index() {
         <div className="relative grid grid-cols-1 md:grid-cols-2">
           <div className="order-2 md:order-1">
             <img
-              src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=2000&q=80&auto=format&fit=crop"
-              alt="Elegant abaya"
+              src={getContent("hero_image", "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=2000&q=80&auto=format&fit=crop")}
+              alt="Hero"
               className="h-[420px] w-full object-cover md:h-full"
             />
           </div>
@@ -38,12 +38,13 @@ export default function Index() {
               New Season • SS25
             </span>
             <h1 className="font-['Playfair Display'] text-4xl font-extrabold tracking-tight md:text-5xl">
-              Luxury Abayas Crafted for Royal Elegance
+              {getContent("hero_title", "Luxury Abayas Crafted for Royal Elegance")}
             </h1>
             <p className="max-w-prose text-muted-foreground">
-              Discover exquisite abayas and modest wear blending timeless design
-              with modern tailoring. Premium fabrics, handcrafted details, and
-              silhouettes inspired by royalty.
+              {getContent(
+                "hero_subtitle",
+                "Discover exquisite abayas and modest wear blending timeless design with modern tailoring. Premium fabrics, handcrafted details, and silhouettes inspired by royalty."
+              )}
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
@@ -157,19 +158,21 @@ export default function Index() {
       <section className="overflow-hidden rounded-2xl border">
         <div className="relative">
           <img
-            src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=2000&q=80&auto=format&fit=crop"
-            alt="Craftsmanship"
+            src={getContent("banner_image", "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=2000&q=80&auto=format&fit=crop")}
+            alt="Banner"
             className="h-72 w-full object-cover md:h-80"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
           <div className="absolute inset-0 flex items-center">
             <div className="px-8 text-white md:px-12">
               <h3 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">
-                Crafted by Artisans
+                {getContent("banner_title", "Crafted by Artisans")}
               </h3>
               <p className="mt-2 max-w-xl text-white/80">
-                Every piece is meticulously designed and hand-finished using
-                premium fabrics. Experience luxury that lasts beyond seasons.
+                {getContent(
+                  "banner_text",
+                  "Every piece is meticulously designed and hand-finished using premium fabrics. Experience luxury that lasts beyond seasons."
+                )}
               </p>
               <Link
                 to="/about"
