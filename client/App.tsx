@@ -17,6 +17,8 @@ import NewArrivals from "./pages/NewArrivals";
 import BestSellers from "./pages/BestSellers";
 import Sale from "./pages/Sale";
 import PlaceholderPage from "@/components/site/PlaceholderPage";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import { CartProvider } from "@/store/cart";
 import { AuthProvider } from "@/store/auth";
 import About from "./pages/About";
@@ -53,10 +55,8 @@ const App = () => (
                 <Route path="/sale" element={<Sale />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route
-                  path="/blog"
-                  element={<PlaceholderPage title="Blog" />}
-                />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/policies" element={<Policies />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/login" element={<Login />} />
