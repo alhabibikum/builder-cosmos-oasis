@@ -18,10 +18,14 @@ import BestSellers from "./pages/BestSellers";
 import Sale from "./pages/Sale";
 import PlaceholderPage from "@/components/site/PlaceholderPage";
 import { CartProvider } from "@/store/cart";
+import { AuthProvider } from "@/store/auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Policies from "./pages/Policies";
 import Account from "./pages/Account";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserDashboard from "./pages/dashboard/UserDashboard";
 
 const queryClient = new QueryClient();
 
@@ -30,10 +34,11 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout />}>
+      <AuthProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<Layout />}>
               <Route path="/" element={<Index />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/product/:id" element={<Product />} />
@@ -48,11 +53,15 @@ const App = () => (
               <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
               <Route path="/policies" element={<Policies />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<UserDashboard />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<PlaceholderPage title="Page Not Found" description="The page you are looking for does not exist." />} />
             </Route>
           </Routes>
-        </BrowserRouter>
-      </CartProvider>
+          </BrowserRouter>
+        </CartProvider>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
