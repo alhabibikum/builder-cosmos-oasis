@@ -1,5 +1,4 @@
 import ProductGrid from "@/components/site/ProductGrid";
-import { products } from "@/data/products";
 
 export default function NewArrivals() {
   return (
