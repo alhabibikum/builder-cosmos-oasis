@@ -7,15 +7,30 @@ import PaymentMethods, { type ManualPaymentData } from "@/components/site/Paymen
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
   const [loading, setLoading] = useState(false);
+  const [payment, setPayment] = useState<ManualPaymentData>({ method: "cod", mobile: "" });
   const navigate = useNavigate();
   const shipping = total >= 150 ? 0 : 15;
   const grand = total + shipping;
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (payment.method !== "cod") {
+      if (!payment.mobile || !payment.transactionId) {
+        alert("Please provide mobile number and transaction ID for your payment.");
+        return;
+      }
+    }
     setLoading(true);
     setTimeout(() => {
       const orderId = `PB-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+      const orderPayload = {
+        id: orderId,
+        items: detailed,
+        totals: { subtotal: total, shipping, total: grand },
+        payment,
+        createdAt: new Date().toISOString(),
+      };
+      localStorage.setItem("lastOrder", JSON.stringify(orderPayload));
       clear();
       navigate(`/order-confirmation?order=${encodeURIComponent(orderId)}`);
     }, 800);
@@ -23,7 +38,7 @@ export default function Checkout() {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-8 md:grid-cols-3">
-      <section className="space-y-4 rounded-xl border p-4 md:col-span-2">
+      <section className="space-y-6 rounded-xl border p-4 md:col-span-2">
         <div className="text-lg font-semibold">Shipping Details</div>
         <div className="grid gap-4 sm:grid-cols-2">
           <input className="h-11 rounded-md border px-3" required placeholder="First name" />
@@ -45,6 +60,8 @@ export default function Checkout() {
           </select>
         </div>
         <div className="pt-2 text-sm text-muted-foreground">We’ll send order updates to your email. By placing this order you agree to our policies.</div>
+
+        <PaymentMethods onChange={setPayment} />
       </section>
       <aside className="space-y-3 rounded-xl border p-4">
         <div className="text-lg font-semibold">Order Summary</div>
@@ -68,6 +85,7 @@ export default function Checkout() {
         <button disabled={loading} className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
           {loading ? "Processing…" : "Place Order"}
         </button>
+        <div className="pt-2 text-xs text-muted-foreground">Manual payments (bKash/Nagad/Rocket) are verified within 1–12 hours. COD requires phone confirmation.</div>
       </aside>
     </form>
   );
