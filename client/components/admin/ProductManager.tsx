@@ -101,7 +101,7 @@ export default function ProductManager() {
   return (
     <div className="grid gap-6 md:grid-cols-5">
       <div className="md:col-span-2 rounded-xl border">
-        <div className="flex items-center gap-2 border-b p-3">
+        <div className="flex flex-wrap items-center gap-2 border-b p-3">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -122,6 +122,74 @@ export default function ProductManager() {
           <button className="rounded-md border px-3 py-2 text-sm" onClick={startNew}>
             New
           </button>
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              className="rounded-md border px-2 py-1 text-xs"
+              onClick={() => alert(JSON.stringify(require("@/lib/catalog").exportOverrides(), null, 2))}
+            >
+              Export Products
+            </button>
+            <button
+              className="rounded-md border px-2 py-1 text-xs"
+              onClick={() => {
+                const text = prompt("Paste products JSON overrides array");
+                if (!text) return;
+                try {
+                  const data = JSON.parse(text);
+                  require("@/lib/catalog").importOverrides(data);
+                  setVersion((v) => v + 1);
+                } catch (e) {
+                  alert("Invalid JSON");
+                }
+              }}
+            >
+              Import Products
+            </button>
+            <button
+              className="rounded-md border px-2 py-1 text-xs text-red-600"
+              onClick={() => {
+                if (!confirm("Clear all product overrides?")) return;
+                require("@/lib/catalog").clearOverrides();
+                setVersion((v) => v + 1);
+              }}
+            >
+              Reset Products
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 border-b p-3 text-xs">
+          <button
+            className="rounded-md border px-2 py-1"
+            onClick={() => alert(JSON.stringify(require("@/lib/inventory").exportInventory(), null, 2))}
+          >
+            Export Inventory
+          </button>
+          <button
+            className="rounded-md border px-2 py-1"
+            onClick={() => {
+              const text = prompt("Paste inventory JSON map");
+              if (!text) return;
+              try {
+                const data = JSON.parse(text);
+                require("@/lib/inventory").importInventory(data);
+                setVersion((v) => v + 1);
+              } catch (e) {
+                alert("Invalid JSON");
+              }
+            }}
+          >
+            Import Inventory
+          </button>
+          <button
+            className="rounded-md border px-2 py-1 text-red-600"
+            onClick={() => {
+              if (!confirm("Reset inventory to defaults?")) return;
+              require("@/lib/inventory").resetInventory();
+              setVersion((v) => v + 1);
+            }}
+          >
+            Reset Inventory
+          </button>
         </div>
         <div className="divide-y">
           {filtered.map((p) => (
@@ -129,6 +197,7 @@ export default function ProductManager() {
               <button className="text-left" onClick={() => setEditing(p as Editable)}>
                 <div className="font-semibold line-clamp-1">{p.title}</div>
                 <div className="text-xs text-muted-foreground">{p.id}</div>
+                <div className="text-xs text-muted-foreground">{stockSummary(p as any)}</div>
               </button>
               <div className="flex items-center gap-2">
                 <button className="rounded-md border px-2 py-1 text-xs" onClick={() => duplicate(p)}>
