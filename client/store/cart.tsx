@@ -49,9 +49,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const parsed = raw ? (JSON.parse(raw) as CartItem[]) : [];
       if (!Array.isArray(parsed)) return [];
       // Filter out entries that don't match current catalog
+      const catalog = getProducts({ includeHidden: true });
       return parsed.filter(
         (i) =>
-          !!products.find((p) => p.id === i.productId) &&
+          !!catalog.find((p) => p.id === i.productId) &&
           typeof i.qty === "number" &&
           i.qty > 0,
       );
