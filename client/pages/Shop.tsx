@@ -7,7 +7,13 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 
 const PAGE_SIZE = 12;
 
-type SortKey = "relevance" | "price-asc" | "price-desc" | "new" | "bestsellers" | "sale";
+type SortKey =
+  | "relevance"
+  | "price-asc"
+  | "price-desc"
+  | "new"
+  | "bestsellers"
+  | "sale";
 
 export default function Shop() {
   const { search } = useLocation();
@@ -32,7 +38,8 @@ export default function Shop() {
   useEffect(() => setPrice([minPrice, maxPrice]), [minPrice, maxPrice]);
 
   const available = (id: string, sizes?: string[]) => {
-    if (sizes && sizes.length) return sizes.reduce((s, x) => s + getStock(id, x as any), 0);
+    if (sizes && sizes.length)
+      return sizes.reduce((s, x) => s + getStock(id, x as any), 0);
     return getStock(id as any);
   };
 
@@ -97,10 +104,17 @@ export default function Shop() {
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">Categories</div>
+          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
+            Categories
+          </div>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
-              <button className={`hover:text-foreground ${category === "all" ? "font-semibold text-foreground" : ""}`} onClick={() => setCategory("all")}>All</button>
+              <button
+                className={`hover:text-foreground ${category === "all" ? "font-semibold text-foreground" : ""}`}
+                onClick={() => setCategory("all")}
+              >
+                All
+              </button>
             </li>
             {categories.map((c) => (
               <li key={c}>
@@ -116,14 +130,18 @@ export default function Shop() {
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">Price</div>
+          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
+            Price
+          </div>
           <div className="px-1">
             <Slider
               value={price}
               max={maxPrice}
               min={minPrice}
               step={100}
-              onValueChange={(v) => setPrice([v[0] ?? minPrice, v[1] ?? maxPrice])}
+              onValueChange={(v) =>
+                setPrice([v[0] ?? minPrice, v[1] ?? maxPrice])
+              }
             />
             <div className="mt-2 flex justify-between text-xs text-muted-foreground">
               <span>Min: {Math.round(price[0])}</span>
@@ -133,16 +151,31 @@ export default function Shop() {
         </div>
 
         <div className="flex items-center gap-2">
-          <input id="instock" type="checkbox" checked={inStock} onChange={(e) => setInStock(e.target.checked)} />
-          <label htmlFor="instock" className="text-sm">Only show in‑stock</label>
+          <input
+            id="instock"
+            type="checkbox"
+            checked={inStock}
+            onChange={(e) => setInStock(e.target.checked)}
+          />
+          <label htmlFor="instock" className="text-sm">
+            Only show in‑stock
+          </label>
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">Quick links</div>
+          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
+            Quick links
+          </div>
           <div className="grid gap-2 text-sm">
-            <Link to="/new" className="hover:underline">New Arrivals</Link>
-            <Link to="/bestsellers" className="hover:underline">Best Sellers</Link>
-            <Link to="/sale" className="hover:underline">Sale</Link>
+            <Link to="/new" className="hover:underline">
+              New Arrivals
+            </Link>
+            <Link to="/bestsellers" className="hover:underline">
+              Best Sellers
+            </Link>
+            <Link to="/sale" className="hover:underline">
+              Sale
+            </Link>
           </div>
         </div>
       </aside>
@@ -179,7 +212,11 @@ export default function Shop() {
             <button
               className="rounded-md border px-3 py-1 disabled:opacity-50"
               disabled={page <= 1}
-              onClick={() => navigate(`/shop?search=${encodeURIComponent(q)}&page=${page - 1}`)}
+              onClick={() =>
+                navigate(
+                  `/shop?search=${encodeURIComponent(q)}&page=${page - 1}`,
+                )
+              }
             >
               Prev
             </button>
@@ -189,7 +226,11 @@ export default function Shop() {
             <button
               className="rounded-md border px-3 py-1 disabled:opacity-50"
               disabled={page >= totalPages}
-              onClick={() => navigate(`/shop?search=${encodeURIComponent(q)}&page=${page + 1}`)}
+              onClick={() =>
+                navigate(
+                  `/shop?search=${encodeURIComponent(q)}&page=${page + 1}`,
+                )
+              }
             >
               Next
             </button>
