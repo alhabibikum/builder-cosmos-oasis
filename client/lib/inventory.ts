@@ -43,14 +43,22 @@ export function exportInventory(): InventoryMap {
 }
 
 export function importInventory(input: unknown) {
-  const obj = (input && typeof input === "object" ? (input as InventoryMap) : {}) as InventoryMap;
-  const allowed = new Set(getProducts({ includeHidden: true }).map((p) => p.id));
+  const obj = (
+    input && typeof input === "object" ? (input as InventoryMap) : {}
+  ) as InventoryMap;
+  const allowed = new Set(
+    getProducts({ includeHidden: true }).map((p) => p.id),
+  );
   const next: InventoryMap = {};
   Object.entries(obj).forEach(([id, rec]) => {
     if (!allowed.has(id)) return;
-    const bySize = rec?.bySize && typeof rec.bySize === "object" ? rec.bySize : undefined;
+    const bySize =
+      rec?.bySize && typeof rec.bySize === "object" ? rec.bySize : undefined;
     const total = typeof rec?.total === "number" ? rec.total : undefined;
-    next[id] = { ...(bySize ? { bySize } : {}), ...(total !== undefined ? { total } : {}) };
+    next[id] = {
+      ...(bySize ? { bySize } : {}),
+      ...(total !== undefined ? { total } : {}),
+    };
   });
   saveInventory(next);
 }

@@ -1,4 +1,8 @@
-import { products as baseProducts, type CatalogProduct, type Size } from "@/data/products";
+import {
+  products as baseProducts,
+  type CatalogProduct,
+  type Size,
+} from "@/data/products";
 import { slugify as slugifyBase } from "@/lib/cms";
 
 export type ManagedProduct = CatalogProduct & { hidden?: boolean };
@@ -19,13 +23,17 @@ export function saveOverrides(list: ManagedProduct[]) {
   localStorage.setItem(KEY, JSON.stringify(list));
 }
 
-export function getProducts(opts?: { includeHidden?: boolean }): CatalogProduct[] {
+export function getProducts(opts?: {
+  includeHidden?: boolean;
+}): CatalogProduct[] {
   const overrides = loadOverrides();
   const map = new Map<string, ManagedProduct>();
   baseProducts.forEach((p) => map.set(p.id, { ...p }));
   overrides.forEach((p) => map.set(p.id, p));
   const merged = Array.from(map.values());
-  return merged.filter((p) => (opts?.includeHidden ? true : !(p as ManagedProduct).hidden));
+  return merged.filter((p) =>
+    opts?.includeHidden ? true : !(p as ManagedProduct).hidden,
+  );
 }
 
 export function getProductById(id: string): CatalogProduct | undefined {
@@ -33,7 +41,9 @@ export function getProductById(id: string): CatalogProduct | undefined {
 }
 
 export function listCategories(): CatalogProduct["category"][] {
-  return Array.from(new Set(getProducts({ includeHidden: true }).map((p) => p.category)));
+  return Array.from(
+    new Set(getProducts({ includeHidden: true }).map((p) => p.category)),
+  );
 }
 
 export function searchProducts(query: string): CatalogProduct[] {
@@ -47,7 +57,9 @@ export function searchProducts(query: string): CatalogProduct[] {
   );
 }
 
-export function upsertProduct(input: Partial<ManagedProduct> & { title: string; price: number }): ManagedProduct[] {
+export function upsertProduct(
+  input: Partial<ManagedProduct> & { title: string; price: number },
+): ManagedProduct[] {
   const list = loadOverrides();
   const id = input.id ? slugifyId(input.id) : slugifyId(input.title);
   const now: ManagedProduct = {
@@ -80,7 +92,9 @@ export function setHidden(id: string, hidden: boolean): ManagedProduct[] {
 
 export function ensureSizes(sizes?: Size[] | string[]): Size[] | undefined {
   if (!sizes) return undefined;
-  const clean = sizes.map((s) => String(s).toUpperCase().trim()).filter(Boolean) as Size[];
+  const clean = sizes
+    .map((s) => String(s).toUpperCase().trim())
+    .filter(Boolean) as Size[];
   return clean.length ? (clean as Size[]) : undefined;
 }
 

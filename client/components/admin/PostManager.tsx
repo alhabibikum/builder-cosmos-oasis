@@ -80,7 +80,8 @@ export default function PostManager() {
   };
 
   const onPublishToggle = (p: Post) => {
-    const next = p.status === "published" ? unpublishPost(p.id) : publishPost(p.id);
+    const next =
+      p.status === "published" ? unpublishPost(p.id) : publishPost(p.id);
     setPosts(next);
     if (editing) setEditing(next.find((x) => x.id === p.id) || null);
   };
@@ -104,7 +105,10 @@ export default function PostManager() {
             <option value="draft">Draft</option>
             <option value="published">Published</option>
           </select>
-          <button className="rounded-md border px-3 py-2 text-sm" onClick={onNew}>
+          <button
+            className="rounded-md border px-3 py-2 text-sm"
+            onClick={onNew}
+          >
             New
           </button>
         </div>
@@ -119,12 +123,15 @@ export default function PostManager() {
             >
               <div className="font-semibold">{p.title}</div>
               <div className="text-xs text-muted-foreground">
-                {p.status.toUpperCase()} • {new Date(p.updatedAt).toLocaleString()}
+                {p.status.toUpperCase()} •{" "}
+                {new Date(p.updatedAt).toLocaleString()}
               </div>
             </button>
           ))}
           {filtered.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">No posts found.</div>
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No posts found.
+            </div>
           )}
         </div>
       </div>
@@ -132,7 +139,9 @@ export default function PostManager() {
       <div className="md:col-span-3 rounded-xl border">
         <div className="border-b p-3 font-semibold">Post Editor</div>
         {!editing ? (
-          <div className="p-4 text-sm text-muted-foreground">Select a post to edit or create a new one.</div>
+          <div className="p-4 text-sm text-muted-foreground">
+            Select a post to edit or create a new one.
+          </div>
         ) : (
           <div className="grid gap-3 p-4">
             <label className="grid gap-1 text-sm">
@@ -140,7 +149,9 @@ export default function PostManager() {
               <input
                 className="h-10 rounded-md border px-2"
                 value={editing.title}
-                onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                onChange={(e) =>
+                  setEditing({ ...editing, title: e.target.value })
+                }
               />
             </label>
             <label className="grid gap-1 text-sm">
@@ -148,7 +159,9 @@ export default function PostManager() {
               <input
                 className="h-10 rounded-md border px-2"
                 value={editing.slug}
-                onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
+                onChange={(e) =>
+                  setEditing({ ...editing, slug: e.target.value })
+                }
                 placeholder="auto from title"
               />
             </label>
@@ -157,7 +170,9 @@ export default function PostManager() {
               <textarea
                 className="min-h-[70px] rounded-md border p-2"
                 value={editing.excerpt || ""}
-                onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })}
+                onChange={(e) =>
+                  setEditing({ ...editing, excerpt: e.target.value })
+                }
               />
             </label>
             <label className="grid gap-1 text-sm">
@@ -165,7 +180,9 @@ export default function PostManager() {
               <input
                 className="h-10 rounded-md border px-2"
                 value={editing.coverImage || ""}
-                onChange={(e) => setEditing({ ...editing, coverImage: e.target.value })}
+                onChange={(e) =>
+                  setEditing({ ...editing, coverImage: e.target.value })
+                }
                 placeholder="https://..."
               />
             </label>
@@ -175,7 +192,13 @@ export default function PostManager() {
                 className="h-10 rounded-md border px-2"
                 value={(editing.tags || []).join(", ")}
                 onChange={(e) =>
-                  setEditing({ ...editing, tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })
+                  setEditing({
+                    ...editing,
+                    tags: e.target.value
+                      .split(",")
+                      .map((t) => t.trim())
+                      .filter(Boolean),
+                  })
                 }
               />
             </label>
@@ -184,27 +207,43 @@ export default function PostManager() {
               <textarea
                 className="min-h-[180px] rounded-md border p-2"
                 value={editing.content}
-                onChange={(e) => setEditing({ ...editing, content: e.target.value })}
+                onChange={(e) =>
+                  setEditing({ ...editing, content: e.target.value })
+                }
               />
             </label>
             <div className="flex flex-wrap items-center gap-2 pt-2">
               <select
                 className="h-10 rounded-md border px-2 text-sm"
                 value={editing.status}
-                onChange={(e) => setEditing({ ...editing, status: e.target.value as PostStatus })}
+                onChange={(e) =>
+                  setEditing({
+                    ...editing,
+                    status: e.target.value as PostStatus,
+                  })
+                }
               >
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
               </select>
-              <button className="rounded-md border px-3 py-2 text-sm" onClick={onSave}>
+              <button
+                className="rounded-md border px-3 py-2 text-sm"
+                onClick={onSave}
+              >
                 Save
               </button>
               {editing.id && (
                 <>
-                  <button className="rounded-md border px-3 py-2 text-sm" onClick={() => onPublishToggle(editing)}>
+                  <button
+                    className="rounded-md border px-3 py-2 text-sm"
+                    onClick={() => onPublishToggle(editing)}
+                  >
                     {editing.status === "published" ? "Unpublish" : "Publish"}
                   </button>
-                  <button className="rounded-md border px-3 py-2 text-sm text-red-600" onClick={() => onDelete(editing.id)}>
+                  <button
+                    className="rounded-md border px-3 py-2 text-sm text-red-600"
+                    onClick={() => onDelete(editing.id)}
+                  >
                     Delete
                   </button>
                 </>

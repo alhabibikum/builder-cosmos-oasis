@@ -24,20 +24,27 @@ export default function BlogPost() {
       <div className="text-xs text-muted-foreground">
         {post.publishedAt ? new Date(post.publishedAt).toLocaleString() : ""}
       </div>
-      <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight">{post.title}</h1>
+      <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight">
+        {post.title}
+      </h1>
       {post.excerpt && <p className="text-muted-foreground">{post.excerpt}</p>}
-      <div className="prose max-w-none whitespace-pre-wrap">
-        {post.content}
-      </div>
+      <div className="prose max-w-none whitespace-pre-wrap">{post.content}</div>
       {post.tags && post.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-4">
           {post.tags.map((t) => (
-            <span key={t} className="rounded-md bg-accent px-2 py-0.5 text-xs text-accent-foreground">{t}</span>
+            <span
+              key={t}
+              className="rounded-md bg-accent px-2 py-0.5 text-xs text-accent-foreground"
+            >
+              {t}
+            </span>
           ))}
         </div>
       )}
       <div className="pt-6">
-        <Link to="/blog" className="text-sm text-primary underline">Back to Blog</Link>
+        <Link to="/blog" className="text-sm text-primary underline">
+          Back to Blog
+        </Link>
       </div>
     </article>
   );

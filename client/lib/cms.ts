@@ -39,7 +39,10 @@ export function loadPosts(): Post[] {
         tags: p.tags || [],
         status: p.status || "draft",
       }))
-      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      .sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      );
   } catch {
     return [];
   }
@@ -49,7 +52,9 @@ export function savePosts(posts: Post[]): void {
   localStorage.setItem(POSTS_KEY, JSON.stringify(posts));
 }
 
-export function upsertPost(input: Partial<Post> & { title: string; content?: string }): Post[] {
+export function upsertPost(
+  input: Partial<Post> & { title: string; content?: string },
+): Post[] {
   const posts = loadPosts();
   const now = new Date().toISOString();
   if (input.id) {
@@ -57,7 +62,11 @@ export function upsertPost(input: Partial<Post> & { title: string; content?: str
     if (idx >= 0) {
       const next = { ...posts[idx], ...input, updatedAt: now } as Post;
       // ensure slug uniqueness
-      next.slug = ensureUniqueSlug(posts, input.slug || posts[idx].slug || slugify(next.title), next.id);
+      next.slug = ensureUniqueSlug(
+        posts,
+        input.slug || posts[idx].slug || slugify(next.title),
+        next.id,
+      );
       posts[idx] = next;
       savePosts(posts);
       return posts;
@@ -93,7 +102,16 @@ export function deletePost(id: string): Post[] {
 export function publishPost(id: string): Post[] {
   const posts = loadPosts();
   const now = new Date().toISOString();
-  const next = posts.map((p) => (p.id === id ? { ...p, status: "published" as PostStatus, publishedAt: now, updatedAt: now } : p));
+  const next = posts.map((p) =>
+    p.id === id
+      ? {
+          ...p,
+          status: "published" as PostStatus,
+          publishedAt: now,
+          updatedAt: now,
+        }
+      : p,
+  );
   savePosts(next);
   return next;
 }
@@ -101,7 +119,9 @@ export function publishPost(id: string): Post[] {
 export function unpublishPost(id: string): Post[] {
   const posts = loadPosts();
   const now = new Date().toISOString();
-  const next = posts.map((p) => (p.id === id ? { ...p, status: "draft" as PostStatus, updatedAt: now } : p));
+  const next = posts.map((p) =>
+    p.id === id ? { ...p, status: "draft" as PostStatus, updatedAt: now } : p,
+  );
   savePosts(next);
   return next;
 }
@@ -110,7 +130,10 @@ export function getPostBySlug(slug: string): Post | undefined {
   return loadPosts().find((p) => p.slug === slug);
 }
 
-export function searchPosts(query: string, opts?: { status?: PostStatus }): Post[] {
+export function searchPosts(
+  query: string,
+  opts?: { status?: PostStatus },
+): Post[] {
   const q = query.toLowerCase();
   return loadPosts().filter((p) => {
     if (opts?.status && p.status !== opts.status) return false;

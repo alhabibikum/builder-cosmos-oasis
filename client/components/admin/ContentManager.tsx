@@ -1,13 +1,38 @@
 import { useEffect, useState } from "react";
-import { loadContent, saveContent, getContent, type ContentMap } from "@/lib/cms";
+import {
+  loadContent,
+  saveContent,
+  getContent,
+  type ContentMap,
+} from "@/lib/cms";
 
 const FIELDS = [
-  { key: "hero_title", label: "Hero Title", placeholder: "Luxury Abayas Crafted for Royal Elegance" },
-  { key: "hero_subtitle", label: "Hero Subtitle", placeholder: "Discover exquisite abayas..." },
+  {
+    key: "hero_title",
+    label: "Hero Title",
+    placeholder: "Luxury Abayas Crafted for Royal Elegance",
+  },
+  {
+    key: "hero_subtitle",
+    label: "Hero Subtitle",
+    placeholder: "Discover exquisite abayas...",
+  },
   { key: "hero_image", label: "Hero Image URL", placeholder: "https://..." },
-  { key: "banner_title", label: "Banner Title", placeholder: "Crafted by Artisans" },
-  { key: "banner_text", label: "Banner Text", placeholder: "Every piece is meticulously designed..." },
-  { key: "banner_image", label: "Banner Image URL", placeholder: "https://..." },
+  {
+    key: "banner_title",
+    label: "Banner Title",
+    placeholder: "Crafted by Artisans",
+  },
+  {
+    key: "banner_text",
+    label: "Banner Text",
+    placeholder: "Every piece is meticulously designed...",
+  },
+  {
+    key: "banner_image",
+    label: "Banner Image URL",
+    placeholder: "https://...",
+  },
 ];
 
 export default function ContentManager() {
@@ -39,16 +64,24 @@ export default function ContentManager() {
               className="h-10 rounded-md border px-2"
               placeholder={f.placeholder}
               value={content[f.key] ?? ""}
-              onChange={(e) => setContent({ ...content, [f.key]: e.target.value })}
+              onChange={(e) =>
+                setContent({ ...content, [f.key]: e.target.value })
+              }
             />
           </label>
         ))}
       </div>
       <div className="flex items-center gap-2 border-t p-3">
-        <button className="rounded-md border px-3 py-2 text-sm" onClick={onSave}>
+        <button
+          className="rounded-md border px-3 py-2 text-sm"
+          onClick={onSave}
+        >
           Save
         </button>
-        <button className="rounded-md border px-3 py-2 text-sm" onClick={onReset}>
+        <button
+          className="rounded-md border px-3 py-2 text-sm"
+          onClick={onReset}
+        >
           Reset to Defaults
         </button>
       </div>

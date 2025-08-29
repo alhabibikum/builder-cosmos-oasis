@@ -29,16 +29,18 @@ export default function Shop() {
             Categories
           </div>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            {Array.from(new Set(getProducts().map((p) => p.category))).map((c) => (
-              <li key={c}>
-                <Link
-                  to={`/shop?search=${encodeURIComponent(c)}`}
-                  className="hover:text-foreground"
-                >
-                  {c}
-                </Link>
-              </li>
-            ))}
+            {Array.from(new Set(getProducts().map((p) => p.category))).map(
+              (c) => (
+                <li key={c}>
+                  <Link
+                    to={`/shop?search=${encodeURIComponent(c)}`}
+                    className="hover:text-foreground"
+                  >
+                    {c}
+                  </Link>
+                </li>
+              ),
+            )}
           </ul>
         </div>
         <div>

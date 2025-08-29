@@ -24,16 +24,20 @@ interface CartState {
 const defaultCart: CartState = {
   items: [],
   add: () => {
-    if (import.meta?.env?.DEV) console.warn("useCart: add called without provider; no-op");
+    if (import.meta?.env?.DEV)
+      console.warn("useCart: add called without provider; no-op");
   },
   remove: () => {
-    if (import.meta?.env?.DEV) console.warn("useCart: remove called without provider; no-op");
+    if (import.meta?.env?.DEV)
+      console.warn("useCart: remove called without provider; no-op");
   },
   updateQty: () => {
-    if (import.meta?.env?.DEV) console.warn("useCart: updateQty called without provider; no-op");
+    if (import.meta?.env?.DEV)
+      console.warn("useCart: updateQty called without provider; no-op");
   },
   clear: () => {
-    if (import.meta?.env?.DEV) console.warn("useCart: clear called without provider; no-op");
+    if (import.meta?.env?.DEV)
+      console.warn("useCart: clear called without provider; no-op");
   },
   total: 0,
   count: 0,
@@ -143,7 +147,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart() {
   const ctx = useContext(CartContext);
   if (import.meta?.env?.DEV && ctx === defaultCart) {
-    console.warn("useCart used outside CartProvider. Falling back to default no-op cart.");
+    console.warn(
+      "useCart used outside CartProvider. Falling back to default no-op cart.",
+    );
   }
   return ctx;
 }

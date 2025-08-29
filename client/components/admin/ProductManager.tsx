@@ -12,7 +12,13 @@ import {
   clearOverrides,
 } from "@/lib/catalog";
 import type { CatalogProduct } from "@/data/products";
-import { getStock, setStock, exportInventory, importInventory, resetInventory } from "@/lib/inventory";
+import {
+  getStock,
+  setStock,
+  exportInventory,
+  importInventory,
+  resetInventory,
+} from "@/lib/inventory";
 
 type Editable = ManagedProduct;
 
@@ -89,7 +95,12 @@ export default function ProductManager() {
   };
 
   const remove = (id: string) => {
-    if (!confirm("Delete this product override? (Static products remain unaffected)")) return;
+    if (
+      !confirm(
+        "Delete this product override? (Static products remain unaffected)",
+      )
+    )
+      return;
     deleteProduct(id);
     setVersion((v) => v + 1);
     if (editing?.id === id) setEditing(null);
@@ -122,7 +133,10 @@ export default function ProductManager() {
               </option>
             ))}
           </select>
-          <button className="rounded-md border px-3 py-2 text-sm" onClick={startNew}>
+          <button
+            className="rounded-md border px-3 py-2 text-sm"
+            onClick={startNew}
+          >
             New
           </button>
           <div className="ml-auto flex items-center gap-2">
@@ -196,27 +210,46 @@ export default function ProductManager() {
         </div>
         <div className="divide-y">
           {filtered.map((p) => (
-            <div key={p.id} className="flex items-center justify-between p-3 text-sm">
-              <button className="text-left" onClick={() => setEditing(p as Editable)}>
+            <div
+              key={p.id}
+              className="flex items-center justify-between p-3 text-sm"
+            >
+              <button
+                className="text-left"
+                onClick={() => setEditing(p as Editable)}
+              >
                 <div className="font-semibold line-clamp-1">{p.title}</div>
                 <div className="text-xs text-muted-foreground">{p.id}</div>
-                <div className="text-xs text-muted-foreground">{stockSummary(p as any)}</div>
+                <div className="text-xs text-muted-foreground">
+                  {stockSummary(p as any)}
+                </div>
               </button>
               <div className="flex items-center gap-2">
-                <button className="rounded-md border px-2 py-1 text-xs" onClick={() => duplicate(p)}>
+                <button
+                  className="rounded-md border px-2 py-1 text-xs"
+                  onClick={() => duplicate(p)}
+                >
                   Duplicate
                 </button>
-                <button className="rounded-md border px-2 py-1 text-xs" onClick={() => toggleHidden(p as Editable)}>
+                <button
+                  className="rounded-md border px-2 py-1 text-xs"
+                  onClick={() => toggleHidden(p as Editable)}
+                >
                   {(p as Editable).hidden ? "Unhide" : "Hide"}
                 </button>
-                <button className="rounded-md border px-2 py-1 text-xs text-red-600" onClick={() => remove(p.id)}>
+                <button
+                  className="rounded-md border px-2 py-1 text-xs text-red-600"
+                  onClick={() => remove(p.id)}
+                >
                   Delete
                 </button>
               </div>
             </div>
           ))}
           {filtered.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">No products found.</div>
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No products found.
+            </div>
           )}
         </div>
       </div>
@@ -224,25 +257,52 @@ export default function ProductManager() {
       <div className="md:col-span-3 rounded-xl border">
         <div className="border-b p-3 font-semibold">Product Editor</div>
         {!editing ? (
-          <div className="p-4 text-sm text-muted-foreground">Select a product to edit or create a new one.</div>
+          <div className="p-4 text-sm text-muted-foreground">
+            Select a product to edit or create a new one.
+          </div>
         ) : (
           <div className="grid gap-3 p-4">
             <div className="grid gap-3 md:grid-cols-2">
-              <Field label="ID (slug)" hint="Leave blank to auto-generate from title">
-                <input className="h-10 w-full rounded-md border px-2" value={editing.id} onChange={(e) => setEditing({ ...editing, id: e.target.value })} />
+              <Field
+                label="ID (slug)"
+                hint="Leave blank to auto-generate from title"
+              >
+                <input
+                  className="h-10 w-full rounded-md border px-2"
+                  value={editing.id}
+                  onChange={(e) =>
+                    setEditing({ ...editing, id: e.target.value })
+                  }
+                />
               </Field>
               <Field label="Title">
-                <input className="h-10 w-full rounded-md border px-2" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
+                <input
+                  className="h-10 w-full rounded-md border px-2"
+                  value={editing.title}
+                  onChange={(e) =>
+                    setEditing({ ...editing, title: e.target.value })
+                  }
+                />
               </Field>
               <Field label="Price">
-                <input type="number" min={0} className="h-10 w-full rounded-md border px-2" value={editing.price} onChange={(e) => setEditing({ ...editing, price: Number(e.target.value) })} />
+                <input
+                  type="number"
+                  min={0}
+                  className="h-10 w-full rounded-md border px-2"
+                  value={editing.price}
+                  onChange={(e) =>
+                    setEditing({ ...editing, price: Number(e.target.value) })
+                  }
+                />
               </Field>
               <Field label="Category">
                 <input
                   list="catalog-categories"
                   className="h-10 w-full rounded-md border px-2"
                   value={editing.category}
-                  onChange={(e) => setEditing({ ...editing, category: e.target.value as any })}
+                  onChange={(e) =>
+                    setEditing({ ...editing, category: e.target.value as any })
+                  }
                 />
                 <datalist id="catalog-categories">
                   {categories
@@ -254,51 +314,132 @@ export default function ProductManager() {
               </Field>
             </div>
             <Field label="Main Image URL">
-              <input className="h-10 w-full rounded-md border px-2" value={editing.image} onChange={(e) => setEditing({ ...editing, image: e.target.value })} />
+              <input
+                className="h-10 w-full rounded-md border px-2"
+                value={editing.image}
+                onChange={(e) =>
+                  setEditing({ ...editing, image: e.target.value })
+                }
+              />
             </Field>
             <Field label="Additional Images (comma separated URLs)">
               <input
                 className="h-10 w-full rounded-md border px-2"
                 value={(editing.images || []).join(", ")}
-                onChange={(e) => setEditing({ ...editing, images: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })}
+                onChange={(e) =>
+                  setEditing({
+                    ...editing,
+                    images: e.target.value
+                      .split(",")
+                      .map((s) => s.trim())
+                      .filter(Boolean),
+                  })
+                }
               />
             </Field>
             <Field label="Description">
-              <textarea className="min-h-[120px] w-full rounded-md border p-2" value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} />
+              <textarea
+                className="min-h-[120px] w-full rounded-md border p-2"
+                value={editing.description}
+                onChange={(e) =>
+                  setEditing({ ...editing, description: e.target.value })
+                }
+              />
             </Field>
             <div className="grid gap-3 md:grid-cols-3">
               <Field label="Sizes (comma separated)">
-                <input className="h-10 w-full rounded-md border px-2" value={(editing.sizes || []).join(", ")} onChange={(e) => setEditing({ ...editing, sizes: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) as any })} />
+                <input
+                  className="h-10 w-full rounded-md border px-2"
+                  value={(editing.sizes || []).join(", ")}
+                  onChange={(e) =>
+                    setEditing({
+                      ...editing,
+                      sizes: e.target.value
+                        .split(",")
+                        .map((s) => s.trim())
+                        .filter(Boolean) as any,
+                    })
+                  }
+                />
               </Field>
               <Field label="Colors (comma separated hex)">
-                <input className="h-10 w-full rounded-md border px-2" value={(editing.colors || []).join(", ")} onChange={(e) => setEditing({ ...editing, colors: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} />
+                <input
+                  className="h-10 w-full rounded-md border px-2"
+                  value={(editing.colors || []).join(", ")}
+                  onChange={(e) =>
+                    setEditing({
+                      ...editing,
+                      colors: e.target.value
+                        .split(",")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                />
               </Field>
               <Field label="Tags (comma separated)">
-                <input className="h-10 w-full rounded-md border px-2" value={(editing.tags || []).join(", ")} onChange={(e) => setEditing({ ...editing, tags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} />
+                <input
+                  className="h-10 w-full rounded-md border px-2"
+                  value={(editing.tags || []).join(", ")}
+                  onChange={(e) =>
+                    setEditing({
+                      ...editing,
+                      tags: e.target.value
+                        .split(",")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                />
               </Field>
             </div>
             <div className="grid gap-3 md:grid-cols-4">
-              <Toggle label="New" checked={!!editing.isNew} onChange={(v) => setEditing({ ...editing, isNew: v })} />
-              <Toggle label="Best Seller" checked={!!editing.isBestSeller} onChange={(v) => setEditing({ ...editing, isBestSeller: v })} />
-              <Toggle label="On Sale" checked={!!editing.onSale} onChange={(v) => setEditing({ ...editing, onSale: v })} />
+              <Toggle
+                label="New"
+                checked={!!editing.isNew}
+                onChange={(v) => setEditing({ ...editing, isNew: v })}
+              />
+              <Toggle
+                label="Best Seller"
+                checked={!!editing.isBestSeller}
+                onChange={(v) => setEditing({ ...editing, isBestSeller: v })}
+              />
+              <Toggle
+                label="On Sale"
+                checked={!!editing.onSale}
+                onChange={(v) => setEditing({ ...editing, onSale: v })}
+              />
               <Field label="Badge">
-                <input className="h-10 w-full rounded-md border px-2" value={editing.badge || ""} onChange={(e) => setEditing({ ...editing, badge: e.target.value })} />
+                <input
+                  className="h-10 w-full rounded-md border px-2"
+                  value={editing.badge || ""}
+                  onChange={(e) =>
+                    setEditing({ ...editing, badge: e.target.value })
+                  }
+                />
               </Field>
             </div>
             <div className="grid gap-2 border-t pt-3">
               <div className="text-sm font-medium">Inventory</div>
               {!editing.id ? (
-                <div className="text-xs text-muted-foreground">Set an ID and save to manage stock.</div>
+                <div className="text-xs text-muted-foreground">
+                  Set an ID and save to manage stock.
+                </div>
               ) : editing.sizes && editing.sizes.length ? (
                 <div className="flex flex-wrap gap-2">
                   {editing.sizes.map((s) => (
-                    <label key={s} className="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm">
+                    <label
+                      key={s}
+                      className="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm"
+                    >
                       <span>{s}</span>
                       <input
                         type="number"
                         defaultValue={getStock(editing.id, s as any)}
                         className="h-9 w-20 rounded-md border px-2"
-                        onBlur={(e) => setStock(editing.id, Number(e.target.value), s as any)}
+                        onBlur={(e) =>
+                          setStock(editing.id, Number(e.target.value), s as any)
+                        }
                       />
                     </label>
                   ))}
@@ -310,7 +451,10 @@ export default function ProductManager() {
                     type="number"
                     defaultValue={editing.id ? getStock(editing.id as any) : 0}
                     className="h-9 w-24 rounded-md border px-2"
-                    onBlur={(e) => editing.id && setStock(editing.id as any, Number(e.target.value))}
+                    onBlur={(e) =>
+                      editing.id &&
+                      setStock(editing.id as any, Number(e.target.value))
+                    }
                   />
                 </div>
               )}
@@ -318,14 +462,26 @@ export default function ProductManager() {
 
             <div className="flex items-center gap-2 border-t pt-3">
               <label className="inline-flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={!!editing.hidden} onChange={(e) => setEditing({ ...editing, hidden: e.target.checked })} />
+                <input
+                  type="checkbox"
+                  checked={!!editing.hidden}
+                  onChange={(e) =>
+                    setEditing({ ...editing, hidden: e.target.checked })
+                  }
+                />
                 Hidden
               </label>
-              <button className="rounded-md border px-3 py-2 text-sm" onClick={persist}>
+              <button
+                className="rounded-md border px-3 py-2 text-sm"
+                onClick={persist}
+              >
                 Save
               </button>
               {editing.id && (
-                <button className="rounded-md border px-3 py-2 text-sm text-red-600" onClick={() => remove(editing.id)}>
+                <button
+                  className="rounded-md border px-3 py-2 text-sm text-red-600"
+                  onClick={() => remove(editing.id)}
+                >
                   Delete Override
                 </button>
               )}
@@ -337,22 +493,44 @@ export default function ProductManager() {
   );
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="grid gap-1 text-sm">
       <span className="text-xs">
         {label}
-        {hint ? <span className="ml-1 text-muted-foreground">({hint})</span> : null}
+        {hint ? (
+          <span className="ml-1 text-muted-foreground">({hint})</span>
+        ) : null}
       </span>
       {children}
     </label>
   );
 }
 
-function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
+function Toggle({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) {
   return (
     <label className="inline-flex items-center gap-2 text-sm">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+      />
       {label}
     </label>
   );
@@ -368,7 +546,12 @@ function stockSummary(p: CatalogProduct): string {
 
 function normalizeList(input: any): string[] {
   if (!input) return [];
-  if (Array.isArray(input)) return input.map((s) => String(s).trim()).filter(Boolean);
-  if (typeof input === "string") return input.split(",").map((s) => s.trim()).filter(Boolean);
+  if (Array.isArray(input))
+    return input.map((s) => String(s).trim()).filter(Boolean);
+  if (typeof input === "string")
+    return input
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
   return [];
 }
