@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { products } from "@/data/products";
 import { useState } from "react";
 import { useCart } from "@/store/cart";
+import { formatCurrency } from "@/lib/money";
 
 export default function Product() {
   const { id } = useParams();
@@ -30,7 +31,7 @@ export default function Product() {
       <div className="space-y-6">
         <div>
           <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight md:text-4xl">{product.title}</h1>
-          <div className="mt-2 text-2xl font-semibold">${product.price.toFixed(2)}</div>
+          <div className="mt-2 text-2xl font-semibold">{formatCurrency(product.price)}</div>
         </div>
         <p className="text-muted-foreground">{product.description}</p>
         {product.sizes && (
@@ -53,7 +54,7 @@ export default function Product() {
         </div>
         <div className="flex gap-3">
           <button onClick={() => add(product.id, qty, size)} className="inline-flex flex-1 items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">Add to Cart</button>
-          <Link to="/checkout" className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">Buy Now</Link>
+          <Link to="/checkout" className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">Buy Now (COD/Manual)</Link>
         </div>
         <div className="text-sm text-muted-foreground">Free express shipping on orders over $150 • 30-day returns</div>
       </div>
