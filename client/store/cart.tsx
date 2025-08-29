@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { products, type CatalogProduct } from "@/data/products";
+import type { CatalogProduct } from "@/data/products";
+import { getProducts } from "@/lib/catalog";
 import { availableFor } from "@/lib/inventory";
 import { toast } from "sonner";
 
