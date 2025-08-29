@@ -1,8 +1,9 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { products } from "@/data/products";
 import { useState } from "react";
 import { useCart } from "@/store/cart";
 import { formatCurrency } from "@/lib/money";
+import { toast } from "sonner";
 
 export default function Product() {
   const { id } = useParams();
@@ -10,6 +11,7 @@ export default function Product() {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState<string | undefined>(product?.sizes?.[0]);
+  const navigate = useNavigate();
 
   if (!product) {
     return (
@@ -53,8 +55,8 @@ export default function Product() {
           </div>
         </div>
         <div className="flex gap-3">
-          <button onClick={() => add(product.id, qty, size)} className="inline-flex flex-1 items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">Add to Cart</button>
-          <Link to="/checkout" className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">Buy Now (COD/Manual)</Link>
+          <button onClick={() => { add(product.id, qty, size); toast.success("Added to cart"); }} className="inline-flex flex-1 items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">Add to Cart</button>
+          <button onClick={() => { add(product.id, qty, size); navigate("/checkout"); }} className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">Buy Now (COD/Manual)</button>
         </div>
         <div className="text-sm text-muted-foreground">Free express shipping on orders over ৳15,000 • 30-day returns</div>
       </div>
