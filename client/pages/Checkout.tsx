@@ -1,0 +1,72 @@
+import { FormEvent, useState } from "react";
+import { useCart } from "@/store/cart";
+import { useNavigate } from "react-router-dom";
+
+export default function Checkout() {
+  const { total, detailed, clear } = useCart();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const shipping = total >= 150 ? 0 : 15;
+  const grand = total + shipping;
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      const orderId = `PB-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+      clear();
+      navigate(`/order-confirmation?order=${encodeURIComponent(orderId)}`);
+    }, 800);
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="grid gap-8 md:grid-cols-3">
+      <section className="space-y-4 rounded-xl border p-4 md:col-span-2">
+        <div className="text-lg font-semibold">Shipping Details</div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <input className="h-11 rounded-md border px-3" required placeholder="First name" />
+          <input className="h-11 rounded-md border px-3" required placeholder="Last name" />
+          <input className="h-11 rounded-md border px-3 sm:col-span-2" type="email" required placeholder="Email" />
+          <input className="h-11 rounded-md border px-3 sm:col-span-2" required placeholder="Address" />
+          <input className="h-11 rounded-md border px-3" required placeholder="City" />
+          <input className="h-11 rounded-md border px-3" required placeholder="State/Province" />
+          <input className="h-11 rounded-md border px-3" required placeholder="Postal code" />
+          <select className="h-11 rounded-md border px-3 sm:col-span-2" required defaultValue="United Arab Emirates">
+            <option>United Arab Emirates</option>
+            <option>Saudi Arabia</option>
+            <option>Kuwait</option>
+            <option>Bahrain</option>
+            <option>Qatar</option>
+            <option>Oman</option>
+            <option>USA</option>
+            <option>UK</option>
+          </select>
+        </div>
+        <div className="pt-2 text-sm text-muted-foreground">We’ll send order updates to your email. By placing this order you agree to our policies.</div>
+      </section>
+      <aside className="space-y-3 rounded-xl border p-4">
+        <div className="text-lg font-semibold">Order Summary</div>
+        <div className="space-y-2">
+          {detailed.map((i) => (
+            <div key={i.productId} className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2">
+                <img src={i.product.image} className="h-12 w-10 rounded object-cover" />
+                <div>
+                  <div className="line-clamp-1">{i.product.title}</div>
+                  <div className="text-muted-foreground">{i.qty} × ${i.product.price.toFixed(2)}</div>
+                </div>
+              </div>
+              <div>${(i.product.price * i.qty).toFixed(2)}</div>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between text-sm"><span>Subtotal</span><span>${total.toFixed(2)}</span></div>
+        <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span></div>
+        <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>${grand.toFixed(2)}</span></div>
+        <button disabled={loading} className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
+          {loading ? "Processing…" : "Place Order"}
+        </button>
+      </aside>
+    </form>
+  );
+}
