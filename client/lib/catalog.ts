@@ -5,7 +5,7 @@ export type ManagedProduct = CatalogProduct & { hidden?: boolean };
 
 const KEY = "catalog_overrides";
 
-function loadOverrides(): ManagedProduct[] {
+export function loadOverrides(): ManagedProduct[] {
   try {
     const raw = localStorage.getItem(KEY);
     const arr = raw ? (JSON.parse(raw) as ManagedProduct[]) : [];
@@ -15,7 +15,7 @@ function loadOverrides(): ManagedProduct[] {
   }
 }
 
-function saveOverrides(list: ManagedProduct[]) {
+export function saveOverrides(list: ManagedProduct[]) {
   localStorage.setItem(KEY, JSON.stringify(list));
 }
 
@@ -82,6 +82,26 @@ export function ensureSizes(sizes?: Size[] | string[]): Size[] | undefined {
   if (!sizes) return undefined;
   const clean = sizes.map((s) => String(s).toUpperCase().trim()).filter(Boolean) as Size[];
   return clean.length ? (clean as Size[]) : undefined;
+}
+
+export function exportOverrides(): ManagedProduct[] {
+  return loadOverrides();
+}
+
+export function importOverrides(input: unknown): ManagedProduct[] {
+  const arr = Array.isArray(input) ? (input as ManagedProduct[]) : [];
+  const cleaned = arr
+    .filter((p) => p && typeof p === "object")
+    .map((p) => ({
+      ...p,
+      id: slugifyId((p as any).id || (p as any).title || "product"),
+    })) as ManagedProduct[];
+  saveOverrides(cleaned);
+  return cleaned;
+}
+
+export function clearOverrides(): void {
+  saveOverrides([]);
 }
 
 export function slugifyId(s: string): string {
