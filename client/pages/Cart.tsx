@@ -36,7 +36,7 @@ export default function Cart() {
         <div className="mb-2 text-lg font-semibold">Order Summary</div>
         <div className="flex justify-between text-sm"><span>Subtotal</span><span>{formatCurrency(total)}</span></div>
         <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{total >= 15000 ? "Free" : formatCurrency(150)}</span></div>
-        <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>{formatCurrency(total + (total >= 150 ? 0 : 15))}</span></div>
+        <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>{formatCurrency(total + (total >= 15000 ? 0 : 150))}</span></div>
         <Link to="/checkout" className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">Checkout</Link>
         <Link to="/shop" className="mt-2 inline-flex w-full items-center justify-center rounded-md border px-5 py-2.5 text-sm font-semibold">Continue shopping</Link>
       </aside>
