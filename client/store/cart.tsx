@@ -22,8 +22,15 @@ const CartContext = createContext<CartState | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {
-    const raw = localStorage.getItem("cart");
-    return raw ? (JSON.parse(raw) as CartItem[]) : [];
+    try {
+      const raw = localStorage.getItem("cart");
+      const parsed = raw ? (JSON.parse(raw) as CartItem[]) : [];
+      if (!Array.isArray(parsed)) return [];
+      // Filter out entries that don't match current catalog
+      return parsed.filter((i) => !!products.find((p) => p.id === i.productId) && typeof i.qty === "number" && i.qty > 0);
+    } catch {
+      return [];
+    }
   });
 
   useEffect(() => {
@@ -43,9 +50,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const updateQty = (id: string, qty: number) => setItems((p) => p.map((i) => (i.productId === id ? { ...i, qty } : i)));
   const clear = () => setItems([]);
 
-  const detailed = useMemo(() => items.map((i) => ({ ...i, product: products.find((p) => p.id === i.productId)! })), [items]);
+  const detailed = useMemo(() => {
+    return items
+      .map((i) => {
+        const product = products.find((p) => p.id === i.productId);
+        return product ? { ...i, product } : null;
+      })
+      .filter(Boolean) as (CartItem & { product: CatalogProduct })[];
+  }, [items]);
 
-  const total = useMemo(() => detailed.reduce((sum, i) => sum + i.product.price * i.qty, 0), [detailed]);
+  const total = useMemo(() => detailed.reduce((sum, i) => sum + (i.product?.price || 0) * i.qty, 0), [detailed]);
   const count = useMemo(() => items.reduce((sum, i) => sum + i.qty, 0), [items]);
 
   const value: CartState = { items, add, remove, updateQty, clear, total, count, detailed };
