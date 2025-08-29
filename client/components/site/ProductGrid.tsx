@@ -4,10 +4,12 @@ import type { CatalogProduct } from "@/data/products";
 
 export default function ProductGrid({
   filter,
+  items,
 }: {
   filter?: (p: CatalogProduct) => boolean;
+  items?: CatalogProduct[];
 }) {
-  const list = getProducts().filter((p) => (filter ? filter(p) : true));
+  const list = (items ?? getProducts()).filter((p) => (filter ? filter(p) : true));
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
       {list.map((p) => (
