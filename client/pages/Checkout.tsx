@@ -3,6 +3,7 @@ import { useCart } from "@/store/cart";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/lib/money";
 import PaymentMethods, { type ManualPaymentData } from "@/components/site/PaymentMethods";
+import { upsertOrder } from "@/lib/orders";
 
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
@@ -28,11 +29,11 @@ export default function Checkout() {
         items: detailed,
         totals: { subtotal: total, shipping, total: grand },
         payment,
+        status: "placed",
+        paymentVerified: false,
         createdAt: new Date().toISOString(),
       };
-      const orders = (() => { try { return JSON.parse(localStorage.getItem("orders") || "[]"); } catch { return []; } })();
-      orders.unshift(orderPayload);
-      localStorage.setItem("orders", JSON.stringify(orders.slice(0, 50)));
+      upsertOrder(orderPayload as any);
       localStorage.setItem("lastOrder", JSON.stringify(orderPayload));
       clear();
       navigate(`/order-confirmation?order=${encodeURIComponent(orderId)}`);
