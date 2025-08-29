@@ -1,4 +1,4 @@
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/catalog";
 import type { Size } from "@/data/products";
 
 export type InventoryMap = Record<
@@ -11,7 +11,7 @@ const DEFAULT_STOCK = 10;
 
 function seed(): InventoryMap {
   const map: InventoryMap = {};
-  products.forEach((p) => {
+  getProducts({ includeHidden: true }).forEach((p) => {
     if (p.sizes && p.sizes.length) {
       const bySize: Record<string, number> = {};
       p.sizes.forEach((s) => (bySize[s] = DEFAULT_STOCK));
