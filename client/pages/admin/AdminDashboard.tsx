@@ -3,6 +3,8 @@ import { getOrders, saveOrders, type Order } from "@/lib/orders";
 import { useMemo, useState } from "react";
 import { formatCurrency } from "@/lib/money";
 import { Navigate } from "react-router-dom";
+import { products } from "@/data/products";
+import { getStock, setStock } from "@/lib/inventory";
 
 export default function AdminDashboard() {
   const { role } = useAuth();
@@ -30,6 +32,38 @@ export default function AdminDashboard() {
         <div className="rounded-xl border p-4"><div className="text-sm text-muted-foreground">Total Revenue</div><div className="text-2xl font-semibold">{formatCurrency(stats.total)}</div></div>
         <div className="rounded-xl border p-4"><div className="text-sm text-muted-foreground">Orders</div><div className="text-2xl font-semibold">{stats.placed}</div></div>
         <div className="rounded-xl border p-4"><div className="text-sm text-muted-foreground">Pending Verification</div><div className="text-2xl font-semibold">{stats.pendingVerify}</div></div>
+      </div>
+
+      <div className="rounded-xl border">
+        <div className="border-b p-4 font-semibold">Inventory</div>
+        <div className="divide-y">
+          {products.map((p) => (
+            <div key={p.id} className="grid gap-3 p-4 md:grid-cols-6 md:items-center">
+              <div className="font-semibold">{p.title}</div>
+              <div className="text-sm text-muted-foreground">{p.id}</div>
+              <div className="md:col-span-3 flex flex-wrap items-center gap-2">
+                {p.sizes && p.sizes.length ? (
+                  p.sizes.map((s) => (
+                    <label key={s} className="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm">
+                      <span>{s}</span>
+                      <input
+                        type="number"
+                        defaultValue={getStock(p.id, s)}
+                        className="h-9 w-20 rounded-md border px-2"
+                        onBlur={(e) => setStock(p.id, Number(e.target.value), s)}
+                      />
+                    </label>
+                  ))
+                ) : (
+                  <input type="number" defaultValue={getStock(p.id)} className="h-9 w-24 rounded-md border px-2" onBlur={(e) => setStock(p.id, Number(e.target.value))} />
+                )}
+              </div>
+              <div className="text-right text-sm">
+                <button className="rounded-md border px-3 py-2" onClick={() => location.reload()}>Refresh</button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="rounded-xl border">
