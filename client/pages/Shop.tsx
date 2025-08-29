@@ -1,5 +1,5 @@
 import ProductGrid from "@/components/site/ProductGrid";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/catalog";
 import { useMemo } from "react";
 import { useLocation, Link } from "react-router-dom";
 
@@ -12,12 +12,12 @@ export default function Shop() {
   const filtered = useMemo(
     () =>
       q
-        ? products.filter(
+        ? getProducts().filter(
             (p) =>
               p.title.toLowerCase().includes(q) ||
-              p.tags?.some((t) => t.includes(q)),
+              p.tags?.some((t) => t.toLowerCase().includes(q)),
           )
-        : products,
+        : getProducts(),
     [q],
   );
 
@@ -29,7 +29,7 @@ export default function Shop() {
             Categories
           </div>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            {Array.from(new Set(products.map((p) => p.category))).map((c) => (
+            {Array.from(new Set(getProducts().map((p) => p.category))).map((c) => (
               <li key={c}>
                 <Link
                   to={`/shop?search=${encodeURIComponent(c)}`}
