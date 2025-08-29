@@ -12,7 +12,18 @@ interface AuthState {
   signOut: () => void;
 }
 
-const AuthContext = createContext<AuthState | null>(null);
+const defaultAuth: AuthState = {
+  role: "guest",
+  user: null,
+  signIn: () => {
+    if (import.meta?.env?.DEV) console.warn("useAuth: signIn called without provider; no-op");
+  },
+  signOut: () => {
+    if (import.meta?.env?.DEV) console.warn("useAuth: signOut called without provider; no-op");
+  },
+};
+
+const AuthContext = createContext<AuthState>(defaultAuth);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<Role>(
@@ -48,6 +59,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  if (import.meta?.env?.DEV && ctx === defaultAuth) {
+    console.warn("useAuth used outside AuthProvider. Falling back to default no-op auth.");
+  }
   return ctx;
 }
