@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/lib/money";
 import PaymentMethods, { type ManualPaymentData } from "@/components/site/PaymentMethods";
 import { upsertOrder } from "@/lib/orders";
+import { adjustStock } from "@/lib/inventory";
 
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
@@ -34,6 +35,8 @@ export default function Checkout() {
         createdAt: new Date().toISOString(),
       };
       upsertOrder(orderPayload as any);
+      // Deduct inventory
+      detailed.forEach((i) => adjustStock(i.product.id, -i.qty, i.size as any));
       localStorage.setItem("lastOrder", JSON.stringify(orderPayload));
       clear();
       navigate(`/order-confirmation?order=${encodeURIComponent(orderId)}`);
