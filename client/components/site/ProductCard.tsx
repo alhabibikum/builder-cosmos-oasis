@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useCart } from "@/store/cart";
 import { formatCurrency } from "@/lib/money";
+import { toast } from "sonner";
 
 export interface Product {
   id: string;
@@ -39,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="opacity-30"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896l-7.336 3.87 1.402-8.168L.132 9.211l8.2-1.193z"/></svg>
           </div>
         </div>
-        <Button className="w-full" onClick={() => add(product.id, 1)}>Add to Cart</Button>
+        <Button className="w-full" onClick={() => { add(product.id, 1); toast.success("Added to cart"); }}>Add to Cart</Button>
       </div>
     </div>
   );
