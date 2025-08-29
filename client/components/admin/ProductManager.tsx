@@ -268,7 +268,7 @@ export default function ProductManager() {
             </Field>
             <div className="grid gap-3 md:grid-cols-3">
               <Field label="Sizes (comma separated)">
-                <input className="h-10 w-full rounded-md border px-2" value={(editing.sizes || []).join(", ")} onChange={(e) => setEditing({ ...editing, sizes: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} />
+                <input className="h-10 w-full rounded-md border px-2" value={(editing.sizes || []).join(", ")} onChange={(e) => setEditing({ ...editing, sizes: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) as any })} />
               </Field>
               <Field label="Colors (comma separated hex)">
                 <input className="h-10 w-full rounded-md border px-2" value={(editing.colors || []).join(", ")} onChange={(e) => setEditing({ ...editing, colors: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} />
