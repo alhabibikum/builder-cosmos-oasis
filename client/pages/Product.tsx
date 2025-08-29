@@ -56,7 +56,7 @@ export default function Product() {
           <button onClick={() => add(product.id, qty, size)} className="inline-flex flex-1 items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">Add to Cart</button>
           <Link to="/checkout" className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">Buy Now (COD/Manual)</Link>
         </div>
-        <div className="text-sm text-muted-foreground">Free express shipping on orders over $150 • 30-day returns</div>
+        <div className="text-sm text-muted-foreground">Free express shipping on orders over ৳15,000 • 30-day returns</div>
       </div>
     </div>
   );
