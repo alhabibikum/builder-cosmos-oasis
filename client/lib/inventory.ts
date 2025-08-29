@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/catalog";
 import type { Size } from "@/data/products";
+import { getProducts } from "@/lib/catalog";
 
 export type InventoryMap = Record<
   string,
