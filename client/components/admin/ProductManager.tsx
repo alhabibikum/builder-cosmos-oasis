@@ -9,6 +9,7 @@ import {
   type ManagedProduct,
 } from "@/lib/catalog";
 import type { CatalogProduct } from "@/data/products";
+import { getStock, setStock } from "@/lib/inventory";
 
 type Editable = ManagedProduct;
 
@@ -165,13 +166,19 @@ export default function ProductManager() {
                 <input type="number" min={0} className="h-10 w-full rounded-md border px-2" value={editing.price} onChange={(e) => setEditing({ ...editing, price: Number(e.target.value) })} />
               </Field>
               <Field label="Category">
-                <select className="h-10 w-full rounded-md border px-2" value={editing.category} onChange={(e) => setEditing({ ...editing, category: e.target.value as any })}>
-                  {categories.filter((c) => c !== "all").map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
+                <input
+                  list="catalog-categories"
+                  className="h-10 w-full rounded-md border px-2"
+                  value={editing.category}
+                  onChange={(e) => setEditing({ ...editing, category: e.target.value as any })}
+                />
+                <datalist id="catalog-categories">
+                  {categories
+                    .filter((c) => c !== "all")
+                    .map((c) => (
+                      <option key={c} value={c} />
+                    ))}
+                </datalist>
               </Field>
             </div>
             <Field label="Main Image URL">
@@ -206,6 +213,37 @@ export default function ProductManager() {
                 <input className="h-10 w-full rounded-md border px-2" value={editing.badge || ""} onChange={(e) => setEditing({ ...editing, badge: e.target.value })} />
               </Field>
             </div>
+            <div className="grid gap-2 border-t pt-3">
+              <div className="text-sm font-medium">Inventory</div>
+              {!editing.id ? (
+                <div className="text-xs text-muted-foreground">Set an ID and save to manage stock.</div>
+              ) : editing.sizes && editing.sizes.length ? (
+                <div className="flex flex-wrap gap-2">
+                  {editing.sizes.map((s) => (
+                    <label key={s} className="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm">
+                      <span>{s}</span>
+                      <input
+                        type="number"
+                        defaultValue={getStock(editing.id, s as any)}
+                        className="h-9 w-20 rounded-md border px-2"
+                        onBlur={(e) => setStock(editing.id, Number(e.target.value), s as any)}
+                      />
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <div className="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm">
+                  <span>Total</span>
+                  <input
+                    type="number"
+                    defaultValue={editing.id ? getStock(editing.id as any) : 0}
+                    className="h-9 w-24 rounded-md border px-2"
+                    onBlur={(e) => editing.id && setStock(editing.id as any, Number(e.target.value))}
+                  />
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center gap-2 border-t pt-3">
               <label className="inline-flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={!!editing.hidden} onChange={(e) => setEditing({ ...editing, hidden: e.target.checked })} />
