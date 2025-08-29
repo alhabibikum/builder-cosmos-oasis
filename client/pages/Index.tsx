@@ -1,12 +1,11 @@
 import ProductCard, { type Product } from "@/components/site/ProductCard";
 import { Link } from "react-router-dom";
+import { products } from "@/data/products";
 
-const featured: Product[] = [
-  { id: "f1", title: "Royal Satin Abaya - Obsidian", price: 259, image: "https://images.unsplash.com/photo-1542000540985-5c8ca4b1c2ad?w=1600&q=80&auto=format&fit=crop", badge: "Bestseller" },
-  { id: "f2", title: "Pearl Trim Open Abaya", price: 219, image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80&auto=format&fit=crop", badge: "New" },
-  { id: "f3", title: "Chiffon Kaftan - Sand Dune", price: 179, image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1600&q=80&auto=format&fit=crop" },
-  { id: "f4", title: "Embroidered Abaya - Royal Plum", price: 249, image: "https://images.unsplash.com/photo-1544441892-3b2f7d3f5953?w=1600&q=80&auto=format&fit=crop" },
-];
+const featured = products
+  .filter((p) => p.isBestSeller || p.isNew || p.onSale)
+  .slice(0, 4)
+  .map((p) => ({ id: p.id, title: p.title, price: p.price, image: p.image, badge: p.isBestSeller ? "Bestseller" : p.isNew ? "New" : p.onSale ? "Sale" : undefined }));
 
 export default function Index() {
   return (
@@ -119,7 +118,7 @@ export default function Index() {
             </div>
             <div>
               <div className="font-semibold">Express Worldwide Shipping</div>
-              <p className="text-sm text-muted-foreground">Complimentary express shipping on orders over $150. Duties included for select regions.</p>
+              <p className="text-sm text-muted-foreground">Complimentary express shipping on orders over ৳15,000. Duties included for select regions.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
