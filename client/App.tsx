@@ -18,6 +18,9 @@ import BestSellers from "./pages/BestSellers";
 import Sale from "./pages/Sale";
 import PlaceholderPage from "@/components/site/PlaceholderPage";
 import { CartProvider } from "@/store/cart";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Policies from "./pages/Policies";
 
 const queryClient = new QueryClient();
 
@@ -39,10 +42,10 @@ const App = () => (
               <Route path="/new" element={<NewArrivals />} />
               <Route path="/bestsellers" element={<BestSellers />} />
               <Route path="/sale" element={<Sale />} />
-              <Route path="/about" element={<PlaceholderPage title="About Us" />} />
-              <Route path="/contact" element={<PlaceholderPage title="Contact" />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
-              <Route path="/policies" element={<PlaceholderPage title="Policies" />} />
+              <Route path="/policies" element={<Policies />} />
               <Route path="/account" element={<PlaceholderPage title="Your Account" />} />
               <Route path="*" element={<PlaceholderPage title="Page Not Found" description="The page you are looking for does not exist." />} />
             </Route>
