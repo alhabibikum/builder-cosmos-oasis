@@ -1,5 +1,4 @@
 import ProductGrid from "@/components/site/ProductGrid";
-import ProductGrid from "@/components/site/ProductGrid";
 import { getProducts } from "@/lib/catalog";
 import { getStock } from "@/lib/inventory";
 import { Slider } from "@/components/ui/slider";
