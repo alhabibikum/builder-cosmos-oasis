@@ -8,7 +8,7 @@ import { getStock } from "@/lib/inventory";
 
 export default function Product() {
   const { id } = useParams();
-  const product = products.find((p) => p.id === id);
+  const product = getProducts({ includeHidden: true }).find((p) => p.id === id);
   const { add } = useCart();
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState<string | undefined>(product?.sizes?.[0]);
