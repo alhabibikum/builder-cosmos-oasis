@@ -21,6 +21,7 @@ import { CartProvider } from "@/store/cart";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Policies from "./pages/Policies";
+import Account from "./pages/Account";
 
 const queryClient = new QueryClient();
 
@@ -46,7 +47,7 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
               <Route path="/policies" element={<Policies />} />
-              <Route path="/account" element={<PlaceholderPage title="Your Account" />} />
+              <Route path="/account" element={<Account />} />
               <Route path="*" element={<PlaceholderPage title="Page Not Found" description="The page you are looking for does not exist." />} />
             </Route>
           </Routes>
