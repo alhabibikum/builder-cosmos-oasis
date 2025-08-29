@@ -30,6 +30,9 @@ export default function Checkout() {
         payment,
         createdAt: new Date().toISOString(),
       };
+      const orders = (() => { try { return JSON.parse(localStorage.getItem("orders") || "[]"); } catch { return []; } })();
+      orders.unshift(orderPayload);
+      localStorage.setItem("orders", JSON.stringify(orders.slice(0, 50)));
       localStorage.setItem("lastOrder", JSON.stringify(orderPayload));
       clear();
       navigate(`/order-confirmation?order=${encodeURIComponent(orderId)}`);
