@@ -39,26 +39,40 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route element={<Layout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/product/:id" element={<Product />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order-confirmation" element={<OrderConfirmation />} />
-              <Route path="/new" element={<NewArrivals />} />
-              <Route path="/bestsellers" element={<BestSellers />} />
-              <Route path="/sale" element={<Sale />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
-              <Route path="/policies" element={<Policies />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/dashboard" element={<UserDashboard />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="*" element={<PlaceholderPage title="Page Not Found" description="The page you are looking for does not exist." />} />
-            </Route>
-          </Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/product/:id" element={<Product />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route
+                  path="/order-confirmation"
+                  element={<OrderConfirmation />}
+                />
+                <Route path="/new" element={<NewArrivals />} />
+                <Route path="/bestsellers" element={<BestSellers />} />
+                <Route path="/sale" element={<Sale />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route
+                  path="/blog"
+                  element={<PlaceholderPage title="Blog" />}
+                />
+                <Route path="/policies" element={<Policies />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/dashboard" element={<UserDashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route
+                  path="*"
+                  element={
+                    <PlaceholderPage
+                      title="Page Not Found"
+                      description="The page you are looking for does not exist."
+                    />
+                  }
+                />
+              </Route>
+            </Routes>
           </BrowserRouter>
         </CartProvider>
       </AuthProvider>

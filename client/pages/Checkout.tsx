@@ -2,14 +2,19 @@ import { FormEvent, useState } from "react";
 import { useCart } from "@/store/cart";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/lib/money";
-import PaymentMethods, { type ManualPaymentData } from "@/components/site/PaymentMethods";
+import PaymentMethods, {
+  type ManualPaymentData,
+} from "@/components/site/PaymentMethods";
 import { upsertOrder } from "@/lib/orders";
 import { adjustStock } from "@/lib/inventory";
 
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
   const [loading, setLoading] = useState(false);
-  const [payment, setPayment] = useState<ManualPaymentData>({ method: "cod", mobile: "" });
+  const [payment, setPayment] = useState<ManualPaymentData>({
+    method: "cod",
+    mobile: "",
+  });
   const navigate = useNavigate();
   const shipping = total >= 15000 ? 0 : 150;
   const grand = total + shipping;
@@ -18,7 +23,9 @@ export default function Checkout() {
     e.preventDefault();
     if (payment.method !== "cod") {
       if (!payment.mobile || !payment.transactionId) {
-        alert("Please provide mobile number and transaction ID for your payment.");
+        alert(
+          "Please provide mobile number and transaction ID for your payment.",
+        );
         return;
       }
     }
@@ -48,14 +55,47 @@ export default function Checkout() {
       <section className="space-y-6 rounded-xl border p-4 md:col-span-2">
         <div className="text-lg font-semibold">Shipping Details</div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <input className="h-11 rounded-md border px-3" required placeholder="First name" />
-          <input className="h-11 rounded-md border px-3" required placeholder="Last name" />
-          <input className="h-11 rounded-md border px-3 sm:col-span-2" type="email" required placeholder="Email" />
-          <input className="h-11 rounded-md border px-3 sm:col-span-2" required placeholder="Address" />
-          <input className="h-11 rounded-md border px-3" required placeholder="City" />
-          <input className="h-11 rounded-md border px-3" required placeholder="State/Province" />
-          <input className="h-11 rounded-md border px-3" required placeholder="Postal code" />
-          <select className="h-11 rounded-md border px-3 sm:col-span-2" required defaultValue="United Arab Emirates">
+          <input
+            className="h-11 rounded-md border px-3"
+            required
+            placeholder="First name"
+          />
+          <input
+            className="h-11 rounded-md border px-3"
+            required
+            placeholder="Last name"
+          />
+          <input
+            className="h-11 rounded-md border px-3 sm:col-span-2"
+            type="email"
+            required
+            placeholder="Email"
+          />
+          <input
+            className="h-11 rounded-md border px-3 sm:col-span-2"
+            required
+            placeholder="Address"
+          />
+          <input
+            className="h-11 rounded-md border px-3"
+            required
+            placeholder="City"
+          />
+          <input
+            className="h-11 rounded-md border px-3"
+            required
+            placeholder="State/Province"
+          />
+          <input
+            className="h-11 rounded-md border px-3"
+            required
+            placeholder="Postal code"
+          />
+          <select
+            className="h-11 rounded-md border px-3 sm:col-span-2"
+            required
+            defaultValue="United Arab Emirates"
+          >
             <option>United Arab Emirates</option>
             <option>Saudi Arabia</option>
             <option>Kuwait</option>
@@ -66,7 +106,10 @@ export default function Checkout() {
             <option>UK</option>
           </select>
         </div>
-        <div className="pt-2 text-sm text-muted-foreground">We’ll send order updates to your email. By placing this order you agree to our policies.</div>
+        <div className="pt-2 text-sm text-muted-foreground">
+          We’ll send order updates to your email. By placing this order you
+          agree to our policies.
+        </div>
 
         <PaymentMethods onChange={setPayment} />
       </section>
@@ -74,25 +117,50 @@ export default function Checkout() {
         <div className="text-lg font-semibold">Order Summary</div>
         <div className="space-y-2">
           {detailed.map((i) => (
-            <div key={i.productId} className="flex items-center justify-between text-sm">
+            <div
+              key={i.productId}
+              className="flex items-center justify-between text-sm"
+            >
               <div className="flex items-center gap-2">
-                <img src={i.product.image} className="h-12 w-10 rounded object-cover" />
+                <img
+                  src={i.product.image}
+                  className="h-12 w-10 rounded object-cover"
+                />
                 <div>
                   <div className="line-clamp-1">{i.product.title}</div>
-                  <div className="text-muted-foreground">{i.qty} × {formatCurrency(i.product.price)}</div>
+                  <div className="text-muted-foreground">
+                    {i.qty} × {formatCurrency(i.product.price)}
+                  </div>
                 </div>
               </div>
               <div>{formatCurrency(i.product.price * i.qty)}</div>
             </div>
           ))}
         </div>
-        <div className="flex justify-between text-sm"><span>Subtotal</span><span>{formatCurrency(total)}</span></div>
-        <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shipping === 0 ? "Free (over ৳15,000)" : formatCurrency(shipping)}</span></div>
-        <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>{formatCurrency(grand)}</span></div>
-        <button disabled={loading} className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
+        <div className="flex justify-between text-sm">
+          <span>Subtotal</span>
+          <span>{formatCurrency(total)}</span>
+        </div>
+        <div className="flex justify-between text-sm text-muted-foreground">
+          <span>Shipping</span>
+          <span>
+            {shipping === 0 ? "Free (over ৳15,000)" : formatCurrency(shipping)}
+          </span>
+        </div>
+        <div className="mt-2 flex justify-between border-t pt-2 font-semibold">
+          <span>Total</span>
+          <span>{formatCurrency(grand)}</span>
+        </div>
+        <button
+          disabled={loading}
+          className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+        >
           {loading ? "Processing…" : "Place Order"}
         </button>
-        <div className="pt-2 text-xs text-muted-foreground">Manual payments (bKash/Nagad/Rocket) are verified within 1–12 hours. COD requires phone confirmation.</div>
+        <div className="pt-2 text-xs text-muted-foreground">
+          Manual payments (bKash/Nagad/Rocket) are verified within 1–12 hours.
+          COD requires phone confirmation.
+        </div>
       </aside>
     </form>
   );

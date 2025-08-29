@@ -5,7 +5,19 @@ import { products } from "@/data/products";
 const featured = products
   .filter((p) => p.isBestSeller || p.isNew || p.onSale)
   .slice(0, 4)
-  .map((p) => ({ id: p.id, title: p.title, price: p.price, image: p.image, badge: p.isBestSeller ? "Bestseller" : p.isNew ? "New" : p.onSale ? "Sale" : undefined }));
+  .map((p) => ({
+    id: p.id,
+    title: p.title,
+    price: p.price,
+    image: p.image,
+    badge: p.isBestSeller
+      ? "Bestseller"
+      : p.isNew
+        ? "New"
+        : p.onSale
+          ? "Sale"
+          : undefined,
+  }));
 
 export default function Index() {
   return (
@@ -24,20 +36,41 @@ export default function Index() {
             <span className="inline-flex w-fit items-center gap-2 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
               New Season • SS25
             </span>
-            <h1 className="font-['Playfair Display'] text-4xl font-extrabold tracking-tight md:text-5xl">Luxury Abayas Crafted for Royal Elegance</h1>
-            <p className="max-w-prose text-muted-foreground">Discover exquisite abayas and modest wear blending timeless design with modern tailoring. Premium fabrics, handcrafted details, and silhouettes inspired by royalty.</p>
+            <h1 className="font-['Playfair Display'] text-4xl font-extrabold tracking-tight md:text-5xl">
+              Luxury Abayas Crafted for Royal Elegance
+            </h1>
+            <p className="max-w-prose text-muted-foreground">
+              Discover exquisite abayas and modest wear blending timeless design
+              with modern tailoring. Premium fabrics, handcrafted details, and
+              silhouettes inspired by royalty.
+            </p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link to="/shop" className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90">
+              <Link
+                to="/shop"
+                className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+              >
                 Shop Now
               </Link>
-              <Link to="/new" className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">
+              <Link
+                to="/new"
+                className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold"
+              >
                 Explore New Arrivals
               </Link>
             </div>
             <div className="flex items-center gap-6 pt-2 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2"><span className="inline-block h-6 w-6 rounded-full bg-amber-500/20 ring-1 ring-amber-500" />Premium Quality</div>
-              <div className="hidden items-center gap-2 sm:flex"><span className="inline-block h-6 w-6 rounded-full bg-primary/20 ring-1 ring-primary" />Free Express Shipping</div>
-              <div className="hidden items-center gap-2 md:flex"><span className="inline-block h-6 w-6 rounded-full bg-accent/20 ring-1 ring-accent" />30-Day Returns</div>
+              <div className="flex items-center gap-2">
+                <span className="inline-block h-6 w-6 rounded-full bg-amber-500/20 ring-1 ring-amber-500" />
+                Premium Quality
+              </div>
+              <div className="hidden items-center gap-2 sm:flex">
+                <span className="inline-block h-6 w-6 rounded-full bg-primary/20 ring-1 ring-primary" />
+                Free Express Shipping
+              </div>
+              <div className="hidden items-center gap-2 md:flex">
+                <span className="inline-block h-6 w-6 rounded-full bg-accent/20 ring-1 ring-accent" />
+                30-Day Returns
+              </div>
             </div>
           </div>
         </div>
@@ -46,22 +79,51 @@ export default function Index() {
       {/* Featured categories */}
       <section>
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">Featured Categories</h2>
-          <Link to="/shop" className="text-sm font-medium text-primary underline-offset-4 hover:underline">View all</Link>
+          <h2 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">
+            Featured Categories
+          </h2>
+          <Link
+            to="/shop"
+            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+          >
+            View all
+          </Link>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {[
-            { title: "Abayas", img: "https://images.unsplash.com/photo-1520975654408-0c0df7e594ef?w=1200&q=80&auto=format&fit=crop" },
-            { title: "Kaftans", img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1200&q=80&auto=format&fit=crop" },
-            { title: "Modest Dresses", img: "https://images.unsplash.com/photo-1520975922401-b09c3163a791?w=1200&q=80&auto=format&fit=crop" },
-            { title: "Prayer Sets", img: "https://images.unsplash.com/photo-1551133988-b9632a4d5801?w=1200&q=80&auto=format&fit=crop" },
+            {
+              title: "Abayas",
+              img: "https://images.unsplash.com/photo-1520975654408-0c0df7e594ef?w=1200&q=80&auto=format&fit=crop",
+            },
+            {
+              title: "Kaftans",
+              img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1200&q=80&auto=format&fit=crop",
+            },
+            {
+              title: "Modest Dresses",
+              img: "https://images.unsplash.com/photo-1520975922401-b09c3163a791?w=1200&q=80&auto=format&fit=crop",
+            },
+            {
+              title: "Prayer Sets",
+              img: "https://images.unsplash.com/photo-1551133988-b9632a4d5801?w=1200&q=80&auto=format&fit=crop",
+            },
           ].map((c) => (
-            <Link key={c.title} to="/shop" className="group overflow-hidden rounded-xl border">
+            <Link
+              key={c.title}
+              to="/shop"
+              className="group overflow-hidden rounded-xl border"
+            >
               <div className="relative aspect-[4/5] w-full">
-                <img src={c.img} alt={c.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img
+                  src={c.img}
+                  alt={c.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-                  <div className="text-sm uppercase tracking-wider text-white/80">Category</div>
+                  <div className="text-sm uppercase tracking-wider text-white/80">
+                    Category
+                  </div>
                   <div className="text-lg font-semibold">{c.title}</div>
                 </div>
               </div>
@@ -73,8 +135,15 @@ export default function Index() {
       {/* Featured products */}
       <section>
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">Featured Pieces</h2>
-          <Link to="/shop" className="text-sm font-medium text-primary underline-offset-4 hover:underline">Shop all</Link>
+          <h2 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">
+            Featured Pieces
+          </h2>
+          <Link
+            to="/shop"
+            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+          >
+            Shop all
+          </Link>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {featured.map((p) => (
@@ -86,13 +155,25 @@ export default function Index() {
       {/* Banner */}
       <section className="overflow-hidden rounded-2xl border">
         <div className="relative">
-          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=2000&q=80&auto=format&fit=crop" alt="Craftsmanship" className="h-72 w-full object-cover md:h-80" />
+          <img
+            src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=2000&q=80&auto=format&fit=crop"
+            alt="Craftsmanship"
+            className="h-72 w-full object-cover md:h-80"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
           <div className="absolute inset-0 flex items-center">
             <div className="px-8 text-white md:px-12">
-              <h3 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">Crafted by Artisans</h3>
-              <p className="mt-2 max-w-xl text-white/80">Every piece is meticulously designed and hand-finished using premium fabrics. Experience luxury that lasts beyond seasons.</p>
-              <Link to="/about" className="mt-4 inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-sm">
+              <h3 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">
+                Crafted by Artisans
+              </h3>
+              <p className="mt-2 max-w-xl text-white/80">
+                Every piece is meticulously designed and hand-finished using
+                premium fabrics. Experience luxury that lasts beyond seasons.
+              </p>
+              <Link
+                to="/about"
+                className="mt-4 inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-sm"
+              >
                 Learn more
               </Link>
             </div>
@@ -105,38 +186,90 @@ export default function Index() {
         <div className="grid gap-4 rounded-2xl border p-6 md:p-8">
           <div className="flex items-start gap-4">
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
             </div>
             <div>
               <div className="font-semibold">Quality Guarantee</div>
-              <p className="text-sm text-muted-foreground">Premium materials and impeccable craftsmanship. 30-day returns on all orders.</p>
+              <p className="text-sm text-muted-foreground">
+                Premium materials and impeccable craftsmanship. 30-day returns
+                on all orders.
+              </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 ring-1 ring-accent">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M16 3v18"/></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M3 3h18v18H3z" />
+                <path d="M16 3v18" />
+              </svg>
             </div>
             <div>
               <div className="font-semibold">Express Worldwide Shipping</div>
-              <p className="text-sm text-muted-foreground">Complimentary express shipping on orders over ৳15,000. Duties included for select regions.</p>
+              <p className="text-sm text-muted-foreground">
+                Complimentary express shipping on orders over ৳15,000. Duties
+                included for select regions.
+              </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/10 ring-1 ring-amber-500">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l3 7h7l-5.5 4.2 2 7L12 17l-6.5 3.2 2-7L2 9h7z"/></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M12 2l3 7h7l-5.5 4.2 2 7L12 17l-6.5 3.2 2-7L2 9h7z" />
+              </svg>
             </div>
             <div>
               <div className="font-semibold">5-Star Rated</div>
-              <p className="text-sm text-muted-foreground">Loved by thousands of customers around the world for fit, finish and feel.</p>
+              <p className="text-sm text-muted-foreground">
+                Loved by thousands of customers around the world for fit, finish
+                and feel.
+              </p>
             </div>
           </div>
         </div>
         <div className="rounded-2xl border p-6 md:p-8">
-          <div className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight">Join the Circle</div>
-          <p className="mt-1 text-sm text-muted-foreground">Be first to know about new drops, exclusive collections and private sales.</p>
-          <form className="mt-4 flex flex-col gap-3 sm:flex-row" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" required placeholder="Enter your email" className="h-11 flex-1 rounded-md border bg-background px-3 text-sm" />
-            <button className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-sm">Subscribe</button>
+          <div className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight">
+            Join the Circle
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Be first to know about new drops, exclusive collections and private
+            sales.
+          </p>
+          <form
+            className="mt-4 flex flex-col gap-3 sm:flex-row"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <input
+              type="email"
+              required
+              placeholder="Enter your email"
+              className="h-11 flex-1 rounded-md border bg-background px-3 text-sm"
+            />
+            <button className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-sm">
+              Subscribe
+            </button>
           </form>
         </div>
       </section>

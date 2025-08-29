@@ -22,26 +22,48 @@ export default function UserDashboard() {
 
   return (
     <section className="space-y-6">
-      <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight">Welcome, {user?.name || "Customer"}</h1>
+      <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight">
+        Welcome, {user?.name || "Customer"}
+      </h1>
       <div className="rounded-xl border">
         <div className="border-b p-4 font-semibold">Recent Orders</div>
         <div className="divide-y">
           {orders.map((o) => (
-            <div key={o.id} className="grid gap-3 p-4 md:grid-cols-6 md:items-center">
+            <div
+              key={o.id}
+              className="grid gap-3 p-4 md:grid-cols-6 md:items-center"
+            >
               <div className="text-sm font-semibold">{o.id}</div>
-              <div className="text-sm">{new Date(o.createdAt).toLocaleDateString()}</div>
+              <div className="text-sm">
+                {new Date(o.createdAt).toLocaleDateString()}
+              </div>
               <div className="text-sm">{o.status}</div>
-              <div className="text-sm">{o.payment.method.toUpperCase()} {o.paymentVerified ? "✓" : "• pending"}</div>
-              <div className="text-sm font-semibold">{formatCurrency(o.totals.total)}</div>
+              <div className="text-sm">
+                {o.payment.method.toUpperCase()}{" "}
+                {o.paymentVerified ? "✓" : "• pending"}
+              </div>
+              <div className="text-sm font-semibold">
+                {formatCurrency(o.totals.total)}
+              </div>
               <div className="text-right">
-                {(["placed", "processing"].includes(o.status)) && (
-                  <button onClick={() => cancel(o.id)} className="rounded-md border px-3 py-2 text-sm">Cancel</button>
+                {["placed", "processing"].includes(o.status) && (
+                  <button
+                    onClick={() => cancel(o.id)}
+                    className="rounded-md border px-3 py-2 text-sm"
+                  >
+                    Cancel
+                  </button>
                 )}
               </div>
             </div>
           ))}
           {orders.length === 0 && (
-            <div className="p-6 text-center text-sm text-muted-foreground">No orders yet. <Link to="/shop" className="underline">Shop now</Link></div>
+            <div className="p-6 text-center text-sm text-muted-foreground">
+              No orders yet.{" "}
+              <Link to="/shop" className="underline">
+                Shop now
+              </Link>
+            </div>
           )}
         </div>
       </div>

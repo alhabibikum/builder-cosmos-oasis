@@ -9,7 +9,11 @@ export interface ManualPaymentData {
   screenshotDataUrl?: string;
 }
 
-export default function PaymentMethods({ onChange }: { onChange: (data: ManualPaymentData) => void }) {
+export default function PaymentMethods({
+  onChange,
+}: {
+  onChange: (data: ManualPaymentData) => void;
+}) {
   const [method, setMethod] = useState<PaymentMethod>("cod");
   const [mobile, setMobile] = useState("");
   const [trx, setTrx] = useState("");
@@ -41,7 +45,12 @@ export default function PaymentMethods({ onChange }: { onChange: (data: ManualPa
     <div className="space-y-3">
       <div className="text-lg font-semibold">Payment Method</div>
       <div className="grid gap-2 sm:grid-cols-4">
-        {[{ k: "bkash", label: "bKash" }, { k: "nagad", label: "Nagad" }, { k: "rocket", label: "Rocket" }, { k: "cod", label: "Cash on Delivery" }].map((m) => (
+        {[
+          { k: "bkash", label: "bKash" },
+          { k: "nagad", label: "Nagad" },
+          { k: "rocket", label: "Rocket" },
+          { k: "cod", label: "Cash on Delivery" },
+        ].map((m) => (
           <button
             key={m.k}
             type="button"
@@ -58,22 +67,60 @@ export default function PaymentMethods({ onChange }: { onChange: (data: ManualPa
 
       {method !== "cod" && (
         <div className="space-y-3 rounded-md border p-3">
-          <div className="text-sm font-medium">Provide transaction details for manual verification</div>
+          <div className="text-sm font-medium">
+            Provide transaction details for manual verification
+          </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <input className="h-11 rounded-md border px-3" required value={mobile} onChange={(e) => { setMobile(e.target.value); update({ mobile: e.target.value }); }} placeholder="Sender mobile number (11 digits)" />
-            <input className="h-11 rounded-md border px-3" required value={trx} onChange={(e) => { setTrx(e.target.value); update({ transactionId: e.target.value }); }} placeholder="Transaction ID" />
+            <input
+              className="h-11 rounded-md border px-3"
+              required
+              value={mobile}
+              onChange={(e) => {
+                setMobile(e.target.value);
+                update({ mobile: e.target.value });
+              }}
+              placeholder="Sender mobile number (11 digits)"
+            />
+            <input
+              className="h-11 rounded-md border px-3"
+              required
+              value={trx}
+              onChange={(e) => {
+                setTrx(e.target.value);
+                update({ transactionId: e.target.value });
+              }}
+              placeholder="Transaction ID"
+            />
             <div className="sm:col-span-2">
-              <label className="mb-1 block text-sm text-muted-foreground">Upload screenshot / receipt (optional)</label>
-              <input type="file" accept="image/*" onChange={(e) => onFile(e.target.files?.[0])} />
-              {shot && <img src={shot} alt="payment" className="mt-2 h-28 rounded border object-cover" />}
+              <label className="mb-1 block text-sm text-muted-foreground">
+                Upload screenshot / receipt (optional)
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => onFile(e.target.files?.[0])}
+              />
+              {shot && (
+                <img
+                  src={shot}
+                  alt="payment"
+                  className="mt-2 h-28 rounded border object-cover"
+                />
+              )}
             </div>
-            <div className="sm:col-span-2 text-xs text-muted-foreground">We will verify your payment and email confirmation. If information is incomplete, processing may be delayed.</div>
+            <div className="sm:col-span-2 text-xs text-muted-foreground">
+              We will verify your payment and email confirmation. If information
+              is incomplete, processing may be delayed.
+            </div>
           </div>
         </div>
       )}
 
       {method === "cod" && (
-        <div className="rounded-md border p-3 text-sm text-muted-foreground">You will pay in cash upon delivery. Our courier will contact you before arrival.</div>
+        <div className="rounded-md border p-3 text-sm text-muted-foreground">
+          You will pay in cash upon delivery. Our courier will contact you
+          before arrival.
+        </div>
       )}
     </div>
   );

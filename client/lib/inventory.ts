@@ -1,7 +1,10 @@
 import { products } from "@/data/products";
 import type { Size } from "@/data/products";
 
-export type InventoryMap = Record<string, { bySize?: Record<string, number>; total?: number }>;
+export type InventoryMap = Record<
+  string,
+  { bySize?: Record<string, number>; total?: number }
+>;
 
 const KEY = "inventory";
 const DEFAULT_STOCK = 10;
