@@ -16,17 +16,17 @@ export default function Cart() {
     <div className="grid gap-8 md:grid-cols-3">
       <section className="space-y-4 md:col-span-2">
         {detailed.map((i) => (
-          <div key={i.productId} className="flex items-center gap-4 rounded-xl border p-3">
+          <div key={`${i.productId}-${i.size ?? 'na'}`} className="flex items-center gap-4 rounded-xl border p-3">
             <img src={i.product.image} alt={i.product.title} className="h-24 w-20 rounded-md object-cover" />
             <div className="flex-1">
               <div className="font-medium">{i.product.title}</div>
               <div className="text-sm text-muted-foreground">{i.size ? `Size ${i.size} • ` : ""}{i.qty} × {formatCurrency(i.product.price)}</div>
-              <button onClick={() => remove(i.productId)} className="mt-1 text-sm text-destructive underline-offset-4 hover:underline">Remove</button>
+              <button onClick={() => remove(i.productId, i.size)} className="mt-1 text-sm text-destructive underline-offset-4 hover:underline">Remove</button>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => updateQty(i.productId, Math.max(1, i.qty - 1))} className="rounded-md border px-2 py-1">-</button>
+              <button onClick={() => updateQty(i.productId, Math.max(1, i.qty - 1), i.size)} className="rounded-md border px-2 py-1">-</button>
               <span className="w-6 text-center">{i.qty}</span>
-              <button onClick={() => updateQty(i.productId, i.qty + 1)} className="rounded-md border px-2 py-1">+</button>
+              <button onClick={() => updateQty(i.productId, i.qty + 1, i.size)} className="rounded-md border px-2 py-1">+</button>
             </div>
             <div className="w-28 text-right font-semibold">{formatCurrency(i.product.price * i.qty)}</div>
           </div>
