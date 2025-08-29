@@ -9,7 +9,7 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [payment, setPayment] = useState<ManualPaymentData>({ method: "cod", mobile: "" });
   const navigate = useNavigate();
-  const shipping = total >= 150 ? 0 : 15;
+  const shipping = total >= 15000 ? 0 : 150;
   const grand = total + shipping;
 
   const onSubmit = async (e: FormEvent) => {
@@ -80,7 +80,7 @@ export default function Checkout() {
           ))}
         </div>
         <div className="flex justify-between text-sm"><span>Subtotal</span><span>{formatCurrency(total)}</span></div>
-        <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shipping === 0 ? "Free" : formatCurrency(shipping)}</span></div>
+        <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shipping === 0 ? "Free (over ৳15,000)" : formatCurrency(shipping)}</span></div>
         <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>{formatCurrency(grand)}</span></div>
         <button disabled={loading} className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
           {loading ? "Processing…" : "Place Order"}
