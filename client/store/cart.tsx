@@ -10,8 +10,8 @@ export interface CartItem {
 interface CartState {
   items: CartItem[];
   add: (id: string, qty?: number, size?: string) => void;
-  remove: (id: string) => void;
-  updateQty: (id: string, qty: number) => void;
+  remove: (id: string, size?: string) => void;
+  updateQty: (id: string, qty: number, size?: string) => void;
   clear: () => void;
   total: number;
   count: number;
@@ -46,8 +46,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...prev, { productId: id, qty, size }];
     });
   };
-  const remove = (id: string) => setItems((p) => p.filter((i) => i.productId !== id));
-  const updateQty = (id: string, qty: number) => setItems((p) => p.map((i) => (i.productId === id ? { ...i, qty } : i)));
+  const remove = (id: string, size?: string) =>
+    setItems((p) => p.filter((i) => !(i.productId === id && (size === undefined ? true : i.size === size))));
+  const updateQty = (id: string, qty: number, size?: string) =>
+    setItems((p) => p.map((i) => (i.productId === id && (size === undefined ? true : i.size === size) ? { ...i, qty } : i)));
   const clear = () => setItems([]);
 
   const detailed = useMemo(() => {
