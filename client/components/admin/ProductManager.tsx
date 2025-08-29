@@ -354,3 +354,18 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
     </label>
   );
 }
+
+function stockSummary(p: CatalogProduct): string {
+  if (p.sizes && p.sizes.length) {
+    const parts = p.sizes.map((s) => `${s}:${getStock(p.id, s as any)}`);
+    return `Stock ${parts.join(" ")}`;
+  }
+  return `Stock ${getStock(p.id)}`;
+}
+
+function normalizeList(input: any): string[] {
+  if (!input) return [];
+  if (Array.isArray(input)) return input.map((s) => String(s).trim()).filter(Boolean);
+  if (typeof input === "string") return input.split(",").map((s) => s.trim()).filter(Boolean);
+  return [];
+}
