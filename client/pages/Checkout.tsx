@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useCart } from "@/store/cart";
 import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "@/lib/money";
 
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
@@ -53,16 +54,16 @@ export default function Checkout() {
                 <img src={i.product.image} className="h-12 w-10 rounded object-cover" />
                 <div>
                   <div className="line-clamp-1">{i.product.title}</div>
-                  <div className="text-muted-foreground">{i.qty} × ${i.product.price.toFixed(2)}</div>
+                  <div className="text-muted-foreground">{i.qty} × {formatCurrency(i.product.price)}</div>
                 </div>
               </div>
-              <div>${(i.product.price * i.qty).toFixed(2)}</div>
+              <div>{formatCurrency(i.product.price * i.qty)}</div>
             </div>
           ))}
         </div>
-        <div className="flex justify-between text-sm"><span>Subtotal</span><span>${total.toFixed(2)}</span></div>
-        <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span></div>
-        <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>${grand.toFixed(2)}</span></div>
+        <div className="flex justify-between text-sm"><span>Subtotal</span><span>{formatCurrency(total)}</span></div>
+        <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shipping === 0 ? "Free" : formatCurrency(shipping)}</span></div>
+        <div className="mt-2 flex justify-between border-t pt-2 font-semibold"><span>Total</span><span>{formatCurrency(grand)}</span></div>
         <button disabled={loading} className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
           {loading ? "Processing…" : "Place Order"}
         </button>
