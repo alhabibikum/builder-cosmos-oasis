@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/catalog";
 import { useState } from "react";
 import { useCart } from "@/store/cart";
 import { formatCurrency } from "@/lib/money";
