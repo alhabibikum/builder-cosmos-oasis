@@ -3,8 +3,9 @@ import { getOrders, saveOrders, type Order } from "@/lib/orders";
 import { useMemo, useState } from "react";
 import { formatCurrency } from "@/lib/money";
 import { Navigate } from "react-router-dom";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/catalog";
 import { getStock, setStock } from "@/lib/inventory";
+import ProductManager from "@/components/admin/ProductManager";
 import PostManager from "@/components/admin/PostManager";
 import ContentManager from "@/components/admin/ContentManager";
 
@@ -41,6 +42,13 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      <div className="rounded-xl border">
+        <div className="border-b p-4 font-semibold">Products</div>
+        <div className="p-4">
+          <ProductManager />
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border p-4">
           <div className="text-sm text-muted-foreground">Total Revenue</div>
@@ -63,7 +71,7 @@ export default function AdminDashboard() {
       <div className="rounded-xl border">
         <div className="border-b p-4 font-semibold">Inventory</div>
         <div className="divide-y">
-          {products.map((p) => (
+          {getProducts({ includeHidden: true }).map((p) => (
             <div
               key={p.id}
               className="grid gap-3 p-4 md:grid-cols-6 md:items-center"
