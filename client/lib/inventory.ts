@@ -38,6 +38,27 @@ export function saveInventory(inv: InventoryMap) {
   localStorage.setItem(KEY, JSON.stringify(inv));
 }
 
+export function exportInventory(): InventoryMap {
+  return getInventory();
+}
+
+export function importInventory(input: unknown) {
+  const obj = (input && typeof input === "object" ? (input as InventoryMap) : {}) as InventoryMap;
+  const allowed = new Set(getProducts({ includeHidden: true }).map((p) => p.id));
+  const next: InventoryMap = {};
+  Object.entries(obj).forEach(([id, rec]) => {
+    if (!allowed.has(id)) return;
+    const bySize = rec?.bySize && typeof rec.bySize === "object" ? rec.bySize : undefined;
+    const total = typeof rec?.total === "number" ? rec.total : undefined;
+    next[id] = { ...(bySize ? { bySize } : {}), ...(total !== undefined ? { total } : {}) };
+  });
+  saveInventory(next);
+}
+
+export function resetInventory() {
+  localStorage.removeItem(KEY);
+}
+
 export function getStock(id: string, size?: Size): number {
   const inv = getInventory();
   const rec = inv[id];
