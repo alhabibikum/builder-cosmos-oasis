@@ -7,9 +7,12 @@ import {
   setHidden,
   slugifyId,
   type ManagedProduct,
+  exportOverrides,
+  importOverrides,
+  clearOverrides,
 } from "@/lib/catalog";
 import type { CatalogProduct } from "@/data/products";
-import { getStock, setStock } from "@/lib/inventory";
+import { getStock, setStock, exportInventory, importInventory, resetInventory } from "@/lib/inventory";
 
 type Editable = ManagedProduct;
 
@@ -125,7 +128,7 @@ export default function ProductManager() {
           <div className="ml-auto flex items-center gap-2">
             <button
               className="rounded-md border px-2 py-1 text-xs"
-              onClick={() => alert(JSON.stringify(require("@/lib/catalog").exportOverrides(), null, 2))}
+              onClick={() => alert(JSON.stringify(exportOverrides(), null, 2))}
             >
               Export Products
             </button>
@@ -136,7 +139,7 @@ export default function ProductManager() {
                 if (!text) return;
                 try {
                   const data = JSON.parse(text);
-                  require("@/lib/catalog").importOverrides(data);
+                  importOverrides(data);
                   setVersion((v) => v + 1);
                 } catch (e) {
                   alert("Invalid JSON");
@@ -149,7 +152,7 @@ export default function ProductManager() {
               className="rounded-md border px-2 py-1 text-xs text-red-600"
               onClick={() => {
                 if (!confirm("Clear all product overrides?")) return;
-                require("@/lib/catalog").clearOverrides();
+                clearOverrides();
                 setVersion((v) => v + 1);
               }}
             >
@@ -160,7 +163,7 @@ export default function ProductManager() {
         <div className="flex flex-wrap items-center gap-2 border-b p-3 text-xs">
           <button
             className="rounded-md border px-2 py-1"
-            onClick={() => alert(JSON.stringify(require("@/lib/inventory").exportInventory(), null, 2))}
+            onClick={() => alert(JSON.stringify(exportInventory(), null, 2))}
           >
             Export Inventory
           </button>
@@ -171,7 +174,7 @@ export default function ProductManager() {
               if (!text) return;
               try {
                 const data = JSON.parse(text);
-                require("@/lib/inventory").importInventory(data);
+                importInventory(data);
                 setVersion((v) => v + 1);
               } catch (e) {
                 alert("Invalid JSON");
@@ -184,7 +187,7 @@ export default function ProductManager() {
             className="rounded-md border px-2 py-1 text-red-600"
             onClick={() => {
               if (!confirm("Reset inventory to defaults?")) return;
-              require("@/lib/inventory").resetInventory();
+              resetInventory();
               setVersion((v) => v + 1);
             }}
           >
