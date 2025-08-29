@@ -8,6 +8,10 @@ import PaymentMethods, {
 import { upsertOrder } from "@/lib/orders";
 import { adjustStock } from "@/lib/inventory";
 
+const BD_DISTRICTS = [
+  "Bagerhat","Bandarban","Barguna","Barishal","Bhola","Bogura","Brahmanbaria","Chandpur","Chapai Nawabganj","Chattogram","Chuadanga","Cox's Bazar","Cumilla","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jashore","Jhalokathi","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"
+];
+
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
   const [loading, setLoading] = useState(false);
@@ -15,8 +19,11 @@ export default function Checkout() {
     method: "cod",
     mobile: "",
   });
+  const [district, setDistrict] = useState<string>("Dhaka");
+  const [upazila, setUpazila] = useState<string>("");
   const navigate = useNavigate();
-  const shipping = total >= 15000 ? 0 : 150;
+  const baseShipping = district === "Dhaka" ? 80 : 150;
+  const shipping = total >= 15000 ? 0 : baseShipping;
   const grand = total + shipping;
 
   const onSubmit = async (e: FormEvent) => {
@@ -40,6 +47,7 @@ export default function Checkout() {
         status: "placed",
         paymentVerified: false,
         createdAt: new Date().toISOString(),
+        shippingAddress: { country: "Bangladesh", district, upazila },
       };
       upsertOrder(orderPayload as any);
       // Deduct inventory
@@ -76,35 +84,47 @@ export default function Checkout() {
             required
             placeholder="Address"
           />
+          <select
+            className="h-11 rounded-md border px-3"
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+            required
+          >
+            {BD_DISTRICTS.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
           <input
             className="h-11 rounded-md border px-3"
             required
-            placeholder="City"
+            value={upazila}
+            onChange={(e) => setUpazila(e.target.value)}
+            placeholder="Upazila/Thana"
           />
           <input
             className="h-11 rounded-md border px-3"
             required
-            placeholder="State/Province"
-          />
-          <input
-            className="h-11 rounded-md border px-3"
-            required
+            inputMode="numeric"
+            pattern="\\d{4,5}"
+            title="Enter 4-5 digit postal code"
             placeholder="Postal code"
           />
-          <select
+          <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
             required
-            defaultValue="United Arab Emirates"
-          >
-            <option>United Arab Emirates</option>
-            <option>Saudi Arabia</option>
-            <option>Kuwait</option>
-            <option>Bahrain</option>
-            <option>Qatar</option>
-            <option>Oman</option>
-            <option>USA</option>
-            <option>UK</option>
-          </select>
+            type="tel"
+            inputMode="numeric"
+            pattern="01\\d{9}"
+            title="Bangladesh mobile number starting with 01 (11 digits)"
+            placeholder="Phone (e.g., 01XXXXXXXXX)"
+          />
+          <input
+            className="h-11 rounded-md border px-3 sm:col-span-2 bg-muted"
+            value="Bangladesh"
+            readOnly
+          />
         </div>
         <div className="pt-2 text-sm text-muted-foreground">
           We’ll send order updates to your email. By placing this order you
@@ -144,7 +164,9 @@ export default function Checkout() {
         <div className="flex justify-between text-sm text-muted-foreground">
           <span>Shipping</span>
           <span>
-            {shipping === 0 ? "Free (over ৳15,000)" : formatCurrency(shipping)}
+            {shipping === 0
+              ? "Free (over ৳15,000)"
+              : `${district === "Dhaka" ? "Inside Dhaka" : "Outside Dhaka"} • ${formatCurrency(shipping)}`}
           </span>
         </div>
         <div className="mt-2 flex justify-between border-t pt-2 font-semibold">
