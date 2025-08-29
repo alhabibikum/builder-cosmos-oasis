@@ -5,6 +5,8 @@ import { formatCurrency } from "@/lib/money";
 import { Navigate } from "react-router-dom";
 import { products } from "@/data/products";
 import { getStock, setStock } from "@/lib/inventory";
+import PostManager from "@/components/admin/PostManager";
+import ContentManager from "@/components/admin/ContentManager";
 
 export default function AdminDashboard() {
   const { role } = useAuth();
@@ -30,6 +32,15 @@ export default function AdminDashboard() {
       <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight">
         Admin Dashboard
       </h1>
+
+      <div className="rounded-xl border">
+        <div className="border-b p-4 font-semibold">Posts & Content</div>
+        <div className="grid gap-6 p-4">
+          <PostManager />
+          <ContentManager />
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border p-4">
           <div className="text-sm text-muted-foreground">Total Revenue</div>
