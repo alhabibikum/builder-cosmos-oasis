@@ -1,62 +1,146 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import ProductCard, { type Product } from "@/components/site/ProductCard";
+import { Link } from "react-router-dom";
+
+const featured: Product[] = [
+  { id: "f1", title: "Royal Satin Abaya - Obsidian", price: 259, image: "https://images.unsplash.com/photo-1542000540985-5c8ca4b1c2ad?w=1600&q=80&auto=format&fit=crop", badge: "Bestseller" },
+  { id: "f2", title: "Pearl Trim Open Abaya", price: 219, image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80&auto=format&fit=crop", badge: "New" },
+  { id: "f3", title: "Chiffon Kaftan - Sand Dune", price: 179, image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1600&q=80&auto=format&fit=crop" },
+  { id: "f4", title: "Embroidered Abaya - Royal Plum", price: 249, image: "https://images.unsplash.com/photo-1544441892-3b2f7d3f5953?w=1600&q=80&auto=format&fit=crop" },
+];
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
+    <div className="space-y-16">
+      {/* Hero */}
+      <section className="overflow-hidden rounded-2xl border">
+        <div className="relative grid grid-cols-1 md:grid-cols-2">
+          <div className="order-2 md:order-1">
+            <img
+              src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=2000&q=80&auto=format&fit=crop"
+              alt="Elegant abaya"
+              className="h-[420px] w-full object-cover md:h-full"
             />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+          </div>
+          <div className="order-1 flex flex-col justify-center gap-6 bg-gradient-to-b from-primary/5 to-accent/10 p-8 md:order-2 md:p-12">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+              New Season • SS25
+            </span>
+            <h1 className="font-['Playfair Display'] text-4xl font-extrabold tracking-tight md:text-5xl">Luxury Abayas Crafted for Royal Elegance</h1>
+            <p className="max-w-prose text-muted-foreground">Discover exquisite abayas and modest wear blending timeless design with modern tailoring. Premium fabrics, handcrafted details, and silhouettes inspired by royalty.</p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link to="/shop" className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90">
+                Shop Now
+              </Link>
+              <Link to="/new" className="inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-semibold">
+                Explore New Arrivals
+              </Link>
+            </div>
+            <div className="flex items-center gap-6 pt-2 text-xs text-muted-foreground">
+              <div className="flex items-center gap-2"><span className="inline-block h-6 w-6 rounded-full bg-amber-500/20 ring-1 ring-amber-500" />Premium Quality</div>
+              <div className="hidden items-center gap-2 sm:flex"><span className="inline-block h-6 w-6 rounded-full bg-primary/20 ring-1 ring-primary" />Free Express Shipping</div>
+              <div className="hidden items-center gap-2 md:flex"><span className="inline-block h-6 w-6 rounded-full bg-accent/20 ring-1 ring-accent" />30-Day Returns</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured categories */}
+      <section>
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">Featured Categories</h2>
+          <Link to="/shop" className="text-sm font-medium text-primary underline-offset-4 hover:underline">View all</Link>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          {[
+            { title: "Abayas", img: "https://images.unsplash.com/photo-1520975654408-0c0df7e594ef?w=1200&q=80&auto=format&fit=crop" },
+            { title: "Kaftans", img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1200&q=80&auto=format&fit=crop" },
+            { title: "Modest Dresses", img: "https://images.unsplash.com/photo-1520975922401-b09c3163a791?w=1200&q=80&auto=format&fit=crop" },
+            { title: "Prayer Sets", img: "https://images.unsplash.com/photo-1551133988-b9632a4d5801?w=1200&q=80&auto=format&fit=crop" },
+          ].map((c) => (
+            <Link key={c.title} to="/shop" className="group overflow-hidden rounded-xl border">
+              <div className="relative aspect-[4/5] w-full">
+                <img src={c.img} alt={c.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+                  <div className="text-sm uppercase tracking-wider text-white/80">Category</div>
+                  <div className="text-lg font-semibold">{c.title}</div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured products */}
+      <section>
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">Featured Pieces</h2>
+          <Link to="/shop" className="text-sm font-medium text-primary underline-offset-4 hover:underline">Shop all</Link>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {featured.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </section>
+
+      {/* Banner */}
+      <section className="overflow-hidden rounded-2xl border">
+        <div className="relative">
+          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=2000&q=80&auto=format&fit=crop" alt="Craftsmanship" className="h-72 w-full object-cover md:h-80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+          <div className="absolute inset-0 flex items-center">
+            <div className="px-8 text-white md:px-12">
+              <h3 className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight md:text-3xl">Crafted by Artisans</h3>
+              <p className="mt-2 max-w-xl text-white/80">Every piece is meticulously designed and hand-finished using premium fabrics. Experience luxury that lasts beyond seasons.</p>
+              <Link to="/about" className="mt-4 inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-sm">
+                Learn more
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & newsletter */}
+      <section className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-4 rounded-2xl border p-6 md:p-8">
+          <div className="flex items-start gap-4">
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div>
+              <div className="font-semibold">Quality Guarantee</div>
+              <p className="text-sm text-muted-foreground">Premium materials and impeccable craftsmanship. 30-day returns on all orders.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 ring-1 ring-accent">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M16 3v18"/></svg>
+            </div>
+            <div>
+              <div className="font-semibold">Express Worldwide Shipping</div>
+              <p className="text-sm text-muted-foreground">Complimentary express shipping on orders over $150. Duties included for select regions.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/10 ring-1 ring-amber-500">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l3 7h7l-5.5 4.2 2 7L12 17l-6.5 3.2 2-7L2 9h7z"/></svg>
+            </div>
+            <div>
+              <div className="font-semibold">5-Star Rated</div>
+              <p className="text-sm text-muted-foreground">Loved by thousands of customers around the world for fit, finish and feel.</p>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-2xl border p-6 md:p-8">
+          <div className="font-['Playfair Display'] text-2xl font-extrabold tracking-tight">Join the Circle</div>
+          <p className="mt-1 text-sm text-muted-foreground">Be first to know about new drops, exclusive collections and private sales.</p>
+          <form className="mt-4 flex flex-col gap-3 sm:flex-row" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" required placeholder="Enter your email" className="h-11 flex-1 rounded-md border bg-background px-3 text-sm" />
+            <button className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-sm">Subscribe</button>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }
