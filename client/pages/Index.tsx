@@ -1,9 +1,9 @@
 import ProductCard, { type Product } from "@/components/site/ProductCard";
 import { Link } from "react-router-dom";
-import { products } from "@/data/products";
 import { getContent } from "@/lib/cms";
+import { getProducts } from "@/lib/catalog";
 
-const featured = products
+const featured = getProducts()
   .filter((p) => p.isBestSeller || p.isNew || p.onSale)
   .slice(0, 4)
   .map((p) => ({
