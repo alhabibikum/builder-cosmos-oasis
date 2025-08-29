@@ -60,12 +60,15 @@ export default function PostManager() {
       alert("Title is required");
       return;
     }
+    const expectedSlug = slugify(editing.slug || editing.title);
     const next = upsertPost({
       ...editing,
-      slug: editing.slug ? slugify(editing.slug) : undefined,
+      slug: editing.slug ? expectedSlug : undefined,
     });
     setPosts(next);
-    const saved = next.find((p) => p.title === editing.title);
+    const saved = editing.id
+      ? next.find((p) => p.id === editing.id)
+      : next.find((p) => p.slug === expectedSlug);
     setEditing(saved || null);
   };
 
