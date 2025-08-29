@@ -108,9 +108,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = () => setItems([]);
 
   const detailed = useMemo(() => {
+    const catalog = getProducts({ includeHidden: true });
     return items
       .map((i) => {
-        const product = products.find((p) => p.id === i.productId);
+        const product = catalog.find((p) => p.id === i.productId);
         return product ? { ...i, product } : null;
       })
       .filter(Boolean) as (CartItem & { product: CatalogProduct })[];
