@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { useCart } from "@/store/cart";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/lib/money";
+import PaymentMethods, { type ManualPaymentData } from "@/components/site/PaymentMethods";
 
 export default function Checkout() {
   const { total, detailed, clear } = useCart();
