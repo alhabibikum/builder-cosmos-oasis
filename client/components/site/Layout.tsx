@@ -17,6 +17,23 @@ function Header() {
     { to: "/bestsellers", label: "Best Sellers" },
     { to: "/sale", label: "Sale" },
   ];
+  const prefetch = (to: string) => {
+    try {
+      if (to === "/shop") import("@/pages/Shop");
+      else if (to.startsWith("/product/")) import("@/pages/Product");
+      else if (to === "/new") import("@/pages/NewArrivals");
+      else if (to === "/bestsellers") import("@/pages/BestSellers");
+      else if (to === "/sale") import("@/pages/Sale");
+      else if (to === "/cart") import("@/pages/Cart");
+      else if (to === "/checkout") import("@/pages/Checkout");
+      else if (to === "/blog") import("@/pages/Blog");
+      else if (to.startsWith("/blog/")) import("@/pages/BlogPost");
+      else if (to === "/about") import("@/pages/About");
+      else if (to === "/contact") import("@/pages/Contact");
+      else if (to === "/account") import("@/pages/Account");
+      else if (to === "/admin") import("@/pages/admin/AdminDashboard");
+    } catch {}
+  };
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:py-4">
@@ -53,6 +70,7 @@ function Header() {
               <NavLink
                 key={n.to}
                 to={n.to}
+                onMouseEnter={() => prefetch(n.to)}
                 className={({ isActive }) =>
                   cn(
                     "text-sm font-medium transition-colors hover:text-foreground",
@@ -175,6 +193,7 @@ function Header() {
               <NavLink
                 key={n.to}
                 to={n.to}
+                onMouseEnter={() => prefetch(n.to)}
                 className={({ isActive }) =>
                   cn(
                     "rounded-md px-3 py-2 text-sm font-medium",
