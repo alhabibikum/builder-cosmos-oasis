@@ -33,6 +33,10 @@ export default function Index() {
                 "https://images.pexels.com/photos/9880859/pexels-photo-9880859.jpeg",
               )}
               alt="Hero"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              sizes="100vw"
               className="h-[420px] w-full object-cover md:h-full"
             />
           </div>
@@ -125,6 +129,9 @@ export default function Index() {
                 <img
                   src={c.img}
                   alt={c.title}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -169,6 +176,9 @@ export default function Index() {
               "https://images.pexels.com/photos/1667451/pexels-photo-1667451.jpeg",
             )}
             alt="Banner"
+            loading="lazy"
+            decoding="async"
+            sizes="100vw"
             className="h-72 w-full object-cover md:h-80"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />

@@ -207,6 +207,9 @@ export default function Checkout() {
               <div className="flex items-center gap-2">
                 <img
                   src={i.product.image}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(max-width:640px) 20vw, 64px"
                   className="h-12 w-10 rounded object-cover"
                 />
                 <div>

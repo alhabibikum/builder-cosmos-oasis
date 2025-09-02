@@ -50,6 +50,9 @@ export default function OrderConfirmation() {
           {pay.screenshotDataUrl && (
             <img
               src={pay.screenshotDataUrl}
+              loading="lazy"
+              decoding="async"
+              sizes="480px"
               className="mt-3 h-36 w-full rounded object-cover"
             />
           )}

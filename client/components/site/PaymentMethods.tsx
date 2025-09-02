@@ -104,6 +104,9 @@ export default function PaymentMethods({
                 <img
                   src={shot}
                   alt="payment"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="320px"
                   className="mt-2 h-28 rounded border object-cover"
                 />
               )}

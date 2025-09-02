@@ -39,6 +39,10 @@ export default function Product() {
         <img
           src={product.image}
           alt={product.title}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          sizes="(min-width:768px) 50vw, 100vw"
           className="aspect-[4/5] w-full rounded-xl border object-cover"
         />
         {product.images?.slice(1).map((src) => (
@@ -46,6 +50,9 @@ export default function Product() {
             key={src}
             src={src}
             alt={product.title}
+            loading="lazy"
+            decoding="async"
+            sizes="(min-width:768px) 50vw, 100vw"
             className="aspect-[4/5] w-full rounded-xl border object-cover"
           />
         ))}

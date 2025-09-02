@@ -28,6 +28,9 @@ export default function Cart() {
             <img
               src={i.product.image}
               alt={i.product.title}
+              loading="lazy"
+              decoding="async"
+              sizes="(max-width:640px) 20vw, 80px"
               className="h-24 w-20 rounded-md object-cover"
             />
             <div className="flex-1">

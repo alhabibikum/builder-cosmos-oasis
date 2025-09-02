@@ -18,7 +18,7 @@ export default function BlogPost() {
     <article className="mx-auto max-w-3xl space-y-6">
       {post.coverImage && (
         <div className="overflow-hidden rounded-xl">
-          <img src={post.coverImage} alt={post.title} className="w-full" />
+          <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" sizes="100vw" className="w-full" />
         </div>
       )}
       <div className="text-xs text-muted-foreground">

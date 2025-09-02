@@ -6,28 +6,30 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import Layout from "@/components/site/Layout";
-import Index from "./pages/Index";
-import Shop from "./pages/Shop";
-import Product from "./pages/Product";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import OrderConfirmation from "./pages/OrderConfirmation";
-import NewArrivals from "./pages/NewArrivals";
-import BestSellers from "./pages/BestSellers";
-import Sale from "./pages/Sale";
 import PlaceholderPage from "@/components/site/PlaceholderPage";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
 import { CartProvider } from "@/store/cart";
 import { AuthProvider } from "@/store/auth";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Policies from "./pages/Policies";
-import Account from "./pages/Account";
-import Login from "./pages/Login";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import UserDashboard from "./pages/dashboard/UserDashboard";
+
+const Index = lazy(() => import("./pages/Index"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Product = lazy(() => import("./pages/Product"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
+const NewArrivals = lazy(() => import("./pages/NewArrivals"));
+const BestSellers = lazy(() => import("./pages/BestSellers"));
+const Sale = lazy(() => import("./pages/Sale"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Policies = lazy(() => import("./pages/Policies"));
+const Account = lazy(() => import("./pages/Account"));
+const Login = lazy(() => import("./pages/Login"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const UserDashboard = lazy(() => import("./pages/dashboard/UserDashboard"));
 
 const queryClient = new QueryClient();
 
@@ -39,40 +41,42 @@ const App = () => (
       <AuthProvider>
         <CartProvider>
           <BrowserRouter>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Index />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/product/:id" element={<Product />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route
-                  path="/order-confirmation"
-                  element={<OrderConfirmation />}
-                />
-                <Route path="/new" element={<NewArrivals />} />
-                <Route path="/bestsellers" element={<BestSellers />} />
-                <Route path="/sale" element={<Sale />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/policies" element={<Policies />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/dashboard" element={<UserDashboard />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route
-                  path="*"
-                  element={
-                    <PlaceholderPage
-                      title="Page Not Found"
-                      description="The page you are looking for does not exist."
-                    />
-                  }
-                />
-              </Route>
-            </Routes>
+            <Suspense fallback={<div className="p-8 text-center text-sm text-muted-foreground">Loading…</div>}>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/product/:id" element={<Product />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route
+                    path="/order-confirmation"
+                    element={<OrderConfirmation />}
+                  />
+                  <Route path="/new" element={<NewArrivals />} />
+                  <Route path="/bestsellers" element={<BestSellers />} />
+                  <Route path="/sale" element={<Sale />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/policies" element={<Policies />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/dashboard" element={<UserDashboard />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route
+                    path="*"
+                    element={
+                      <PlaceholderPage
+                        title="Page Not Found"
+                        description="The page you are looking for does not exist."
+                      />
+                    }
+                  />
+                </Route>
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </CartProvider>
       </AuthProvider>
