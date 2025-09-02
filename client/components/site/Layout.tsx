@@ -56,10 +56,10 @@ function Header() {
           </button>
           <Link to="/" className="group flex items-baseline gap-2">
             <span className="text-2xl font-extrabold tracking-tight leading-none font-[\'Playfair Display\'] text-primary">
-              PoshaBaya
+              DUBAI OASIS
             </span>
             <span className="hidden text-xs font-medium uppercase text-muted-foreground md:inline-block">
-              Luxury Abayas
+              Modest Fashion
             </span>
           </Link>
         </div>
@@ -231,7 +231,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-4">
         <div>
           <div className="mb-3 text-2xl font-extrabold font-['Playfair Display'] text-primary">
-            PoshaBaya
+            DUBAI OASIS
           </div>
           <p className="text-sm text-muted-foreground">
             Exquisite abayas and modest fashion with a royal touch. Crafted for
@@ -337,7 +337,7 @@ function Footer() {
         </div>
       </div>
       <div className="border-t py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} PoshaBaya. All rights reserved.
+        © {new Date().getFullYear()} DUBAI OASIS. All rights reserved.
       </div>
     </footer>
   );

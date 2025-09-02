@@ -3,7 +3,7 @@ export default function About() {
     <section className="prose prose-slate max-w-none dark:prose-invert">
       <h1 className="font-['Playfair Display']">Our Story</h1>
       <p>
-        PoshaBaya crafts luxury abayas and modest wear that blend timeless
+        DUBAI OASIS crafts luxury abayas and modest wear that blend timeless
         elegance with contemporary tailoring. Each collection is developed with
         premium fabrics, artisanal finishes and a focus on comfort.
       </p>

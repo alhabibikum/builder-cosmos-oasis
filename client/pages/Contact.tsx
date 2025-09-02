@@ -45,9 +45,9 @@ export default function Contact() {
         </form>
       )}
       <div className="mt-8 grid gap-3 text-sm text-muted-foreground">
-        <div>Email: support@poshabaya.example</div>
-        <div>Phone: +880 1XXXXXXXXX</div>
-        <div>Address: Dhaka, Bangladesh</div>
+        <div>Email: call@dubaioasis.com</div>
+        <div>Phone: +880 1825262871</div>
+        <div>Address: Shop No: 56, Building No: 08 (2nd Floor), Chandni Chawk, Ac Market, Dhaka-1205, Bangladesh</div>
       </div>
     </section>
   );
