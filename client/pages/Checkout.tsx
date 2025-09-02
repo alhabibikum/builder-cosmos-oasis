@@ -118,7 +118,8 @@ export default function Checkout() {
     // Normalize phone to 01XXXXXXXXX
     let phoneNorm = phone.replace(/\D/g, "");
     if (phoneNorm.startsWith("880")) phoneNorm = phoneNorm.slice(2);
-    if (!/^01\d{9}$/.test(phoneNorm)) return toast.error("Enter a valid BD phone number");
+    if (!/^01\d{9}$/.test(phoneNorm))
+      return toast.error("Enter a valid BD phone number");
     setPhone(phoneNorm);
 
     setLoading(true);
@@ -214,7 +215,9 @@ export default function Checkout() {
             title="4-digit postal code (optional)"
             placeholder="Postal code (optional)"
             value={postal}
-            onChange={(e) => setPostal(e.target.value.replace(/\D/g, "").slice(0, 4))}
+            onChange={(e) =>
+              setPostal(e.target.value.replace(/\D/g, "").slice(0, 4))
+            }
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
