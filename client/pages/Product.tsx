@@ -5,6 +5,7 @@ import { useCart } from "@/store/cart";
 import { formatCurrency } from "@/lib/money";
 import { toast } from "sonner";
 import { getStock } from "@/lib/inventory";
+import { buildSrcSet } from "@/lib/utils";
 
 export default function Product() {
   const { id } = useParams();
