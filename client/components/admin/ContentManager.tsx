@@ -7,32 +7,20 @@ import {
 } from "@/lib/cms";
 
 const FIELDS = [
-  {
-    key: "hero_title",
-    label: "Hero Title",
-    placeholder: "Luxury Abayas Crafted for Royal Elegance",
-  },
-  {
-    key: "hero_subtitle",
-    label: "Hero Subtitle",
-    placeholder: "Discover exquisite abayas...",
-  },
+  { key: "hero_title", label: "Hero Title", placeholder: "Luxury Abayas Crafted for Royal Elegance" },
+  { key: "hero_subtitle", label: "Hero Subtitle", placeholder: "Discover exquisite abayas..." },
   { key: "hero_image", label: "Hero Image URL", placeholder: "https://..." },
-  {
-    key: "banner_title",
-    label: "Banner Title",
-    placeholder: "Crafted by Artisans",
-  },
-  {
-    key: "banner_text",
-    label: "Banner Text",
-    placeholder: "Every piece is meticulously designed...",
-  },
-  {
-    key: "banner_image",
-    label: "Banner Image URL",
-    placeholder: "https://...",
-  },
+  { key: "banner_title", label: "Banner Title", placeholder: "Crafted by Artisans" },
+  { key: "banner_text", label: "Banner Text", placeholder: "Every piece is meticulously designed..." },
+  { key: "banner_image", label: "Banner Image URL", placeholder: "https://..." },
+  { key: "cat1_title", label: "Category 1 Title", placeholder: "Abayas" },
+  { key: "cat1_image", label: "Category 1 Image URL", placeholder: "https://..." },
+  { key: "cat2_title", label: "Category 2 Title", placeholder: "Kaftans" },
+  { key: "cat2_image", label: "Category 2 Image URL", placeholder: "https://..." },
+  { key: "cat3_title", label: "Category 3 Title", placeholder: "Modest Dresses" },
+  { key: "cat3_image", label: "Category 3 Image URL", placeholder: "https://..." },
+  { key: "cat4_title", label: "Category 4 Title", placeholder: "Prayer Sets" },
+  { key: "cat4_image", label: "Category 4 Image URL", placeholder: "https://..." },
 ];
 
 export default function ContentManager() {
