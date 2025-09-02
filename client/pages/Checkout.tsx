@@ -115,6 +115,12 @@ export default function Checkout() {
         return toast.error("Provide mobile and transaction ID for payment");
     }
 
+    // Normalize phone to 01XXXXXXXXX
+    let phoneNorm = phone.replace(/\D/g, "");
+    if (phoneNorm.startsWith("880")) phoneNorm = phoneNorm.slice(2);
+    if (!/^01\d{9}$/.test(phoneNorm)) return toast.error("Enter a valid BD phone number");
+    setPhone(phoneNorm);
+
     setLoading(true);
     setTimeout(() => {
       const orderId = `PB-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
@@ -135,7 +141,7 @@ export default function Checkout() {
           district,
           upazila,
           postalCode: postal || undefined,
-          phone,
+          phone: phoneNorm,
         },
       };
       upsertOrder(orderPayload as any);
@@ -204,21 +210,22 @@ export default function Checkout() {
             className="h-11 rounded-md border px-3"
             inputMode="numeric"
             pattern="\\d{4}"
+            maxLength={4}
             title="4-digit postal code (optional)"
             placeholder="Postal code (optional)"
             value={postal}
-            onChange={(e) => setPostal(e.target.value)}
+            onChange={(e) => setPostal(e.target.value.replace(/\D/g, "").slice(0, 4))}
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
             required
             type="tel"
             inputMode="numeric"
-            pattern="01\\d{9}"
-            title="Bangladesh mobile number starting with 01 (11 digits)"
-            placeholder="Phone (e.g., 01XXXXXXXXX)"
+            pattern="(\\+?88)?01\\d{9}"
+            title="Bangladesh mobile: 01XXXXXXXXX or +8801XXXXXXXXX"
+            placeholder="Phone (01XXXXXXXXX or +8801XXXXXXXXX)"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/[\s-]/g, ""))}
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2 bg-muted"
