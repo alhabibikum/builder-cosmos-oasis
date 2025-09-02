@@ -23,10 +23,10 @@ export const products: CatalogProduct[] = [
     title: "Royal Satin Abaya - Obsidian",
     price: 259,
     image:
-      "https://images.unsplash.com/photo-1542000540985-5c8ca4b1c2ad?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/7816726/pexels-photo-7816726.jpeg",
     images: [
-      "https://images.unsplash.com/photo-1542000540985-5c8ca4b1c2ad?w=1600&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/7816726/pexels-photo-7816726.jpeg",
+      "https://images.pexels.com/photos/7805045/pexels-photo-7805045.jpeg",
     ],
     description:
       "An exquisite satin abaya finished with pearl piping and a fluid drape. Tailored for an elegant silhouette.",
@@ -42,7 +42,7 @@ export const products: CatalogProduct[] = [
     title: "Pearl Trim Open Abaya",
     price: 219,
     image:
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/7805045/pexels-photo-7805045.jpeg",
     description:
       "Lightweight crepe with pearl-trim details. Versatile for day to evening.",
     category: "Abayas",
@@ -57,7 +57,7 @@ export const products: CatalogProduct[] = [
     title: "Chiffon Kaftan - Sand Dune",
     price: 179,
     image:
-      "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/18958578/pexels-photo-18958578.jpeg",
     description:
       "Airy chiffon kaftan with subtle metallic threadwork inspired by desert dunes.",
     category: "Kaftans",
@@ -68,7 +68,7 @@ export const products: CatalogProduct[] = [
     title: "Embroidered Abaya - Royal Plum",
     price: 249,
     image:
-      "https://images.unsplash.com/photo-1544441892-3b2f7d3f5953?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/32208654/pexels-photo-32208654.jpeg",
     description:
       "Hand-embroidered detailing with a regal hue. Statement evening piece.",
     category: "Abayas",
@@ -80,7 +80,7 @@ export const products: CatalogProduct[] = [
     title: "Belted Abaya - Pearl",
     price: 219,
     image:
-      "https://images.unsplash.com/photo-1551133988-b9632a4d5801?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/32388357/pexels-photo-32388357.jpeg",
     description:
       "Structured crepe abaya with removable belt in soft pearl tone.",
     category: "Abayas",
@@ -90,7 +90,7 @@ export const products: CatalogProduct[] = [
     title: "Kimono Abaya - Sapphire",
     price: 209,
     image:
-      "https://images.unsplash.com/photo-1551717743-49959800b1f3?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/30435953/pexels-photo-30435953.jpeg",
     description:
       "Kimono-style abaya with wide sleeves and satin finish in sapphire.",
     category: "Abayas",
@@ -100,7 +100,7 @@ export const products: CatalogProduct[] = [
     title: "Pleated Abaya - Charcoal",
     price: 189,
     image:
-      "https://images.unsplash.com/photo-1520975922401-b09c3163a791?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/9218391/pexels-photo-9218391.jpeg",
     description:
       "Fine pleating throughout with a relaxed fit for everyday elegance.",
     category: "Abayas",
@@ -110,7 +110,7 @@ export const products: CatalogProduct[] = [
     title: "Luxe Satin Abaya - Mocha",
     price: 229,
     image:
-      "https://images.unsplash.com/photo-1520975654408-0c0df7e594ef?w=1600&q=80&auto=format&fit=crop",
+      "https://images.pexels.com/photos/9880839/pexels-photo-9880839.jpeg",
     description: "Silky satin with subtle sheen in rich mocha tone.",
     category: "Abayas",
   },
