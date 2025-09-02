@@ -32,6 +32,12 @@ export default function Index() {
                 "hero_image",
                 "https://images.pexels.com/photos/9880859/pexels-photo-9880859.jpeg",
               )}
+              srcSet={buildSrcSet(
+                getContent(
+                  "hero_image",
+                  "https://images.pexels.com/photos/9880859/pexels-photo-9880859.jpeg",
+                )
+              )}
               alt="Hero"
               loading="eager"
               fetchpriority="high"
@@ -128,6 +134,7 @@ export default function Index() {
               <div className="relative aspect-[4/5] w-full">
                 <img
                   src={c.img}
+                  srcSet={buildSrcSet(c.img)}
                   alt={c.title}
                   loading="lazy"
                   decoding="async"
@@ -174,6 +181,12 @@ export default function Index() {
             src={getContent(
               "banner_image",
               "https://images.pexels.com/photos/1667451/pexels-photo-1667451.jpeg",
+            )}
+            srcSet={buildSrcSet(
+              getContent(
+                "banner_image",
+                "https://images.pexels.com/photos/1667451/pexels-photo-1667451.jpeg",
+              )
             )}
             alt="Banner"
             loading="lazy"
