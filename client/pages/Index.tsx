@@ -104,20 +104,20 @@ export default function Index() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {[
             {
-              title: "Abayas",
-              img: "https://images.pexels.com/photos/9880839/pexels-photo-9880839.jpeg",
+              title: getContent("cat1_title", "Abayas"),
+              img: getContent("cat1_image", "https://images.pexels.com/photos/9880839/pexels-photo-9880839.jpeg"),
             },
             {
-              title: "Kaftans",
-              img: "https://images.pexels.com/photos/18958578/pexels-photo-18958578.jpeg",
+              title: getContent("cat2_title", "Kaftans"),
+              img: getContent("cat2_image", "https://images.pexels.com/photos/18958578/pexels-photo-18958578.jpeg"),
             },
             {
-              title: "Modest Dresses",
-              img: "https://images.pexels.com/photos/4678387/pexels-photo-4678387.jpeg",
+              title: getContent("cat3_title", "Modest Dresses"),
+              img: getContent("cat3_image", "https://images.pexels.com/photos/4678387/pexels-photo-4678387.jpeg"),
             },
             {
-              title: "Prayer Sets",
-              img: "https://images.pexels.com/photos/7956906/pexels-photo-7956906.jpeg",
+              title: getContent("cat4_title", "Prayer Sets"),
+              img: getContent("cat4_image", "https://images.pexels.com/photos/7956906/pexels-photo-7956906.jpeg"),
             },
           ].map((c) => (
             <Link
