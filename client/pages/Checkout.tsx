@@ -111,7 +111,6 @@ export default function Checkout() {
         return toast.error("Provide mobile and transaction ID for payment");
     }
 
-
     setLoading(true);
     setTimeout(() => {
       const orderId = `PB-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
