@@ -32,6 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
         <img
           src={product.image}
+          srcSet={buildSrcSet(product.image)}
           alt={product.title}
           loading="lazy"
           decoding="async"
