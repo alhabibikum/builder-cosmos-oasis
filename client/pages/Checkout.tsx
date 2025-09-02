@@ -7,6 +7,8 @@ import PaymentMethods, {
 } from "@/components/site/PaymentMethods";
 import { upsertOrder } from "@/lib/orders";
 import { adjustStock } from "@/lib/inventory";
+import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 
 const BD_DISTRICTS = [
   "Bagerhat",
@@ -82,8 +84,14 @@ export default function Checkout() {
     method: "cod",
     mobile: "",
   });
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [district, setDistrict] = useState<string>("Dhaka");
   const [upazila, setUpazila] = useState<string>("");
+  const [postal, setPostal] = useState("");
+  const [phone, setPhone] = useState("");
   const navigate = useNavigate();
   const baseShipping = district === "Dhaka" ? 80 : 150;
   const shipping = total >= 15000 ? 0 : baseShipping;
@@ -91,14 +99,23 @@ export default function Checkout() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    // Basic client-side validation
+    if (!first.trim()) return toast.error("First name is required");
+    if (!last.trim()) return toast.error("Last name is required");
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return toast.error("Valid email is required");
+    if (!address.trim()) return toast.error("Address is required");
+    if (!upazila.trim()) return toast.error("Upazila/Thana is required");
+    if (postal && !/^\d{4}$/.test(postal))
+      return toast.error("Postal code must be 4 digits");
+    if (!/^01\d{9}$/.test(phone))
+      return toast.error("Phone must be 11 digits starting with 01");
+
     if (payment.method !== "cod") {
-      if (!payment.mobile || !payment.transactionId) {
-        alert(
-          "Please provide mobile number and transaction ID for your payment.",
-        );
-        return;
-      }
+      if (!payment.mobile || !payment.transactionId)
+        return toast.error("Provide mobile and transaction ID for payment");
     }
+
     setLoading(true);
     setTimeout(() => {
       const orderId = `PB-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
@@ -110,7 +127,17 @@ export default function Checkout() {
         status: "placed",
         paymentVerified: false,
         createdAt: new Date().toISOString(),
-        shippingAddress: { country: "Bangladesh", district, upazila },
+        shippingAddress: {
+          country: "Bangladesh",
+          firstName: first,
+          lastName: last,
+          email,
+          address,
+          district,
+          upazila,
+          postalCode: postal || undefined,
+          phone,
+        },
       };
       upsertOrder(orderPayload as any);
       // Deduct inventory
@@ -129,22 +156,30 @@ export default function Checkout() {
           <input
             className="h-11 rounded-md border px-3"
             required
+            value={first}
+            onChange={(e) => setFirst(e.target.value)}
             placeholder="First name"
           />
           <input
             className="h-11 rounded-md border px-3"
             required
+            value={last}
+            onChange={(e) => setLast(e.target.value)}
             placeholder="Last name"
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
             type="email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
             required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             placeholder="Address"
           />
           <select
@@ -172,6 +207,8 @@ export default function Checkout() {
             pattern="\\d{4}"
             title="4-digit postal code (optional)"
             placeholder="Postal code (optional)"
+            value={postal}
+            onChange={(e) => setPostal(e.target.value)}
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
@@ -181,6 +218,8 @@ export default function Checkout() {
             pattern="01\\d{9}"
             title="Bangladesh mobile number starting with 01 (11 digits)"
             placeholder="Phone (e.g., 01XXXXXXXXX)"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2 bg-muted"
