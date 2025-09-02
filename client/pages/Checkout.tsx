@@ -7,7 +7,6 @@ import PaymentMethods, {
 } from "@/components/site/PaymentMethods";
 import { upsertOrder } from "@/lib/orders";
 import { adjustStock } from "@/lib/inventory";
-import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 
 const BD_DISTRICTS = [
