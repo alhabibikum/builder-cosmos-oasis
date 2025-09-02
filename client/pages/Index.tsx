@@ -30,7 +30,7 @@ export default function Index() {
             <img
               src={getContent(
                 "hero_image",
-                "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=2000&q=80&auto=format&fit=crop",
+                "https://images.pexels.com/photos/9880859/pexels-photo-9880859.jpeg",
               )}
               alt="Hero"
               className="h-[420px] w-full object-cover md:h-full"
@@ -101,19 +101,19 @@ export default function Index() {
           {[
             {
               title: "Abayas",
-              img: "https://images.unsplash.com/photo-1520975654408-0c0df7e594ef?w=1200&q=80&auto=format&fit=crop",
+              img: "https://images.pexels.com/photos/9880839/pexels-photo-9880839.jpeg",
             },
             {
               title: "Kaftans",
-              img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=1200&q=80&auto=format&fit=crop",
+              img: "https://images.pexels.com/photos/18958578/pexels-photo-18958578.jpeg",
             },
             {
               title: "Modest Dresses",
-              img: "https://images.unsplash.com/photo-1520975922401-b09c3163a791?w=1200&q=80&auto=format&fit=crop",
+              img: "https://images.pexels.com/photos/4678387/pexels-photo-4678387.jpeg",
             },
             {
               title: "Prayer Sets",
-              img: "https://images.unsplash.com/photo-1551133988-b9632a4d5801?w=1200&q=80&auto=format&fit=crop",
+              img: "https://images.pexels.com/photos/7956906/pexels-photo-7956906.jpeg",
             },
           ].map((c) => (
             <Link
@@ -166,7 +166,7 @@ export default function Index() {
           <img
             src={getContent(
               "banner_image",
-              "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=2000&q=80&auto=format&fit=crop",
+              "https://images.pexels.com/photos/1667451/pexels-photo-1667451.jpeg",
             )}
             alt="Banner"
             className="h-72 w-full object-cover md:h-80"
