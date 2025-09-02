@@ -38,6 +38,7 @@ export default function Product() {
       <div className="grid gap-3">
         <img
           src={product.image}
+          srcSet={buildSrcSet(product.image)}
           alt={product.title}
           loading="eager"
           fetchpriority="high"
@@ -49,6 +50,7 @@ export default function Product() {
           <img
             key={src}
             src={src}
+            srcSet={buildSrcSet(src)}
             alt={product.title}
             loading="lazy"
             decoding="async"
