@@ -168,11 +168,10 @@ export default function Checkout() {
           />
           <input
             className="h-11 rounded-md border px-3"
-            required
             inputMode="numeric"
-            pattern="\\d{4,5}"
-            title="Enter 4-5 digit postal code"
-            placeholder="Postal code"
+            pattern="\\d{4}"
+            title="4-digit postal code (optional)"
+            placeholder="Postal code (optional)"
           />
           <input
             className="h-11 rounded-md border px-3 sm:col-span-2"
