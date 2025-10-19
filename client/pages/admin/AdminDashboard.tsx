@@ -73,32 +73,23 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="mb-2 sticky top-16 z-10 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 border rounded-lg shadow-sm">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="customers">Customers</TabsTrigger>
-          <TabsTrigger value="products">Products</TabsTrigger>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
-          <TabsTrigger value="inventory">Inventory</TabsTrigger>
-          <TabsTrigger value="content">Posts & Content</TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview">
+      <AdminSidebarLayout
+        overview={
           <div className="rounded-xl border p-4 text-sm text-muted-foreground">
-            Use the tabs to manage every part of the shop: products, inventory,
-            orders, homepage content and blog posts.
+            Use the sidebar to manage every part of the shop: products, inventory, orders, homepage content and blog posts.
           </div>
-        </TabsContent>
-        <TabsContent value="customers">
+        }
+        customers={
           <div className="rounded-xl border p-2 md:p-4">
             <CustomerManager />
           </div>
-        </TabsContent>
-        <TabsContent value="products">
+        }
+        products={
           <div className="rounded-xl border p-2 md:p-4">
             <ProductManager />
           </div>
-        </TabsContent>
-        <TabsContent value="orders">
+        }
+        orders={
           <div className="rounded-xl border">
             <div className="flex flex-wrap items-center gap-2 border-b p-3">
               <input
@@ -128,44 +119,22 @@ export default function AdminDashboard() {
             </div>
             <div className="divide-y">
               {filteredOrders.map((o, idx) => (
-                <div
-                  key={o.id}
-                  className="grid gap-3 p-4 md:grid-cols-7 md:items-center"
-                >
+                <div key={o.id} className="grid gap-3 p-4 md:grid-cols-7 md:items-center">
                   <div className="md:col-span-2">
                     <div className="text-sm font-semibold">{o.id}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {new Date(o.createdAt).toLocaleString()}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {o.payment.method.toUpperCase()}
-                    </div>
+                    <div className="text-xs text-muted-foreground">{new Date(o.createdAt).toLocaleString()}</div>
+                    <div className="text-xs text-muted-foreground">{o.payment.method.toUpperCase()}</div>
                   </div>
                   <div className="text-sm">
-                    {o.items[0]?.product.title}{" "}
-                    {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
+                    {o.items[0]?.product.title} {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
                   </div>
-                  <div className="text-sm font-semibold">
-                    {formatCurrency(o.totals.total)}
-                  </div>
+                  <div className="text-sm font-semibold">{formatCurrency(o.totals.total)}</div>
                   <div className="flex items-center gap-2">
                     <label className="text-xs">Verified</label>
-                    <input
-                      type="checkbox"
-                      checked={o.paymentVerified}
-                      onChange={(e) =>
-                        update(idx, { paymentVerified: e.target.checked })
-                      }
-                    />
+                    <input type="checkbox" checked={o.paymentVerified} onChange={(e) => update(idx, { paymentVerified: e.target.checked })} />
                   </div>
                   <div>
-                    <select
-                      className="h-10 rounded-md border px-2 text-sm"
-                      value={o.status}
-                      onChange={(e) =>
-                        update(idx, { status: e.target.value as any })
-                      }
-                    >
+                    <select className="h-10 rounded-md border px-2 text-sm" value={o.status} onChange={(e) => update(idx, { status: e.target.value as any })}>
                       <option value="placed">Placed</option>
                       <option value="processing">Processing</option>
                       <option value="shipped">Shipped</option>
@@ -174,43 +143,30 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div className="text-right">
-                    <a
-                      className="text-sm text-primary underline"
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        alert(JSON.stringify(o, null, 2));
-                      }}
-                    >
+                    <a className="text-sm text-primary underline" href="#" onClick={(e) => { e.preventDefault(); alert(JSON.stringify(o, null, 2)); }}>
                       View
                     </a>
                   </div>
                 </div>
               ))}
               {filteredOrders.length === 0 && (
-                <div className="p-6 text-center text-sm text-muted-foreground">
-                  No orders found.
-                </div>
+                <div className="p-6 text-center text-sm text-muted-foreground">No orders found.</div>
               )}
             </div>
           </div>
-        </TabsContent>
-        <TabsContent value="inventory">
+        }
+        inventory={
           <div className="rounded-xl border p-2 md:p-4">
             <InventoryManager />
           </div>
-        </TabsContent>
-        <TabsContent value="content">
+        }
+        content={
           <div className="grid gap-6">
-            <div className="rounded-xl border p-2 md:p-4">
-              <PostManager />
-            </div>
-            <div className="rounded-xl border p-2 md:p-4">
-              <ContentManager />
-            </div>
+            <div className="rounded-xl border p-2 md:p-4"><PostManager /></div>
+            <div className="rounded-xl border p-2 md:p-4"><ContentManager /></div>
           </div>
-        </TabsContent>
-      </Tabs>
+        }
+      />
     </section>
   );
 }
