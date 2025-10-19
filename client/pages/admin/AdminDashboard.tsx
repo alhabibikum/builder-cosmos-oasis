@@ -174,42 +174,8 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
         <TabsContent value="inventory">
-          <div className="rounded-xl border">
-            <div className="divide-y">
-              {getProducts({ includeHidden: true }).map((p) => (
-                <div key={p.id} className="grid gap-3 p-4 md:grid-cols-6 md:items-center">
-                  <div className="font-semibold">{p.title}</div>
-                  <div className="text-sm text-muted-foreground">{p.id}</div>
-                  <div className="md:col-span-3 flex flex-wrap items-center gap-2">
-                    {p.sizes && p.sizes.length ? (
-                      p.sizes.map((s) => (
-                        <label key={s} className="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm">
-                          <span>{s}</span>
-                          <input
-                            type="number"
-                            defaultValue={getStock(p.id, s)}
-                            className="h-9 w-20 rounded-md border px-2"
-                            onBlur={(e) => setStock(p.id, Number(e.target.value), s)}
-                          />
-                        </label>
-                      ))
-                    ) : (
-                      <input
-                        type="number"
-                        defaultValue={getStock(p.id)}
-                        className="h-9 w-24 rounded-md border px-2"
-                        onBlur={(e) => setStock(p.id, Number(e.target.value))}
-                      />
-                    )}
-                  </div>
-                  <div className="text-right text-sm">
-                    <button className="rounded-md border px-3 py-2" onClick={() => location.reload()}>
-                      Refresh
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="rounded-xl border p-2 md:p-4">
+            <InventoryManager />
           </div>
         </TabsContent>
         <TabsContent value="content">
