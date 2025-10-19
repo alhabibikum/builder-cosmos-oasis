@@ -88,96 +88,17 @@ export default function Shop() {
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-      <aside className="space-y-6 md:col-span-1">
-        <div className="grid gap-2">
-          <input
-            placeholder="Search products"
-            defaultValue={q}
-            className="h-10 rounded-md border px-3"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                const v = (e.target as HTMLInputElement).value.trim();
-                navigate(v ? `/shop?search=${encodeURIComponent(v)}` : "/shop");
-              }
-            }}
-          />
+      {/* Mobile Filters */}
+      <details className="rounded-lg border md:hidden">
+        <summary className="cursor-pointer select-none list-none rounded-lg px-4 py-3 text-sm font-semibold">Filters & Sort</summary>
+        <div className="grid gap-6 border-t p-4">
+          <FilterPanel />
         </div>
+      </details>
 
-        <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
-            Categories
-          </div>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>
-              <button
-                className={`hover:text-foreground ${category === "all" ? "font-semibold text-foreground" : ""}`}
-                onClick={() => setCategory("all")}
-              >
-                All
-              </button>
-            </li>
-            {categories.map((c) => (
-              <li key={c}>
-                <button
-                  className={`hover:text-foreground ${category === c ? "font-semibold text-foreground" : ""}`}
-                  onClick={() => setCategory(c)}
-                >
-                  {c}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
-            Price
-          </div>
-          <div className="px-1">
-            <Slider
-              value={price}
-              max={maxPrice}
-              min={minPrice}
-              step={100}
-              onValueChange={(v) =>
-                setPrice([v[0] ?? minPrice, v[1] ?? maxPrice])
-              }
-            />
-            <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-              <span>Min: {Math.round(price[0])}</span>
-              <span>Max: {Math.round(price[1])}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <input
-            id="instock"
-            type="checkbox"
-            checked={inStock}
-            onChange={(e) => setInStock(e.target.checked)}
-          />
-          <label htmlFor="instock" className="text-sm">
-            Only show in‑stock
-          </label>
-        </div>
-
-        <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
-            Quick links
-          </div>
-          <div className="grid gap-2 text-sm">
-            <Link to="/new" className="hover:underline">
-              New Arrivals
-            </Link>
-            <Link to="/bestsellers" className="hover:underline">
-              Best Sellers
-            </Link>
-            <Link to="/sale" className="hover:underline">
-              Sale
-            </Link>
-          </div>
-        </div>
+      {/* Desktop Filters */}
+      <aside className="hidden space-y-6 md:col-span-1 md:block">
+        <FilterPanel />
       </aside>
 
       <section className="md:col-span-3">
