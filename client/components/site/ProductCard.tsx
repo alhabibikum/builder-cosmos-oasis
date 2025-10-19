@@ -5,6 +5,7 @@ import { formatCurrency } from "@/lib/money";
 import { toast } from "sonner";
 import { getStock } from "@/lib/inventory";
 import { buildSrcSet } from "@/lib/utils";
+import { memo } from "react";
 
 export interface Product {
   id: string;
@@ -15,13 +16,13 @@ export interface Product {
   sizes?: string[];
 }
 
-export default function ProductCard({ product }: { product: Product }) {
+function Card({ product }: { product: Product }) {
   const { add } = useCart();
   const hasSizes = (product as any).sizes?.length > 0;
   const stock = hasSizes ? undefined : getStock(product.id);
   const out = stock !== undefined && stock <= 0;
   return (
-    <div className="group overflow-hidden rounded-xl border bg-card">
+    <div className="group overflow-hidden rounded-xl border bg-card [content-visibility:auto] [contain-intrinsic-size:400px]">
       <Link
         to={`/product/${product.id}`}
         className="relative block aspect-[4/5] w-full overflow-hidden"
@@ -99,3 +100,5 @@ export default function ProductCard({ product }: { product: Product }) {
     </div>
   );
 }
+
+export default memo(Card);
