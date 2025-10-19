@@ -9,6 +9,7 @@ import ContentManager from "@/components/admin/ContentManager";
 import CustomerManager from "@/components/admin/CustomerManager";
 import InventoryManager from "@/components/admin/InventoryManager";
 import SidebarNav from "@/components/admin/SidebarNav";
+import AdminSidebarLayout from "@/components/admin/AdminSidebarLayout";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import DashboardHeader from "@/components/admin/DashboardHeader";
 
