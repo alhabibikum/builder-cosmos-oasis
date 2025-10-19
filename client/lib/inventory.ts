@@ -6,8 +6,20 @@ export type InventoryMap = Record<
   { bySize?: Record<string, number>; total?: number }
 >;
 
+export interface InventoryEvent {
+  id: string;
+  size?: Size;
+  delta: number; // change applied
+  qtyAfter: number; // resulting quantity
+  reason?: string;
+  at: string; // ISO timestamp
+}
+
 const KEY = "inventory";
+const KEY_THRESH = "inventory_thresholds";
+const KEY_HISTORY = "inventory_history";
 const DEFAULT_STOCK = 10;
+const DEFAULT_THRESHOLD = 3;
 
 function seed(): InventoryMap {
   const map: InventoryMap = {};
@@ -75,25 +87,66 @@ export function getStock(id: string, size?: Size): number {
   return rec.total ?? 0;
 }
 
-export function setStock(id: string, qty: number, size?: Size) {
+export function setStock(id: string, qty: number, size?: Size, reason?: string) {
   const inv = getInventory();
+  const prev = getStock(id, size);
   const rec = inv[id] || {};
+  const nextQty = Math.max(0, Math.floor(qty));
   if (size) {
     rec.bySize = rec.bySize || {};
-    rec.bySize[size] = Math.max(0, Math.floor(qty));
+    rec.bySize[size] = nextQty;
   } else {
-    rec.total = Math.max(0, Math.floor(qty));
+    rec.total = nextQty;
   }
   inv[id] = rec;
   saveInventory(inv);
+  logInventoryEvent({ id, size, delta: nextQty - prev, qtyAfter: nextQty, reason });
 }
 
-export function adjustStock(id: string, delta: number, size?: Size) {
+export function adjustStock(id: string, delta: number, size?: Size, reason?: string) {
   const current = getStock(id, size);
-  setStock(id, current + delta, size);
+  setStock(id, current + delta, size, reason);
 }
 
 export function availableFor(id: string, requested: number, size?: Size) {
   const stock = getStock(id, size);
   return Math.max(0, Math.min(stock, requested));
+}
+
+export function getThresholds(): Record<string, number> {
+  try {
+    const raw = localStorage.getItem(KEY_THRESH);
+    const parsed = raw ? (JSON.parse(raw) as Record<string, number>) : {};
+    return parsed || {};
+  } catch {
+    return {};
+  }
+}
+export function getThreshold(id: string): number {
+  const map = getThresholds();
+  return typeof map[id] === "number" ? map[id] : DEFAULT_THRESHOLD;
+}
+export function setThreshold(id: string, n: number) {
+  const map = getThresholds();
+  map[id] = Math.max(0, Math.floor(n));
+  localStorage.setItem(KEY_THRESH, JSON.stringify(map));
+}
+
+export function logInventoryEvent(e: Omit<InventoryEvent, "at">) {
+  const list = getInventoryHistory();
+  const rec: InventoryEvent = { ...e, at: new Date().toISOString() };
+  list.unshift(rec);
+  localStorage.setItem(KEY_HISTORY, JSON.stringify(list.slice(0, 500)));
+}
+export function getInventoryHistory(): InventoryEvent[] {
+  try {
+    const raw = localStorage.getItem(KEY_HISTORY);
+    const arr = raw ? (JSON.parse(raw) as InventoryEvent[]) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+export function clearInventoryHistory() {
+  localStorage.removeItem(KEY_HISTORY);
 }
