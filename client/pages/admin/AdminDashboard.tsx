@@ -11,6 +11,7 @@ import ContentManager from "@/components/admin/ContentManager";
 import CustomerManager from "@/components/admin/CustomerManager";
 import InventoryManager from "@/components/admin/InventoryManager";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import DashboardHeader from "@/components/admin/DashboardHeader";
 
 export default function AdminDashboard() {
   const { role } = useAuth();
