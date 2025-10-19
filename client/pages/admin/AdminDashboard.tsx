@@ -49,27 +49,28 @@ export default function AdminDashboard() {
 
   return (
     <section className="space-y-6">
-      <h1 className="font-['Playfair Display'] text-3xl font-extrabold tracking-tight">
-        Admin Dashboard
-      </h1>
+      <DashboardHeader
+        title="Admin Dashboard"
+        subtitle="Manage customers, products, orders, inventory, posts and site content."
+      />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border p-4">
+        <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
           <div className="text-sm text-muted-foreground">Total Revenue</div>
           <div className="text-2xl font-semibold">{formatCurrency(stats.total)}</div>
         </div>
-        <div className="rounded-xl border p-4">
+        <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
           <div className="text-sm text-muted-foreground">Orders</div>
           <div className="text-2xl font-semibold">{stats.placed}</div>
         </div>
-        <div className="rounded-xl border p-4">
+        <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
           <div className="text-sm text-muted-foreground">Pending Verification</div>
           <div className="text-2xl font-semibold">{stats.pendingVerify}</div>
         </div>
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="mb-2">
+        <TabsList className="mb-2 sticky top-16 z-10 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 border rounded-lg shadow-sm">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="customers">Customers</TabsTrigger>
           <TabsTrigger value="products">Products</TabsTrigger>
