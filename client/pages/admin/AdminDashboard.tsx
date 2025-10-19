@@ -8,6 +8,8 @@ import { getStock, setStock } from "@/lib/inventory";
 import ProductManager from "@/components/admin/ProductManager";
 import PostManager from "@/components/admin/PostManager";
 import ContentManager from "@/components/admin/ContentManager";
+import CustomerManager from "@/components/admin/CustomerManager";
+import InventoryManager from "@/components/admin/InventoryManager";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export default function AdminDashboard() {
