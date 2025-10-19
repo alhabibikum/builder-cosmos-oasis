@@ -3,14 +3,13 @@ import { getOrders, saveOrders, type Order } from "@/lib/orders";
 import { useMemo, useState } from "react";
 import { formatCurrency } from "@/lib/money";
 import { Navigate } from "react-router-dom";
-import { getProducts } from "@/lib/catalog";
-import { getStock, setStock } from "@/lib/inventory";
 import ProductManager from "@/components/admin/ProductManager";
 import PostManager from "@/components/admin/PostManager";
 import ContentManager from "@/components/admin/ContentManager";
 import CustomerManager from "@/components/admin/CustomerManager";
 import InventoryManager from "@/components/admin/InventoryManager";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import SidebarNav from "@/components/admin/SidebarNav";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import DashboardHeader from "@/components/admin/DashboardHeader";
 
 export default function AdminDashboard() {
