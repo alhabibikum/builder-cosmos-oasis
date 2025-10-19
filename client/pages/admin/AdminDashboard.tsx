@@ -71,6 +71,7 @@ export default function AdminDashboard() {
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="mb-2">
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="customers">Customers</TabsTrigger>
           <TabsTrigger value="products">Products</TabsTrigger>
           <TabsTrigger value="orders">Orders</TabsTrigger>
           <TabsTrigger value="inventory">Inventory</TabsTrigger>
