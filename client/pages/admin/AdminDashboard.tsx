@@ -82,6 +82,11 @@ export default function AdminDashboard() {
             Use the tabs to manage every part of the shop: products, inventory, orders, homepage content and blog posts.
           </div>
         </TabsContent>
+        <TabsContent value="customers">
+          <div className="rounded-xl border p-2 md:p-4">
+            <CustomerManager />
+          </div>
+        </TabsContent>
         <TabsContent value="products">
           <div className="rounded-xl border p-2 md:p-4">
             <ProductManager />
