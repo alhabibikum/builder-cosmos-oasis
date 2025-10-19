@@ -87,7 +87,12 @@ export function getStock(id: string, size?: Size): number {
   return rec.total ?? 0;
 }
 
-export function setStock(id: string, qty: number, size?: Size, reason?: string) {
+export function setStock(
+  id: string,
+  qty: number,
+  size?: Size,
+  reason?: string,
+) {
   const inv = getInventory();
   const prev = getStock(id, size);
   const rec = inv[id] || {};
@@ -100,10 +105,21 @@ export function setStock(id: string, qty: number, size?: Size, reason?: string) 
   }
   inv[id] = rec;
   saveInventory(inv);
-  logInventoryEvent({ id, size, delta: nextQty - prev, qtyAfter: nextQty, reason });
+  logInventoryEvent({
+    id,
+    size,
+    delta: nextQty - prev,
+    qtyAfter: nextQty,
+    reason,
+  });
 }
 
-export function adjustStock(id: string, delta: number, size?: Size, reason?: string) {
+export function adjustStock(
+  id: string,
+  delta: number,
+  size?: Size,
+  reason?: string,
+) {
   const current = getStock(id, size);
   setStock(id, current + delta, size, reason);
 }

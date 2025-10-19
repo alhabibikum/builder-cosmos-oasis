@@ -11,7 +11,13 @@ import {
 } from "@/lib/customers";
 import { formatCurrency } from "@/lib/money";
 
-const STATUSES: CustomerStatus[] = ["lead", "active", "vip", "inactive", "banned"];
+const STATUSES: CustomerStatus[] = [
+  "lead",
+  "active",
+  "vip",
+  "inactive",
+  "banned",
+];
 
 export default function CustomerManager() {
   const [list, setList] = useState<CustomerProfile[]>(loadCustomers());
@@ -115,14 +121,23 @@ export default function CustomerManager() {
               </option>
             ))}
           </select>
-          <button className="rounded-md border px-3 py-2 text-sm" onClick={onNew}>
+          <button
+            className="rounded-md border px-3 py-2 text-sm"
+            onClick={onNew}
+          >
             New
           </button>
           <div className="ml-auto flex items-center gap-2">
-            <button className="rounded-md border px-2 py-1 text-xs" onClick={exportJson}>
+            <button
+              className="rounded-md border px-2 py-1 text-xs"
+              onClick={exportJson}
+            >
               Export
             </button>
-            <button className="rounded-md border px-2 py-1 text-xs" onClick={importJson}>
+            <button
+              className="rounded-md border px-2 py-1 text-xs"
+              onClick={importJson}
+            >
               Import
             </button>
           </div>
@@ -163,7 +178,9 @@ export default function CustomerManager() {
               >
                 <div className="flex items-center justify-between">
                   <div className="font-semibold line-clamp-1">{c.name}</div>
-                  <span className="rounded-md border px-2 py-0.5 text-xs capitalize">{c.status}</span>
+                  <span className="rounded-md border px-2 py-0.5 text-xs capitalize">
+                    {c.status}
+                  </span>
                 </div>
                 <div className="text-xs text-muted-foreground line-clamp-1">
                   {c.email || "—"} • {c.phone || "—"}
@@ -175,7 +192,9 @@ export default function CustomerManager() {
             );
           })}
           {filtered.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">No customers found.</div>
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              No customers found.
+            </div>
           )}
         </div>
       </div>
@@ -183,7 +202,9 @@ export default function CustomerManager() {
       <div className="md:col-span-3 rounded-xl border">
         <div className="border-b p-3 font-semibold">Customer Profile</div>
         {!editing ? (
-          <div className="p-4 text-sm text-muted-foreground">Select a customer to view or create a new one.</div>
+          <div className="p-4 text-sm text-muted-foreground">
+            Select a customer to view or create a new one.
+          </div>
         ) : (
           <div className="grid gap-3 p-4">
             <div className="grid gap-3 md:grid-cols-2">
@@ -191,14 +212,21 @@ export default function CustomerManager() {
                 <input
                   className="h-10 w-full rounded-md border px-2"
                   value={editing.name}
-                  onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+                  onChange={(e) =>
+                    setEditing({ ...editing, name: e.target.value })
+                  }
                 />
               </Field>
               <Field label="Status">
                 <select
                   className="h-10 w-full rounded-md border px-2"
                   value={editing.status}
-                  onChange={(e) => setEditing({ ...editing, status: e.target.value as CustomerStatus })}
+                  onChange={(e) =>
+                    setEditing({
+                      ...editing,
+                      status: e.target.value as CustomerStatus,
+                    })
+                  }
                 >
                   {STATUSES.map((s) => (
                     <option key={s} value={s}>
@@ -211,14 +239,18 @@ export default function CustomerManager() {
                 <input
                   className="h-10 w-full rounded-md border px-2"
                   value={editing.email || ""}
-                  onChange={(e) => setEditing({ ...editing, email: e.target.value })}
+                  onChange={(e) =>
+                    setEditing({ ...editing, email: e.target.value })
+                  }
                 />
               </Field>
               <Field label="Phone">
                 <input
                   className="h-10 w-full rounded-md border px-2"
                   value={editing.phone || ""}
-                  onChange={(e) => setEditing({ ...editing, phone: e.target.value })}
+                  onChange={(e) =>
+                    setEditing({ ...editing, phone: e.target.value })
+                  }
                 />
               </Field>
               <Field label="Tags (comma separated)">
@@ -241,16 +273,24 @@ export default function CustomerManager() {
               <textarea
                 className="min-h-[90px] w-full rounded-md border p-2"
                 value={editing.notes || ""}
-                onChange={(e) => setEditing({ ...editing, notes: e.target.value })}
+                onChange={(e) =>
+                  setEditing({ ...editing, notes: e.target.value })
+                }
               />
             </Field>
 
             <div className="flex items-center gap-2 border-t pt-3">
-              <button className="rounded-md border px-3 py-2 text-sm" onClick={persist}>
+              <button
+                className="rounded-md border px-3 py-2 text-sm"
+                onClick={persist}
+              >
                 Save
               </button>
               {editing.id && (
-                <button className="rounded-md border px-3 py-2 text-sm text-red-600" onClick={() => remove(editing.id)}>
+                <button
+                  className="rounded-md border px-3 py-2 text-sm text-red-600"
+                  onClick={() => remove(editing.id)}
+                >
                   Delete
                 </button>
               )}
@@ -260,20 +300,30 @@ export default function CustomerManager() {
               <div className="grid gap-2 border-t pt-3">
                 <div className="text-sm font-medium">Recent Interactions</div>
                 <InteractionComposer
-                  onAdd={(t, note) => setList(addInteraction(editing.id!, { type: t, note }))}
+                  onAdd={(t, note) =>
+                    setList(addInteraction(editing.id!, { type: t, note }))
+                  }
                 />
                 <div className="divide-y rounded-md border">
                   {(editing.interactions || []).map((i) => (
                     <div key={i.id} className="grid gap-1 p-2 text-sm">
                       <div className="flex items-center justify-between">
                         <span className="capitalize">{i.type}</span>
-                        <span className="text-xs text-muted-foreground">{new Date(i.at).toLocaleString()}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(i.at).toLocaleString()}
+                        </span>
                       </div>
-                      {i.note && <div className="text-xs text-muted-foreground">{i.note}</div>}
+                      {i.note && (
+                        <div className="text-xs text-muted-foreground">
+                          {i.note}
+                        </div>
+                      )}
                     </div>
                   ))}
                   {(editing.interactions || []).length === 0 && (
-                    <div className="p-3 text-center text-xs text-muted-foreground">No interactions yet.</div>
+                    <div className="p-3 text-center text-xs text-muted-foreground">
+                      No interactions yet.
+                    </div>
                   )}
                 </div>
               </div>
@@ -285,7 +335,13 @@ export default function CustomerManager() {
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="grid gap-1 text-sm">
       <span className="text-xs">{label}</span>
@@ -294,7 +350,11 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function InteractionComposer({ onAdd }: { onAdd: (type: InteractionType, note?: string) => void }) {
+function InteractionComposer({
+  onAdd,
+}: {
+  onAdd: (type: InteractionType, note?: string) => void;
+}) {
   type InteractionType = "note" | "call" | "email" | "meeting";
   const [type, setType] = useState<InteractionType>("note");
   const [note, setNote] = useState("");

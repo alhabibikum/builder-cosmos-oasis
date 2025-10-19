@@ -58,14 +58,18 @@ export default function AdminDashboard() {
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
           <div className="text-sm text-muted-foreground">Total Revenue</div>
-          <div className="text-2xl font-semibold">{formatCurrency(stats.total)}</div>
+          <div className="text-2xl font-semibold">
+            {formatCurrency(stats.total)}
+          </div>
         </div>
         <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
           <div className="text-sm text-muted-foreground">Orders</div>
           <div className="text-2xl font-semibold">{stats.placed}</div>
         </div>
         <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
-          <div className="text-sm text-muted-foreground">Pending Verification</div>
+          <div className="text-sm text-muted-foreground">
+            Pending Verification
+          </div>
           <div className="text-2xl font-semibold">{stats.pendingVerify}</div>
         </div>
       </div>
@@ -81,7 +85,8 @@ export default function AdminDashboard() {
         </TabsList>
         <TabsContent value="overview">
           <div className="rounded-xl border p-4 text-sm text-muted-foreground">
-            Use the tabs to manage every part of the shop: products, inventory, orders, homepage content and blog posts.
+            Use the tabs to manage every part of the shop: products, inventory,
+            orders, homepage content and blog posts.
           </div>
         </TabsContent>
         <TabsContent value="customers">
@@ -124,29 +129,43 @@ export default function AdminDashboard() {
             </div>
             <div className="divide-y">
               {filteredOrders.map((o, idx) => (
-                <div key={o.id} className="grid gap-3 p-4 md:grid-cols-7 md:items-center">
+                <div
+                  key={o.id}
+                  className="grid gap-3 p-4 md:grid-cols-7 md:items-center"
+                >
                   <div className="md:col-span-2">
                     <div className="text-sm font-semibold">{o.id}</div>
-                    <div className="text-xs text-muted-foreground">{new Date(o.createdAt).toLocaleString()}</div>
-                    <div className="text-xs text-muted-foreground">{o.payment.method.toUpperCase()}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {new Date(o.createdAt).toLocaleString()}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {o.payment.method.toUpperCase()}
+                    </div>
                   </div>
                   <div className="text-sm">
-                    {o.items[0]?.product.title} {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
+                    {o.items[0]?.product.title}{" "}
+                    {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
                   </div>
-                  <div className="text-sm font-semibold">{formatCurrency(o.totals.total)}</div>
+                  <div className="text-sm font-semibold">
+                    {formatCurrency(o.totals.total)}
+                  </div>
                   <div className="flex items-center gap-2">
                     <label className="text-xs">Verified</label>
                     <input
                       type="checkbox"
                       checked={o.paymentVerified}
-                      onChange={(e) => update(idx, { paymentVerified: e.target.checked })}
+                      onChange={(e) =>
+                        update(idx, { paymentVerified: e.target.checked })
+                      }
                     />
                   </div>
                   <div>
                     <select
                       className="h-10 rounded-md border px-2 text-sm"
                       value={o.status}
-                      onChange={(e) => update(idx, { status: e.target.value as any })}
+                      onChange={(e) =>
+                        update(idx, { status: e.target.value as any })
+                      }
                     >
                       <option value="placed">Placed</option>
                       <option value="processing">Processing</option>
@@ -170,7 +189,9 @@ export default function AdminDashboard() {
                 </div>
               ))}
               {filteredOrders.length === 0 && (
-                <div className="p-6 text-center text-sm text-muted-foreground">No orders found.</div>
+                <div className="p-6 text-center text-sm text-muted-foreground">
+                  No orders found.
+                </div>
               )}
             </div>
           </div>

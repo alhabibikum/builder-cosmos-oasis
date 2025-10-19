@@ -55,7 +55,9 @@ export default function Shop() {
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">Categories</div>
+          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
+            Categories
+          </div>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <button
@@ -79,14 +81,18 @@ export default function Shop() {
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">Price</div>
+          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
+            Price
+          </div>
           <div className="px-1">
             <Slider
               value={price}
               max={maxPrice}
               min={minPrice}
               step={100}
-              onValueChange={(v) => setPrice([v[0] ?? minPrice, v[1] ?? maxPrice])}
+              onValueChange={(v) =>
+                setPrice([v[0] ?? minPrice, v[1] ?? maxPrice])
+              }
             />
             <div className="mt-2 flex justify-between text-xs text-muted-foreground">
               <span>Min: {Math.round(price[0])}</span>
@@ -102,15 +108,25 @@ export default function Shop() {
             checked={inStock}
             onChange={(e) => setInStock(e.target.checked)}
           />
-          <label htmlFor="instock" className="text-sm">Only show in‑stock</label>
+          <label htmlFor="instock" className="text-sm">
+            Only show in‑stock
+          </label>
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">Quick links</div>
+          <div className="mb-2 text-sm font-semibold uppercase tracking-wide">
+            Quick links
+          </div>
           <div className="grid gap-2 text-sm">
-            <Link to="/new" className="hover:underline">New Arrivals</Link>
-            <Link to="/bestsellers" className="hover:underline">Best Sellers</Link>
-            <Link to="/sale" className="hover:underline">Sale</Link>
+            <Link to="/new" className="hover:underline">
+              New Arrivals
+            </Link>
+            <Link to="/bestsellers" className="hover:underline">
+              Best Sellers
+            </Link>
+            <Link to="/sale" className="hover:underline">
+              Sale
+            </Link>
           </div>
         </div>
       </>
@@ -170,7 +186,9 @@ export default function Shop() {
     <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
       {/* Mobile Filters */}
       <details className="rounded-lg border md:hidden">
-        <summary className="cursor-pointer select-none list-none rounded-lg px-4 py-3 text-sm font-semibold">Filters & Sort</summary>
+        <summary className="cursor-pointer select-none list-none rounded-lg px-4 py-3 text-sm font-semibold">
+          Filters & Sort
+        </summary>
         <div className="grid gap-6 border-t p-4">
           <FilterPanel />
         </div>

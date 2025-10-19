@@ -14,9 +14,13 @@ export default function DashboardHeader({
           {title}
         </h1>
         {subtitle ? (
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{subtitle}</p>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+            {subtitle}
+          </p>
         ) : null}
-        {actions ? <div className="mt-3 flex flex-wrap gap-2">{actions}</div> : null}
+        {actions ? (
+          <div className="mt-3 flex flex-wrap gap-2">{actions}</div>
+        ) : null}
       </div>
       <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-accent/10 blur-2xl" />

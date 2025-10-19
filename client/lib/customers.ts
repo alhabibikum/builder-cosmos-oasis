@@ -33,7 +33,9 @@ export function loadCustomers(): CustomerProfile[] {
 export function saveCustomers(list: CustomerProfile[]) {
   localStorage.setItem(KEY, JSON.stringify(list));
 }
-export function upsertCustomer(input: Partial<CustomerProfile>): CustomerProfile[] {
+export function upsertCustomer(
+  input: Partial<CustomerProfile>,
+): CustomerProfile[] {
   const list = loadCustomers();
   const now = new Date().toISOString();
   if (!input.id) {
@@ -75,12 +77,19 @@ export function deleteCustomer(id: string): CustomerProfile[] {
   saveCustomers(list);
   return list;
 }
-export function addInteraction(customerId: string, inter: Omit<Interaction, "id" | "at"> & { note?: string }) {
+export function addInteraction(
+  customerId: string,
+  inter: Omit<Interaction, "id" | "at"> & { note?: string },
+) {
   const list = loadCustomers();
   const idx = list.findIndex((c) => c.id === customerId);
   if (idx < 0) return list;
   const now = new Date().toISOString();
-  const full: Interaction = { id: `INT-${Math.random().toString(36).slice(2, 10)}`, at: now, ...inter };
+  const full: Interaction = {
+    id: `INT-${Math.random().toString(36).slice(2, 10)}`,
+    at: now,
+    ...inter,
+  };
   const c = list[idx];
   const interactions = [full, ...(c.interactions || [])].slice(0, 100);
   list[idx] = { ...c, interactions, lastInteractionAt: now, updatedAt: now };
@@ -88,7 +97,10 @@ export function addInteraction(customerId: string, inter: Omit<Interaction, "id"
   return list;
 }
 
-export interface PurchaseStats { orders: number; spent: number }
+export interface PurchaseStats {
+  orders: number;
+  spent: number;
+}
 export function getPurchaseStats(): Record<string, PurchaseStats> {
   const stats: Record<string, PurchaseStats> = {};
   const orders = getOrders() as any[];
