@@ -119,13 +119,13 @@ export default function InventoryManager() {
 
       <StockAdjuster onSelect={(id) => setSelected(id)} />
 
-      <div className="rounded-xl border">
-        <div className="border-b p-3 font-semibold">Inventory Trends</div>
-        <div className="p-3">
-          <div className="mb-2 flex items-center gap-2 text-sm">
-            <label className="text-xs">Product</label>
+      <div className="rounded-xl border bg-white overflow-hidden">
+        <div className="border-b p-4 font-semibold text-foreground">Inventory Trends</div>
+        <div className="p-4">
+          <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-center md:gap-3">
+            <label className="text-xs font-medium text-foreground">Product</label>
             <select
-              className="h-9 rounded-md border px-2 text-sm"
+              className="h-10 flex-1 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
@@ -159,15 +159,15 @@ export default function InventoryManager() {
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-8 text-center text-sm text-muted-foreground">
               Select a product to view trends.
             </div>
           )}
         </div>
       </div>
 
-      <div className="rounded-xl border">
-        <div className="border-b p-3 font-semibold">Recent Adjustments</div>
+      <div className="rounded-xl border bg-white overflow-hidden">
+        <div className="border-b p-4 font-semibold text-foreground">Recent Adjustments</div>
         <div className="divide-y">
           {history.slice(0, 50).map((h, i) => (
             <div
