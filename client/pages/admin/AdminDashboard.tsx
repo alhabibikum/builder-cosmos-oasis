@@ -55,22 +55,49 @@ export default function AdminDashboard() {
         subtitle="Manage customers, products, orders, inventory, posts and site content."
       />
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
-          <div className="text-sm text-muted-foreground">Total Revenue</div>
-          <div className="text-2xl font-semibold">
-            {formatCurrency(stats.total)}
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">Total Revenue</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                {formatCurrency(stats.total)}
+              </h3>
+            </div>
+            <div className="rounded-lg bg-primary/10 p-3">
+              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
           </div>
         </div>
-        <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
-          <div className="text-sm text-muted-foreground">Orders</div>
-          <div className="text-2xl font-semibold">{stats.placed}</div>
-        </div>
-        <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
-          <div className="text-sm text-muted-foreground">
-            Pending Verification
+
+        <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">Total Orders</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{stats.placed}</h3>
+            </div>
+            <div className="rounded-lg bg-blue-100 p-3">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
           </div>
-          <div className="text-2xl font-semibold">{stats.pendingVerify}</div>
+        </div>
+
+        <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">Pending Verification</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-orange-600">{stats.pendingVerify}</h3>
+            </div>
+            <div className="rounded-lg bg-orange-100 p-3">
+              <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
