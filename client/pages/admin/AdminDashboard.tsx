@@ -118,20 +118,20 @@ export default function AdminDashboard() {
           </div>
         }
         orders={
-          <div className="rounded-xl border">
-            <div className="flex flex-wrap items-center gap-2 border-b p-3">
+          <div className="rounded-xl border bg-white overflow-hidden">
+            <div className="flex flex-col gap-3 border-b p-4 md:flex-row md:items-center md:gap-2">
               <input
                 value={orderQuery}
                 onChange={(e) => setOrderQuery(e.target.value)}
                 placeholder="Search orders by ID, product or method..."
-                className="h-9 flex-1 rounded-md border px-2 text-sm"
+                className="h-10 flex-1 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
               <select
                 value={orderStatus}
                 onChange={(e) => setOrderStatus(e.target.value as any)}
-                className="h-9 rounded-md border px-2 text-sm"
+                className="h-10 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
               >
-                <option value="all">All</option>
+                <option value="all">All Status</option>
                 <option value="placed">Placed</option>
                 <option value="processing">Processing</option>
                 <option value="shipped">Shipped</option>
@@ -139,30 +139,30 @@ export default function AdminDashboard() {
                 <option value="cancelled">Cancelled</option>
               </select>
               <button
-                className="rounded-md border px-3 py-2 text-sm"
+                className="rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                 onClick={() => alert(JSON.stringify(filteredOrders, null, 2))}
               >
-                Export JSON
+                Export
               </button>
             </div>
             <div className="divide-y">
               {filteredOrders.map((o, idx) => (
                 <div key={o.id} className="grid gap-3 p-4 md:grid-cols-7 md:items-center">
                   <div className="md:col-span-2">
-                    <div className="text-sm font-semibold">{o.id}</div>
+                    <div className="text-sm font-semibold text-foreground">{o.id}</div>
                     <div className="text-xs text-muted-foreground">{new Date(o.createdAt).toLocaleString()}</div>
-                    <div className="text-xs text-muted-foreground">{o.payment.method.toUpperCase()}</div>
+                    <div className="text-xs text-muted-foreground font-medium">{o.payment.method.toUpperCase()}</div>
                   </div>
-                  <div className="text-sm">
+                  <div className="text-sm text-foreground">
                     {o.items[0]?.product.title} {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
                   </div>
-                  <div className="text-sm font-semibold">{formatCurrency(o.totals.total)}</div>
+                  <div className="text-sm font-semibold text-foreground">{formatCurrency(o.totals.total)}</div>
                   <div className="flex items-center gap-2">
-                    <label className="text-xs">Verified</label>
-                    <input type="checkbox" checked={o.paymentVerified} onChange={(e) => update(idx, { paymentVerified: e.target.checked })} />
+                    <label className="text-xs text-muted-foreground">Verified</label>
+                    <input type="checkbox" checked={o.paymentVerified} onChange={(e) => update(idx, { paymentVerified: e.target.checked })} className="h-4 w-4" />
                   </div>
                   <div>
-                    <select className="h-10 rounded-md border px-2 text-sm" value={o.status} onChange={(e) => update(idx, { status: e.target.value as any })}>
+                    <select className="h-9 rounded-lg border px-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20" value={o.status} onChange={(e) => update(idx, { status: e.target.value as any })}>
                       <option value="placed">Placed</option>
                       <option value="processing">Processing</option>
                       <option value="shipped">Shipped</option>
@@ -171,14 +171,14 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div className="text-right">
-                    <a className="text-sm text-primary underline" href="#" onClick={(e) => { e.preventDefault(); alert(JSON.stringify(o, null, 2)); }}>
+                    <button className="text-sm text-primary font-medium hover:underline" onClick={(e) => { e.preventDefault(); alert(JSON.stringify(o, null, 2)); }}>
                       View
-                    </a>
+                    </button>
                   </div>
                 </div>
               ))}
               {filteredOrders.length === 0 && (
-                <div className="p-6 text-center text-sm text-muted-foreground">No orders found.</div>
+                <div className="p-8 text-center text-sm text-muted-foreground">No orders found.</div>
               )}
             </div>
           </div>
