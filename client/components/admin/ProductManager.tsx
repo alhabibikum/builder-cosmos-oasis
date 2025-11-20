@@ -114,40 +114,44 @@ export default function ProductManager() {
 
   return (
     <div className="grid gap-6 md:grid-cols-5">
-      <div className="md:col-span-2 rounded-xl border">
-        <div className="flex flex-wrap items-center gap-2 border-b p-3">
+      <div className="md:col-span-2 rounded-xl border bg-white overflow-hidden flex flex-col">
+        <div className="flex flex-col gap-2 border-b p-4 md:gap-1">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search products..."
-            className="h-9 flex-1 rounded-md border px-2 text-sm"
+            className="h-10 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="h-9 rounded-md border px-2 text-sm"
-          >
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-          <button
-            className="rounded-md border px-3 py-2 text-sm"
-            onClick={startNew}
-          >
-            New
-          </button>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex gap-2">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="h-10 flex-1 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
             <button
-              className="rounded-md border px-2 py-1 text-xs"
+              className="h-10 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+              onClick={startNew}
+            >
+              New
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-1 border-b p-4 text-xs md:gap-1">
+          <div className="flex flex-wrap gap-1">
+            <button
+              className="h-9 rounded-lg border px-2 font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
               onClick={() => alert(JSON.stringify(exportOverrides(), null, 2))}
             >
-              Export Products
+              Export
             </button>
             <button
-              className="rounded-md border px-2 py-1 text-xs"
+              className="h-9 rounded-lg border px-2 font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
               onClick={() => {
                 const text = prompt("Paste products JSON overrides array");
                 if (!text) return;
@@ -160,102 +164,100 @@ export default function ProductManager() {
                 }
               }}
             >
-              Import Products
+              Import
             </button>
             <button
-              className="rounded-md border px-2 py-1 text-xs text-red-600"
+              className="h-9 rounded-lg border px-2 font-medium text-red-600 transition-colors hover:bg-red-50"
               onClick={() => {
                 if (!confirm("Clear all product overrides?")) return;
                 clearOverrides();
                 setVersion((v) => v + 1);
               }}
             >
-              Reset Products
+              Reset
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-1">
+            <button
+              className="h-9 rounded-lg border px-2 font-medium text-xs transition-colors hover:bg-accent hover:text-accent-foreground"
+              onClick={() => alert(JSON.stringify(exportInventory(), null, 2))}
+            >
+              Export Stock
+            </button>
+            <button
+              className="h-9 rounded-lg border px-2 font-medium text-xs transition-colors hover:bg-accent hover:text-accent-foreground"
+              onClick={() => {
+                const text = prompt("Paste inventory JSON map");
+                if (!text) return;
+                try {
+                  const data = JSON.parse(text);
+                  importInventory(data);
+                  setVersion((v) => v + 1);
+                } catch (e) {
+                  alert("Invalid JSON");
+                }
+              }}
+            >
+              Import Stock
+            </button>
+            <button
+              className="h-9 rounded-lg border px-2 font-medium text-xs text-red-600 transition-colors hover:bg-red-50"
+              onClick={() => {
+                if (!confirm("Reset inventory to defaults?")) return;
+                resetInventory();
+                setVersion((v) => v + 1);
+              }}
+            >
+              Reset Stock
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2 border-b p-3 text-xs">
-          <button
-            className="rounded-md border px-2 py-1"
-            onClick={() => alert(JSON.stringify(exportInventory(), null, 2))}
-          >
-            Export Inventory
-          </button>
-          <button
-            className="rounded-md border px-2 py-1"
-            onClick={() => {
-              const text = prompt("Paste inventory JSON map");
-              if (!text) return;
-              try {
-                const data = JSON.parse(text);
-                importInventory(data);
-                setVersion((v) => v + 1);
-              } catch (e) {
-                alert("Invalid JSON");
-              }
-            }}
-          >
-            Import Inventory
-          </button>
-          <button
-            className="rounded-md border px-2 py-1 text-red-600"
-            onClick={() => {
-              if (!confirm("Reset inventory to defaults?")) return;
-              resetInventory();
-              setVersion((v) => v + 1);
-            }}
-          >
-            Reset Inventory
-          </button>
-        </div>
-        <div className="divide-y">
+        <div className="divide-y flex-1 overflow-y-auto max-h-[600px]">
           {filtered.map((p) => (
-            <div
+            <button
               key={p.id}
-              className="flex items-center justify-between p-3 text-sm"
+              className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 ${
+                editing?.id === p.id ? "bg-primary/5 border-l-2 border-primary" : ""
+              }`}
+              onClick={() => setEditing(p as Editable)}
             >
-              <button
-                className="text-left"
-                onClick={() => setEditing(p as Editable)}
-              >
-                <div className="font-semibold line-clamp-1">{p.title}</div>
-                <div className="text-xs text-muted-foreground">{p.id}</div>
-                <div className="text-xs text-muted-foreground">
-                  {stockSummary(p as any)}
-                </div>
-              </button>
-              <div className="flex items-center gap-2">
+              <div className="font-semibold line-clamp-1 text-foreground mb-1">{p.title}</div>
+              <div className="text-xs text-muted-foreground mb-1">{p.id}</div>
+              <div className="text-xs text-muted-foreground font-medium mb-2">
+                {stockSummary(p as any)}
+              </div>
+              <div className="flex flex-wrap gap-1">
                 <button
-                  className="rounded-md border px-2 py-1 text-xs"
-                  onClick={() => duplicate(p)}
+                  className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                  onClick={(e) => { e.stopPropagation(); duplicate(p); }}
                 >
-                  Duplicate
+                  Dup
                 </button>
                 <button
-                  className="rounded-md border px-2 py-1 text-xs"
-                  onClick={() => toggleHidden(p as Editable)}
+                  className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                  onClick={(e) => { e.stopPropagation(); toggleHidden(p as Editable); }}
                 >
-                  {(p as Editable).hidden ? "Unhide" : "Hide"}
+                  {(p as Editable).hidden ? "Show" : "Hide"}
                 </button>
                 <button
-                  className="rounded-md border px-2 py-1 text-xs text-red-600"
-                  onClick={() => remove(p.id)}
+                  className="h-7 rounded-md border text-xs px-2 text-red-600 transition-colors hover:bg-red-50"
+                  onClick={(e) => { e.stopPropagation(); remove(p.id); }}
                 >
-                  Delete
+                  Del
                 </button>
               </div>
-            </div>
+            </button>
           ))}
           {filtered.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-6 text-center text-sm text-muted-foreground">
               No products found.
             </div>
           )}
         </div>
       </div>
 
-      <div className="md:col-span-3 rounded-xl border">
-        <div className="border-b p-3 font-semibold">Product Editor</div>
+      <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden flex flex-col">
+        <div className="border-b p-4 font-semibold text-foreground">Product Editor</div>
         {!editing ? (
           <div className="p-4 text-sm text-muted-foreground">
             Select a product to edit or create a new one.
