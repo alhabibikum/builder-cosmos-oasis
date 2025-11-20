@@ -214,9 +214,9 @@ export default function ProductManager() {
         </div>
         <div className="divide-y flex-1 overflow-y-auto max-h-[600px]">
           {filtered.map((p) => (
-            <button
+            <div
               key={p.id}
-              className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 ${
+              className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 cursor-pointer ${
                 editing?.id === p.id ? "bg-primary/5 border-l-2 border-primary" : ""
               }`}
               onClick={() => setEditing(p as Editable)}
@@ -227,26 +227,26 @@ export default function ProductManager() {
                 {stockSummary(p as any)}
               </div>
               <div className="flex flex-wrap gap-1">
-                <button
-                  className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                <div
+                  className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer flex items-center justify-center"
                   onClick={(e) => { e.stopPropagation(); duplicate(p); }}
                 >
                   Dup
-                </button>
-                <button
-                  className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                </div>
+                <div
+                  className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer flex items-center justify-center"
                   onClick={(e) => { e.stopPropagation(); toggleHidden(p as Editable); }}
                 >
                   {(p as Editable).hidden ? "Show" : "Hide"}
-                </button>
-                <button
-                  className="h-7 rounded-md border text-xs px-2 text-red-600 transition-colors hover:bg-red-50"
+                </div>
+                <div
+                  className="h-7 rounded-md border text-xs px-2 text-red-600 transition-colors hover:bg-red-50 cursor-pointer flex items-center justify-center"
                   onClick={(e) => { e.stopPropagation(); remove(p.id); }}
                 >
                   Del
-                </button>
+                </div>
               </div>
-            </button>
+            </div>
           ))}
           {filtered.length === 0 && (
             <div className="p-6 text-center text-sm text-muted-foreground">
