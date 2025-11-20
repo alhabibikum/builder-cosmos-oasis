@@ -99,72 +99,74 @@ export default function CustomerManager() {
 
   return (
     <div className="grid gap-6 md:grid-cols-5">
-      <div className="md:col-span-2 rounded-xl border">
-        <div className="flex flex-wrap items-center gap-2 border-b p-3">
+      <div className="md:col-span-2 rounded-xl border bg-white overflow-hidden">
+        <div className="flex flex-col gap-2 border-b p-4 md:gap-1">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search customers by name, email, phone, tags..."
-            className="h-9 flex-1 rounded-md border px-2 text-sm"
+            placeholder="Search customers..."
+            className="h-10 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
             aria-label="Search customers"
           />
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value as any)}
-            className="h-9 rounded-md border px-2 text-sm"
-            aria-label="Status filter"
-          >
-            <option value="all">All statuses</option>
-            {STATUSES.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-          <button
-            className="rounded-md border px-3 py-2 text-sm"
-            onClick={onNew}
-          >
-            New
-          </button>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex gap-2">
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as any)}
+              className="h-10 flex-1 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
+              aria-label="Status filter"
+            >
+              <option value="all">All statuses</option>
+              {STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
             <button
-              className="rounded-md border px-2 py-1 text-xs"
+              className="h-10 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+              onClick={onNew}
+            >
+              New
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 border-b p-4 text-xs md:flex-row md:gap-1">
+          <label className="inline-flex items-center gap-2">
+            Min Orders
+            <input
+              type="number"
+              className="h-9 w-20 rounded-lg border px-2"
+              value={minOrders}
+              onChange={(e) => setMinOrders(Number(e.target.value) || 0)}
+              min={0}
+            />
+          </label>
+          <label className="inline-flex items-center gap-2">
+            Min Spent
+            <input
+              type="number"
+              className="h-9 w-24 rounded-lg border px-2"
+              value={minSpent}
+              onChange={(e) => setMinSpent(Number(e.target.value) || 0)}
+              min={0}
+            />
+          </label>
+          <div className="ml-auto flex items-center gap-1">
+            <button
+              className="h-9 rounded-lg border px-2 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
               onClick={exportJson}
             >
               Export
             </button>
             <button
-              className="rounded-md border px-2 py-1 text-xs"
+              className="h-9 rounded-lg border px-2 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
               onClick={importJson}
             >
               Import
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2 border-b p-3 text-xs">
-          <label className="inline-flex items-center gap-1">
-            Min Orders
-            <input
-              type="number"
-              className="h-8 w-16 rounded-md border px-1"
-              value={minOrders}
-              onChange={(e) => setMinOrders(Number(e.target.value) || 0)}
-              min={0}
-            />
-          </label>
-          <label className="inline-flex items-center gap-1">
-            Min Spent
-            <input
-              type="number"
-              className="h-8 w-24 rounded-md border px-1"
-              value={minSpent}
-              onChange={(e) => setMinSpent(Number(e.target.value) || 0)}
-              min={0}
-            />
-          </label>
-        </div>
-        <div className="divide-y">
+        <div className="divide-y max-h-[600px] overflow-y-auto">
           {filtered.map((c) => {
             const key = c.email?.toLowerCase() || c.phone || "";
             const st = stats[key] || { orders: 0, spent: 0 };
@@ -172,34 +174,40 @@ export default function CustomerManager() {
               <button
                 key={c.id}
                 onClick={() => setEditing(c)}
-                className={`w-full p-3 text-left text-sm transition-colors hover:bg-accent/10 ${
-                  editing?.id === c.id ? "bg-accent/10" : ""
+                className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 ${
+                  editing?.id === c.id ? "bg-primary/5 border-l-2 border-primary" : ""
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <div className="font-semibold line-clamp-1">{c.name}</div>
-                  <span className="rounded-md border px-2 py-0.5 text-xs capitalize">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <div className="font-semibold line-clamp-1 text-foreground">{c.name}</div>
+                  <span className={`rounded-lg px-2 py-1 text-xs font-medium capitalize ${
+                    c.status === 'vip' ? 'bg-amber-100 text-amber-700' :
+                    c.status === 'active' ? 'bg-green-100 text-green-700' :
+                    c.status === 'lead' ? 'bg-blue-100 text-blue-700' :
+                    c.status === 'inactive' ? 'bg-gray-100 text-gray-700' :
+                    'bg-red-100 text-red-700'
+                  }`}>
                     {c.status}
                   </span>
                 </div>
-                <div className="text-xs text-muted-foreground line-clamp-1">
+                <div className="text-xs text-muted-foreground line-clamp-1 mb-1">
                   {c.email || "—"} • {c.phone || "—"}
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-muted-foreground font-medium">
                   {st.orders} orders • {formatCurrency(st.spent)} spent
                 </div>
               </button>
             );
           })}
           {filtered.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-6 text-center text-sm text-muted-foreground">
               No customers found.
             </div>
           )}
         </div>
       </div>
 
-      <div className="md:col-span-3 rounded-xl border">
+      <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden">
         <div className="border-b p-3 font-semibold">Customer Profile</div>
         {!editing ? (
           <div className="p-4 text-sm text-muted-foreground">
