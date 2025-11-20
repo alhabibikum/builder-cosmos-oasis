@@ -65,13 +65,13 @@ export default function InventoryManager() {
 
   return (
     <div className="grid gap-6">
-      <div className="grid gap-4 sm:grid-cols-3">
-        <Card title="Low Stock Items" value={lowStock.length.toString()} />
-        <Card title="Total Units In Stock" value={totalUnits.toString()} />
-        <Card title="Products Managed" value={products.length.toString()} />
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Card title="Low Stock Items" value={lowStock.length.toString()} icon="alert" />
+        <Card title="Total Units In Stock" value={totalUnits.toString()} icon="package" />
+        <Card title="Products Managed" value={products.length.toString()} icon="box" />
       </div>
 
-      <div className="rounded-xl border">
+      <div className="rounded-xl border bg-white overflow-hidden">
         <div className="border-b p-3 font-semibold">Alerts</div>
         <div className="divide-y">
           {lowStock.map((l) => (
