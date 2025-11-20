@@ -120,14 +120,6 @@ function Header() {
               </Link>
             ) : (
               <>
-                {role === "admin" && (
-                  <Link
-                    to="/admin"
-                    className="rounded-md border px-3 py-2 text-sm"
-                  >
-                    Admin
-                  </Link>
-                )}
                 <Link
                   to="/dashboard"
                   className="rounded-md border px-3 py-2 text-sm"
