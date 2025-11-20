@@ -129,7 +129,7 @@ export default function InventoryManager() {
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
-              <option value="">— Select a product —</option>
+              <option value="">�� Select a product —</option>
               {products.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.title}
@@ -255,13 +255,13 @@ function StockAdjuster({ onSelect }: { onSelect: (id: string) => void }) {
   };
 
   return (
-    <div className="rounded-xl border">
-      <div className="border-b p-3 font-semibold">Stock Adjustment</div>
-      <div className="grid gap-3 p-3 md:grid-cols-5 md:items-end">
+    <div className="rounded-xl border bg-white overflow-hidden">
+      <div className="border-b p-4 font-semibold text-foreground">Stock Adjustment</div>
+      <div className="grid gap-3 p-4 md:grid-cols-5 md:items-end md:gap-2">
         <label className="grid gap-1 text-sm">
-          <span className="text-xs">Product</span>
+          <span className="text-xs font-medium text-foreground">Product</span>
           <select
-            className="h-10 rounded-md border px-2"
+            className="h-10 rounded-lg border px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
             value={pid}
             onChange={(e) => setPid(e.target.value)}
           >
@@ -275,9 +275,9 @@ function StockAdjuster({ onSelect }: { onSelect: (id: string) => void }) {
         </label>
         {p?.sizes?.length ? (
           <label className="grid gap-1 text-sm">
-            <span className="text-xs">Size</span>
+            <span className="text-xs font-medium text-foreground">Size</span>
             <select
-              className="h-10 rounded-md border px-2"
+              className="h-10 rounded-lg border px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
               value={size}
               onChange={(e) => setSize(e.target.value)}
             >
@@ -293,38 +293,38 @@ function StockAdjuster({ onSelect }: { onSelect: (id: string) => void }) {
           <div />
         )}
         <label className="grid gap-1 text-sm">
-          <span className="text-xs">Mode</span>
+          <span className="text-xs font-medium text-foreground">Mode</span>
           <select
-            className="h-10 rounded-md border px-2"
+            className="h-10 rounded-lg border px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
             value={mode}
             onChange={(e) => setMode(e.target.value as any)}
           >
-            <option value="adjust">Adjust by ±</option>
-            <option value="set">Set absolute</option>
+            <option value="adjust">Adjust ±</option>
+            <option value="set">Set Qty</option>
           </select>
         </label>
         <label className="grid gap-1 text-sm">
-          <span className="text-xs">
-            {mode === "set" ? "Quantity" : "Delta"}
+          <span className="text-xs font-medium text-foreground">
+            {mode === "set" ? "Qty" : "Δ"}
           </span>
           <input
             type="number"
-            className="h-10 rounded-md border px-2"
+            className="h-10 rounded-lg border px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
             value={value}
             onChange={(e) => setValue(Number(e.target.value) || 0)}
           />
         </label>
         <label className="grid gap-1 text-sm md:col-span-2">
-          <span className="text-xs">Reason (optional)</span>
+          <span className="text-xs font-medium text-foreground">Reason (optional)</span>
           <input
-            className="h-10 rounded-md border px-2"
+            className="h-10 rounded-lg border px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
           />
         </label>
         <div className="md:col-span-5">
           <button
-            className="rounded-md border px-3 py-2 text-sm"
+            className="h-10 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
             onClick={apply}
           >
             Apply
