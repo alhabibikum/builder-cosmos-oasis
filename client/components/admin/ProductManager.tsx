@@ -259,11 +259,11 @@ export default function ProductManager() {
       <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden flex flex-col">
         <div className="border-b p-4 font-semibold text-foreground">Product Editor</div>
         {!editing ? (
-          <div className="p-4 text-sm text-muted-foreground">
+          <div className="flex-1 flex items-center justify-center p-8 text-sm text-muted-foreground">
             Select a product to edit or create a new one.
           </div>
         ) : (
-          <div className="grid gap-3 p-4">
+          <div className="flex-1 overflow-y-auto grid gap-3 p-4 md:p-6">
             <div className="grid gap-3 md:grid-cols-2">
               <Field
                 label="ID (slug)"
