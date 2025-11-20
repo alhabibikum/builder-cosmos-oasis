@@ -119,15 +119,21 @@ export default function PostManager() {
             <button
               key={p.id}
               className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 ${
-                editing?.id === p.id ? "bg-primary/5 border-l-2 border-primary" : ""
+                editing?.id === p.id
+                  ? "bg-primary/5 border-l-2 border-primary"
+                  : ""
               }`}
               onClick={() => setEditing(p)}
             >
               <div className="font-semibold text-foreground">{p.title}</div>
               <div className="text-xs text-muted-foreground mt-1">
-                <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium mr-2 ${
-                  p.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
-                }`}>
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium mr-2 ${
+                    p.status === "published"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
+                >
                   {p.status.toUpperCase()}
                 </span>
                 <span className="text-muted-foreground">
@@ -145,7 +151,9 @@ export default function PostManager() {
       </div>
 
       <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden flex flex-col">
-        <div className="border-b p-4 font-semibold text-foreground">Post Editor</div>
+        <div className="border-b p-4 font-semibold text-foreground">
+          Post Editor
+        </div>
         {!editing ? (
           <div className="flex-1 flex items-center justify-center p-8 text-sm text-muted-foreground">
             Select a post to edit or create a new one.

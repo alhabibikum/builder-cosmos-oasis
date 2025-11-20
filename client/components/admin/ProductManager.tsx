@@ -217,11 +217,15 @@ export default function ProductManager() {
             <div
               key={p.id}
               className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 cursor-pointer ${
-                editing?.id === p.id ? "bg-primary/5 border-l-2 border-primary" : ""
+                editing?.id === p.id
+                  ? "bg-primary/5 border-l-2 border-primary"
+                  : ""
               }`}
               onClick={() => setEditing(p as Editable)}
             >
-              <div className="font-semibold line-clamp-1 text-foreground mb-1">{p.title}</div>
+              <div className="font-semibold line-clamp-1 text-foreground mb-1">
+                {p.title}
+              </div>
               <div className="text-xs text-muted-foreground mb-1">{p.id}</div>
               <div className="text-xs text-muted-foreground font-medium mb-2">
                 {stockSummary(p as any)}
@@ -229,19 +233,28 @@ export default function ProductManager() {
               <div className="flex flex-wrap gap-1">
                 <div
                   className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer flex items-center justify-center"
-                  onClick={(e) => { e.stopPropagation(); duplicate(p); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    duplicate(p);
+                  }}
                 >
                   Dup
                 </div>
                 <div
                   className="h-7 rounded-md border text-xs px-2 transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer flex items-center justify-center"
-                  onClick={(e) => { e.stopPropagation(); toggleHidden(p as Editable); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleHidden(p as Editable);
+                  }}
                 >
                   {(p as Editable).hidden ? "Show" : "Hide"}
                 </div>
                 <div
                   className="h-7 rounded-md border text-xs px-2 text-red-600 transition-colors hover:bg-red-50 cursor-pointer flex items-center justify-center"
-                  onClick={(e) => { e.stopPropagation(); remove(p.id); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    remove(p.id);
+                  }}
                 >
                   Del
                 </div>
@@ -257,7 +270,9 @@ export default function ProductManager() {
       </div>
 
       <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden flex flex-col">
-        <div className="border-b p-4 font-semibold text-foreground">Product Editor</div>
+        <div className="border-b p-4 font-semibold text-foreground">
+          Product Editor
+        </div>
         {!editing ? (
           <div className="flex-1 flex items-center justify-center p-8 text-sm text-muted-foreground">
             Select a product to edit or create a new one.

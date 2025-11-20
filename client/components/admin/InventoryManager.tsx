@@ -66,13 +66,27 @@ export default function InventoryManager() {
   return (
     <div className="grid gap-6">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <Card title="Low Stock Items" value={lowStock.length.toString()} icon="alert" />
-        <Card title="Total Units In Stock" value={totalUnits.toString()} icon="package" />
-        <Card title="Products Managed" value={products.length.toString()} icon="box" />
+        <Card
+          title="Low Stock Items"
+          value={lowStock.length.toString()}
+          icon="alert"
+        />
+        <Card
+          title="Total Units In Stock"
+          value={totalUnits.toString()}
+          icon="package"
+        />
+        <Card
+          title="Products Managed"
+          value={products.length.toString()}
+          icon="box"
+        />
       </div>
 
       <div className="rounded-xl border bg-white overflow-hidden">
-        <div className="border-b p-4 font-semibold text-foreground">Low Stock Alerts</div>
+        <div className="border-b p-4 font-semibold text-foreground">
+          Low Stock Alerts
+        </div>
         <div className="divide-y">
           {lowStock.map((l) => (
             <div
@@ -80,7 +94,9 @@ export default function InventoryManager() {
               className="grid gap-3 p-4 md:grid-cols-3 md:items-center"
             >
               <div>
-                <div className="font-semibold line-clamp-1 text-foreground">{l.title}</div>
+                <div className="font-semibold line-clamp-1 text-foreground">
+                  {l.title}
+                </div>
                 <div className="text-xs text-muted-foreground">{l.id}</div>
               </div>
               <div className="text-sm font-medium text-red-600">
@@ -120,10 +136,14 @@ export default function InventoryManager() {
       <StockAdjuster onSelect={(id) => setSelected(id)} />
 
       <div className="rounded-xl border bg-white overflow-hidden">
-        <div className="border-b p-4 font-semibold text-foreground">Inventory Trends</div>
+        <div className="border-b p-4 font-semibold text-foreground">
+          Inventory Trends
+        </div>
         <div className="p-4">
           <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-center md:gap-3">
-            <label className="text-xs font-medium text-foreground">Product</label>
+            <label className="text-xs font-medium text-foreground">
+              Product
+            </label>
             <select
               className="h-10 flex-1 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
               value={selected}
@@ -167,7 +187,9 @@ export default function InventoryManager() {
       </div>
 
       <div className="rounded-xl border bg-white overflow-hidden">
-        <div className="border-b p-4 font-semibold text-foreground">Recent Adjustments</div>
+        <div className="border-b p-4 font-semibold text-foreground">
+          Recent Adjustments
+        </div>
         <div className="divide-y max-h-[400px] overflow-y-auto">
           {history.slice(0, 50).map((h, i) => (
             <div
@@ -183,10 +205,14 @@ export default function InventoryManager() {
                   {h.size ? ` • ${h.size}` : ""}
                 </div>
               </div>
-              <div className={`font-semibold ${h.delta < 0 ? "text-red-600" : "text-green-600"}`}>
+              <div
+                className={`font-semibold ${h.delta < 0 ? "text-red-600" : "text-green-600"}`}
+              >
                 {h.delta > 0 ? `+${h.delta}` : h.delta}
               </div>
-              <div className="text-foreground font-medium">Qty: {h.qtyAfter}</div>
+              <div className="text-foreground font-medium">
+                Qty: {h.qtyAfter}
+              </div>
               <div className="text-right text-xs text-muted-foreground">
                 {new Date(h.at).toLocaleString()}
               </div>
@@ -203,28 +229,70 @@ export default function InventoryManager() {
   );
 }
 
-function Card({ title, value, icon }: { title: string; value: string; icon?: string }) {
+function Card({
+  title,
+  value,
+  icon,
+}: {
+  title: string;
+  value: string;
+  icon?: string;
+}) {
   return (
     <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-muted-foreground mb-2">{title}</p>
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground">{value}</h3>
+          <p className="text-sm font-medium text-muted-foreground mb-2">
+            {title}
+          </p>
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+            {value}
+          </h3>
         </div>
         <div className="rounded-lg bg-accent/10 p-3">
-          {icon === 'alert' && (
-            <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0-10a9 9 0 110 18 9 9 0 010-18z" />
+          {icon === "alert" && (
+            <svg
+              className="w-6 h-6 text-orange-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4v2m0-10a9 9 0 110 18 9 9 0 010-18z"
+              />
             </svg>
           )}
-          {icon === 'package' && (
-            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10v10l8 4" />
+          {icon === "package" && (
+            <svg
+              className="w-6 h-6 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10v10l8 4"
+              />
             </svg>
           )}
-          {icon === 'box' && (
-            <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9-4v4m0 0v4" />
+          {icon === "box" && (
+            <svg
+              className="w-6 h-6 text-purple-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9-4v4m0 0v4"
+              />
             </svg>
           )}
         </div>
@@ -256,7 +324,9 @@ function StockAdjuster({ onSelect }: { onSelect: (id: string) => void }) {
 
   return (
     <div className="rounded-xl border bg-white overflow-hidden">
-      <div className="border-b p-4 font-semibold text-foreground">Stock Adjustment</div>
+      <div className="border-b p-4 font-semibold text-foreground">
+        Stock Adjustment
+      </div>
       <div className="grid gap-3 p-4 md:grid-cols-5 md:items-end md:gap-2">
         <label className="grid gap-1 text-sm">
           <span className="text-xs font-medium text-foreground">Product</span>
@@ -315,7 +385,9 @@ function StockAdjuster({ onSelect }: { onSelect: (id: string) => void }) {
           />
         </label>
         <label className="grid gap-1 text-sm md:col-span-2">
-          <span className="text-xs font-medium text-foreground">Reason (optional)</span>
+          <span className="text-xs font-medium text-foreground">
+            Reason (optional)
+          </span>
           <input
             className="h-10 rounded-lg border px-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
             value={reason}

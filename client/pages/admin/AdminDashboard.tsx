@@ -59,14 +59,26 @@ export default function AdminDashboard() {
         <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-sm font-medium text-muted-foreground mb-2">Total Revenue</p>
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Total Revenue
+              </p>
               <h3 className="text-2xl md:text-3xl font-bold text-foreground">
                 {formatCurrency(stats.total)}
               </h3>
             </div>
             <div className="rounded-lg bg-primary/10 p-3">
-              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-6 h-6 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
           </div>
@@ -75,12 +87,26 @@ export default function AdminDashboard() {
         <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-sm font-medium text-muted-foreground mb-2">Total Orders</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{stats.placed}</h3>
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Total Orders
+              </p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                {stats.placed}
+              </h3>
             </div>
             <div className="rounded-lg bg-blue-100 p-3">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              <svg
+                className="w-6 h-6 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
               </svg>
             </div>
           </div>
@@ -89,12 +115,26 @@ export default function AdminDashboard() {
         <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-sm font-medium text-muted-foreground mb-2">Pending Verification</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-orange-600">{stats.pendingVerify}</h3>
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Pending Verification
+              </p>
+              <h3 className="text-2xl md:text-3xl font-bold text-orange-600">
+                {stats.pendingVerify}
+              </h3>
             </div>
             <div className="rounded-lg bg-orange-100 p-3">
-              <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-6 h-6 text-orange-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
           </div>
@@ -104,7 +144,8 @@ export default function AdminDashboard() {
       <AdminSidebarLayout
         overview={
           <div className="rounded-xl border p-4 text-sm text-muted-foreground">
-            Use the sidebar to manage every part of the shop: products, inventory, orders, homepage content and blog posts.
+            Use the sidebar to manage every part of the shop: products,
+            inventory, orders, homepage content and blog posts.
           </div>
         }
         customers={
@@ -147,22 +188,49 @@ export default function AdminDashboard() {
             </div>
             <div className="divide-y">
               {filteredOrders.map((o, idx) => (
-                <div key={o.id} className="grid gap-3 p-4 md:grid-cols-7 md:items-center">
+                <div
+                  key={o.id}
+                  className="grid gap-3 p-4 md:grid-cols-7 md:items-center"
+                >
                   <div className="md:col-span-2">
-                    <div className="text-sm font-semibold text-foreground">{o.id}</div>
-                    <div className="text-xs text-muted-foreground">{new Date(o.createdAt).toLocaleString()}</div>
-                    <div className="text-xs text-muted-foreground font-medium">{o.payment.method.toUpperCase()}</div>
+                    <div className="text-sm font-semibold text-foreground">
+                      {o.id}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {new Date(o.createdAt).toLocaleString()}
+                    </div>
+                    <div className="text-xs text-muted-foreground font-medium">
+                      {o.payment.method.toUpperCase()}
+                    </div>
                   </div>
                   <div className="text-sm text-foreground">
-                    {o.items[0]?.product.title} {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
+                    {o.items[0]?.product.title}{" "}
+                    {o.items.length > 1 ? `+${o.items.length - 1} more` : ""}
                   </div>
-                  <div className="text-sm font-semibold text-foreground">{formatCurrency(o.totals.total)}</div>
+                  <div className="text-sm font-semibold text-foreground">
+                    {formatCurrency(o.totals.total)}
+                  </div>
                   <div className="flex items-center gap-2">
-                    <label className="text-xs text-muted-foreground">Verified</label>
-                    <input type="checkbox" checked={o.paymentVerified} onChange={(e) => update(idx, { paymentVerified: e.target.checked })} className="h-4 w-4" />
+                    <label className="text-xs text-muted-foreground">
+                      Verified
+                    </label>
+                    <input
+                      type="checkbox"
+                      checked={o.paymentVerified}
+                      onChange={(e) =>
+                        update(idx, { paymentVerified: e.target.checked })
+                      }
+                      className="h-4 w-4"
+                    />
                   </div>
                   <div>
-                    <select className="h-9 rounded-lg border px-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20" value={o.status} onChange={(e) => update(idx, { status: e.target.value as any })}>
+                    <select
+                      className="h-9 rounded-lg border px-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      value={o.status}
+                      onChange={(e) =>
+                        update(idx, { status: e.target.value as any })
+                      }
+                    >
                       <option value="placed">Placed</option>
                       <option value="processing">Processing</option>
                       <option value="shipped">Shipped</option>
@@ -171,14 +239,22 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div className="text-right">
-                    <button className="text-sm text-primary font-medium hover:underline" onClick={(e) => { e.preventDefault(); alert(JSON.stringify(o, null, 2)); }}>
+                    <button
+                      className="text-sm text-primary font-medium hover:underline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        alert(JSON.stringify(o, null, 2));
+                      }}
+                    >
                       View
                     </button>
                   </div>
                 </div>
               ))}
               {filteredOrders.length === 0 && (
-                <div className="p-8 text-center text-sm text-muted-foreground">No orders found.</div>
+                <div className="p-8 text-center text-sm text-muted-foreground">
+                  No orders found.
+                </div>
               )}
             </div>
           </div>
@@ -190,8 +266,12 @@ export default function AdminDashboard() {
         }
         content={
           <div className="grid gap-6">
-            <div className="rounded-xl border p-2 md:p-4"><PostManager /></div>
-            <div className="rounded-xl border p-2 md:p-4"><ContentManager /></div>
+            <div className="rounded-xl border p-2 md:p-4">
+              <PostManager />
+            </div>
+            <div className="rounded-xl border p-2 md:p-4">
+              <ContentManager />
+            </div>
           </div>
         }
       />

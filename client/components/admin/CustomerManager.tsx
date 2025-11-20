@@ -175,18 +175,28 @@ export default function CustomerManager() {
                 key={c.id}
                 onClick={() => setEditing(c)}
                 className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 ${
-                  editing?.id === c.id ? "bg-primary/5 border-l-2 border-primary" : ""
+                  editing?.id === c.id
+                    ? "bg-primary/5 border-l-2 border-primary"
+                    : ""
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 mb-1">
-                  <div className="font-semibold line-clamp-1 text-foreground">{c.name}</div>
-                  <span className={`rounded-lg px-2 py-1 text-xs font-medium capitalize ${
-                    c.status === 'vip' ? 'bg-amber-100 text-amber-700' :
-                    c.status === 'active' ? 'bg-green-100 text-green-700' :
-                    c.status === 'lead' ? 'bg-blue-100 text-blue-700' :
-                    c.status === 'inactive' ? 'bg-gray-100 text-gray-700' :
-                    'bg-red-100 text-red-700'
-                  }`}>
+                  <div className="font-semibold line-clamp-1 text-foreground">
+                    {c.name}
+                  </div>
+                  <span
+                    className={`rounded-lg px-2 py-1 text-xs font-medium capitalize ${
+                      c.status === "vip"
+                        ? "bg-amber-100 text-amber-700"
+                        : c.status === "active"
+                          ? "bg-green-100 text-green-700"
+                          : c.status === "lead"
+                            ? "bg-blue-100 text-blue-700"
+                            : c.status === "inactive"
+                              ? "bg-gray-100 text-gray-700"
+                              : "bg-red-100 text-red-700"
+                    }`}
+                  >
                     {c.status}
                   </span>
                 </div>
@@ -208,7 +218,9 @@ export default function CustomerManager() {
       </div>
 
       <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden flex flex-col">
-        <div className="border-b p-4 font-semibold text-foreground">Customer Profile</div>
+        <div className="border-b p-4 font-semibold text-foreground">
+          Customer Profile
+        </div>
         {!editing ? (
           <div className="flex-1 flex items-center justify-center p-8 text-sm text-muted-foreground">
             Select a customer to view or create a new one.
