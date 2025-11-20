@@ -168,14 +168,14 @@ export default function InventoryManager() {
 
       <div className="rounded-xl border bg-white overflow-hidden">
         <div className="border-b p-4 font-semibold text-foreground">Recent Adjustments</div>
-        <div className="divide-y">
+        <div className="divide-y max-h-[400px] overflow-y-auto">
           {history.slice(0, 50).map((h, i) => (
             <div
               key={i}
-              className="grid gap-1 p-3 text-sm md:grid-cols-5 md:items-center"
+              className="grid gap-2 p-4 text-sm md:grid-cols-5 md:items-center md:gap-0"
             >
               <div className="md:col-span-2">
-                <div className="font-medium line-clamp-1">
+                <div className="font-semibold line-clamp-1 text-foreground">
                   {getProductById(h.id)?.title || h.id}
                 </div>
                 <div className="text-xs text-muted-foreground">
@@ -183,17 +183,17 @@ export default function InventoryManager() {
                   {h.size ? ` • ${h.size}` : ""}
                 </div>
               </div>
-              <div className={h.delta < 0 ? "text-red-600" : "text-green-600"}>
+              <div className={`font-semibold ${h.delta < 0 ? "text-red-600" : "text-green-600"}`}>
                 {h.delta > 0 ? `+${h.delta}` : h.delta}
               </div>
-              <div className="text-muted-foreground">Qty: {h.qtyAfter}</div>
+              <div className="text-foreground font-medium">Qty: {h.qtyAfter}</div>
               <div className="text-right text-xs text-muted-foreground">
                 {new Date(h.at).toLocaleString()}
               </div>
             </div>
           ))}
           {history.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-8 text-center text-sm text-muted-foreground">
               No history yet.
             </div>
           )}
@@ -203,11 +203,32 @@ export default function InventoryManager() {
   );
 }
 
-function Card({ title, value }: { title: string; value: string }) {
+function Card({ title, value, icon }: { title: string; value: string; icon?: string }) {
   return (
-    <div className="rounded-xl border p-4 transition-shadow hover:shadow-sm">
-      <div className="text-sm text-muted-foreground">{title}</div>
-      <div className="text-2xl font-semibold">{value}</div>
+    <div className="rounded-xl border bg-white p-5 md:p-6 transition-all hover:shadow-md hover:border-primary/20">
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
+          <p className="text-sm font-medium text-muted-foreground mb-2">{title}</p>
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground">{value}</h3>
+        </div>
+        <div className="rounded-lg bg-accent/10 p-3">
+          {icon === 'alert' && (
+            <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0-10a9 9 0 110 18 9 9 0 010-18z" />
+            </svg>
+          )}
+          {icon === 'package' && (
+            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10v10l8 4" />
+            </svg>
+          )}
+          {icon === 'box' && (
+            <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9-4v4m0 0v4" />
+            </svg>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
