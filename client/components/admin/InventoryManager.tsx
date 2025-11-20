@@ -72,45 +72,45 @@ export default function InventoryManager() {
       </div>
 
       <div className="rounded-xl border bg-white overflow-hidden">
-        <div className="border-b p-3 font-semibold">Alerts</div>
+        <div className="border-b p-4 font-semibold text-foreground">Low Stock Alerts</div>
         <div className="divide-y">
           {lowStock.map((l) => (
             <div
               key={l.id}
-              className="grid gap-2 p-3 md:grid-cols-3 md:items-center"
+              className="grid gap-3 p-4 md:grid-cols-3 md:items-center"
             >
               <div>
-                <div className="font-semibold line-clamp-1">{l.title}</div>
+                <div className="font-semibold line-clamp-1 text-foreground">{l.title}</div>
                 <div className="text-xs text-muted-foreground">{l.id}</div>
               </div>
-              <div className="text-sm text-red-600">
+              <div className="text-sm font-medium text-red-600">
                 {l.sizes.length ? (
-                  <span>Low sizes: {l.sizes.join(", ")}</span>
+                  <span>Low: {l.sizes.join(", ")}</span>
                 ) : (
                   <span>Low total stock</span>
                 )}
               </div>
               <div className="flex items-center gap-2 md:justify-end">
-                <label className="text-xs">Threshold</label>
+                <label className="text-xs text-muted-foreground">Min:</label>
                 <input
                   type="number"
-                  className="h-8 w-20 rounded-md border px-2 text-sm"
+                  className="h-9 w-20 rounded-lg border px-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
                   defaultValue={l.threshold}
                   onBlur={(e) =>
                     setThreshold(l.id, Number(e.target.value) || 0)
                   }
                 />
                 <button
-                  className="rounded-md border px-2 py-1 text-xs"
+                  className="h-9 rounded-lg border px-3 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                   onClick={() => setSelected(l.id)}
                 >
-                  View Trends
+                  Chart
                 </button>
               </div>
             </div>
           ))}
           {lowStock.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-8 text-center text-sm text-muted-foreground">
               No low stock alerts.
             </div>
           )}
