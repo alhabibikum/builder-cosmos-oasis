@@ -88,56 +88,64 @@ export default function PostManager() {
 
   return (
     <div className="grid gap-6 md:grid-cols-5">
-      <div className="md:col-span-2 rounded-xl border">
-        <div className="flex items-center gap-2 border-b p-3">
+      <div className="md:col-span-2 rounded-xl border bg-white overflow-hidden flex flex-col">
+        <div className="flex flex-col gap-2 border-b p-4 md:gap-1">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search posts..."
-            className="h-9 flex-1 rounded-md border px-2 text-sm"
+            className="h-10 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value as any)}
-            className="h-9 rounded-md border px-2 text-sm"
-          >
-            <option value="all">All</option>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-          </select>
-          <button
-            className="rounded-md border px-3 py-2 text-sm"
-            onClick={onNew}
-          >
-            New
-          </button>
+          <div className="flex gap-2">
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as any)}
+              className="h-10 flex-1 rounded-lg border px-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              <option value="all">All</option>
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+            <button
+              className="h-10 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+              onClick={onNew}
+            >
+              New
+            </button>
+          </div>
         </div>
-        <div className="divide-y">
+        <div className="divide-y flex-1 overflow-y-auto max-h-[600px]">
           {filtered.map((p) => (
             <button
               key={p.id}
-              className={`w-full p-3 text-left text-sm ${
-                editing?.id === p.id ? "bg-accent/10" : ""
+              className={`w-full p-4 text-left text-sm transition-all hover:bg-accent/10 ${
+                editing?.id === p.id ? "bg-primary/5 border-l-2 border-primary" : ""
               }`}
               onClick={() => setEditing(p)}
             >
-              <div className="font-semibold">{p.title}</div>
-              <div className="text-xs text-muted-foreground">
-                {p.status.toUpperCase()} •{" "}
-                {new Date(p.updatedAt).toLocaleString()}
+              <div className="font-semibold text-foreground">{p.title}</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium mr-2 ${
+                  p.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+                }`}>
+                  {p.status.toUpperCase()}
+                </span>
+                <span className="text-muted-foreground">
+                  {new Date(p.updatedAt).toLocaleString()}
+                </span>
               </div>
             </button>
           ))}
           {filtered.length === 0 && (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-6 text-center text-sm text-muted-foreground">
               No posts found.
             </div>
           )}
         </div>
       </div>
 
-      <div className="md:col-span-3 rounded-xl border">
-        <div className="border-b p-3 font-semibold">Post Editor</div>
+      <div className="md:col-span-3 rounded-xl border bg-white overflow-hidden flex flex-col">
+        <div className="border-b p-4 font-semibold text-foreground">Post Editor</div>
         {!editing ? (
           <div className="p-4 text-sm text-muted-foreground">
             Select a post to edit or create a new one.
